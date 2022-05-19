@@ -23,7 +23,9 @@ let useStore = (set) => ({
 
   getAllProduct: async () => {
     try {
-      const res = await axios.get("/api/product/getproduct/");
+      const res = await axios.get(
+        "https://hbn-host.herokuapp.com/api/product/getproduct/"
+      );
       set({ AllProducts: res.data.data });
       return res;
     } catch (error) {}
@@ -37,7 +39,9 @@ let useStore = (set) => ({
           Authorization: `Bearer ${token.AccessToken}`,
         },
       };
-      const res = await axios.delete(`/api/product/${id}`);
+      const res = await axios.delete(
+        `https://hbn-host.herokuapp.com/api/product/${id}`
+      );
     } catch (error) {
       toast.error(error);
     }
@@ -51,7 +55,11 @@ let useStore = (set) => ({
           Authorization: `Bearer ${token.AccessToken}`,
         },
       };
-      const res = await axios.get("/api/user/alluser", config, {});
+      const res = await axios.get(
+        "https://hbn-host.herokuapp.com/api/user/alluser",
+        config,
+        {}
+      );
       set({ AllUsers: res.data.data });
     } catch (error) {
       toast.error(error);
@@ -66,7 +74,11 @@ let useStore = (set) => ({
           Authorization: `Bearer ${token.AccessToken}`,
         },
       };
-      const res = await axios.get("/api/user/fetchuser", config, {});
+      const res = await axios.get(
+        "https://hbn-host.herokuapp.com/api/user/fetchuser",
+        config,
+        {}
+      );
       return res;
     } catch (error) {
       toast.error(error.message);
@@ -81,13 +93,18 @@ let useStore = (set) => ({
           Authorization: `Bearer ${token.AccessToken}`,
         },
       };
-      const res = await axios.delete(`/api/user/deleteuser/${id}`);
+      const res = await axios.delete(
+        `https://hbn-host.herokuapp.com/api/user/deleteuser/${id}`
+      );
     } catch (error) {}
   },
 
   register: async (cred) => {
     try {
-      const res = await axios.post("/api/auth/register", cred);
+      const res = await axios.post(
+        "https://hbn-host.herokuapp.com/api/auth/register",
+        cred
+      );
     } catch (error) {
       console.log("error");
     }
@@ -95,7 +112,10 @@ let useStore = (set) => ({
 
   login: async (cred) => {
     try {
-      const res = await axios.post("/api/auth/login", cred);
+      const res = await axios.post(
+        "https://hbn-host.herokuapp.com/api/auth/login",
+        cred
+      );
       localStorage.setItem("userInfo", JSON.stringify(res.data.data));
       set({ LoginUser: res.data.data, LoginError: false });
       return "Success";
@@ -120,7 +140,7 @@ let useStore = (set) => ({
       };
 
       const res = await axios.post(
-        "/api/product/addproduct",
+        "https://hbn-host.herokuapp.com/api/product/addproduct",
         proddetails,
         config
       );
@@ -137,7 +157,9 @@ let useStore = (set) => ({
           Authorization: `Bearer ${token.AccessToken}`,
         },
       };
-      const res = await axios.get(`/api/product/${id}`);
+      const res = await axios.get(
+        `https://hbn-host.herokuapp.com/api/product/${id}`
+      );
       // set({ Product: res.data.data });
       return res.data.data;
     } catch (error) {}
@@ -151,7 +173,11 @@ let useStore = (set) => ({
           Authorization: `Bearer ${token.AccessToken}`,
         },
       };
-      const res = await axios.patch(`/api/product/${id}`, details, config);
+      const res = await axios.patch(
+        `https://hbn-host.herokuapp.com/api/product/${id}`,
+        details,
+        config
+      );
       return res;
     } catch (error) {
       return error;
@@ -166,7 +192,9 @@ let useStore = (set) => ({
           Authorization: `Bearer ${token.AccessToken}`,
         },
       };
-      const res = await axios.get("/api/reviews/getall");
+      const res = await axios.get(
+        "https://hbn-host.herokuapp.com/api/reviews/getall"
+      );
       set({ AllReviews: res.data.data });
     } catch (error) {}
   },
@@ -179,7 +207,11 @@ let useStore = (set) => ({
           Authorization: `Bearer ${token.AccessToken}`,
         },
       };
-      const res = await axios.get(`/api/reviews/${id}`, config, {});
+      const res = await axios.get(
+        `https://hbn-host.herokuapp.com/api/reviews/${id}`,
+        config,
+        {}
+      );
       set({ AllReviewsById: res.data.data });
       return res;
     } catch (error) {
@@ -195,7 +227,11 @@ let useStore = (set) => ({
           Authorization: `Bearer ${token.AccessToken}`,
         },
       };
-      const res = await axios.post(`/api/reviews/${id}`, details, config);
+      const res = await axios.post(
+        `https://hbn-host.herokuapp.com/api/reviews/${id}`,
+        details,
+        config
+      );
       return res;
     } catch (error) {
       return error;
@@ -210,7 +246,10 @@ let useStore = (set) => ({
           Authorization: `Bearer ${token.AccessToken}`,
         },
       };
-      const res = await axios.put(`/api/reviews/${prod_id}/${id}`, details);
+      const res = await axios.put(
+        `https://hbn-host.herokuapp.com/api/reviews/${prod_id}/${id}`,
+        details
+      );
     } catch (error) {}
   },
 
@@ -222,7 +261,9 @@ let useStore = (set) => ({
           Authorization: `Bearer ${token.AccessToken}`,
         },
       };
-      const res = await axios.delete(`/api/reviews/${prod_id}/${id}`);
+      const res = await axios.delete(
+        `https://hbn-host.herokuapp.com/api/reviews/${prod_id}/${id}`
+      );
     } catch (error) {}
   },
 
@@ -234,7 +275,9 @@ let useStore = (set) => ({
           Authorization: `Bearer ${token.AccessToken}`,
         },
       };
-      const res = await axios.get(`/api/reviews/user_reviews`);
+      const res = await axios.get(
+        `https://hbn-host.herokuapp.com/api/reviews/user_reviews`
+      );
       set({ ReviewByUserId: res.data.data });
     } catch (error) {}
   },
@@ -246,7 +289,9 @@ let useStore = (set) => ({
           Authorization: `Bearer ${token.AccessToken}`,
         },
       };
-      const res = await axios.get(`/api/reviews/${id}`);
+      const res = await axios.get(
+        `https://hbn-host.herokuapp.com/api/reviews/${id}`
+      );
       set({ ReviewByReviewId: res.data.data });
     } catch (error) {}
   },
@@ -260,7 +305,7 @@ let useStore = (set) => ({
         },
       };
       const res = await axios.post(
-        `/api/featured_product/${id}`,
+        `https://hbn-host.herokuapp.com/api/featured_product/${id}`,
         details,
         config
       );
@@ -277,7 +322,9 @@ let useStore = (set) => ({
           Authorization: `Bearer ${token.AccessToken}`,
         },
       };
-      const res = await axios.get(`/api/featured_product/${pid}/${fpid}`);
+      const res = await axios.get(
+        `https://hbn-host.herokuapp.com/api/featured_product/${pid}/${fpid}`
+      );
       // set({ FeaturedProdById: res.data.data });
       return res.data.data;
     } catch (error) {}
@@ -291,7 +338,7 @@ let useStore = (set) => ({
         },
       };
       const res = await axios.patch(
-        `/api/featured_product/${pid}/${fpid}`,
+        `https://hbn-host.herokuapp.com/api/featured_product/${pid}/${fpid}`,
         details,
         config
       );
@@ -308,7 +355,9 @@ let useStore = (set) => ({
           Authorization: `Bearer ${token.AccessToken}`,
         },
       };
-      const res = await axios.delete(`}/api/featured_product/${prod_id}/${id}`);
+      const res = await axios.delete(
+        `}https://hbn-host.herokuapp.com/api/featured_product/${prod_id}/${id}`
+      );
     } catch (error) {}
   },
   getCartDetails: async () => {
@@ -319,7 +368,11 @@ let useStore = (set) => ({
           Authorization: `Bearer ${token.AccessToken}`,
         },
       };
-      const res = await axios.get("/api/cart/getcart", config, {});
+      const res = await axios.get(
+        "https://hbn-host.herokuapp.com/api/cart/getcart",
+        config,
+        {}
+      );
       set({ CartDetails: res.data.data });
       return res;
     } catch (error) {}
@@ -333,7 +386,9 @@ let useStore = (set) => ({
           Authorization: `Bearer ${token.AccessToken}`,
         },
       };
-      const res = await axios.get(`/api/cart/${id}`);
+      const res = await axios.get(
+        `https://hbn-host.herokuapp.com/api/cart/${id}`
+      );
       set({ AllCartDetailsById: res.data.data });
     } catch (error) {}
   },
@@ -345,7 +400,11 @@ let useStore = (set) => ({
           Authorization: `Bearer ${token.AccessToken}`,
         },
       };
-      const res = await axios.post(`/api/orders/createorder/`, details, config);
+      const res = await axios.post(
+        `https://hbn-host.herokuapp.com/api/orders/createorder/`,
+        details,
+        config
+      );
       return res;
     } catch (error) {}
   },
@@ -358,7 +417,11 @@ let useStore = (set) => ({
           Authorization: `Bearer ${token.AccessToken}`,
         },
       };
-      const res = await axios.post(`/api/orders/getallorder/`, {}, config);
+      const res = await axios.post(
+        `https://hbn-host.herokuapp.com/api/orders/getallorder/`,
+        {},
+        config
+      );
       return res;
     } catch (error) {
       return error;
@@ -372,7 +435,10 @@ let useStore = (set) => ({
           Authorization: `Bearer ${token.AccessToken}`,
         },
       };
-      const res = await axios.patch(`/api/orders/${id}`, details);
+      const res = await axios.patch(
+        `https://hbn-host.herokuapp.com/api/orders/${id}`,
+        details
+      );
     } catch (error) {}
   },
 
@@ -384,7 +450,11 @@ let useStore = (set) => ({
           Authorization: `Bearer ${token.AccessToken}`,
         },
       };
-      const res = await axios.get(`/api/orders/${id}`, config, {});
+      const res = await axios.get(
+        `https://hbn-host.herokuapp.com/api/orders/${id}`,
+        config,
+        {}
+      );
       return res;
     } catch (error) {}
   },
@@ -396,7 +466,11 @@ let useStore = (set) => ({
           Authorization: `Bearer ${token.AccessToken}`,
         },
       };
-      const res = await axios.post(`/api/cart/create`, {}, config);
+      const res = await axios.post(
+        `https://hbn-host.herokuapp.com/api/cart/create`,
+        {},
+        config
+      );
       set({ Cart: res.data.data });
     } catch (error) {
       console.log(error);
@@ -412,7 +486,7 @@ let useStore = (set) => ({
       };
       console.log(fpid, pid, qty);
       const res = await axios.patch(
-        `/api/cart/${pid}/${fpid}/add`,
+        `https://hbn-host.herokuapp.com/api/cart/${pid}/${fpid}/add`,
         { quantity: qty },
         config
       );
@@ -434,7 +508,7 @@ let useStore = (set) => ({
       };
       console.log(fpid, pid);
       const res = await axios.patch(
-        `/api/cart/${pid}/${fpid}/remove`,
+        `https://hbn-host.herokuapp.com/api/cart/${pid}/${fpid}/remove`,
         {},
         config
       );
