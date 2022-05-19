@@ -121,7 +121,7 @@ const Signup = () => {
   `;
   return (
     <>
-    {checkAuth() ? <Navigate to={from} replace /> : <><TopNav />
+    {checkAuth() ? <Navigate to={from} replace /> : <>
       <BoxContainer>
         <Box>
           <Title>Welcome to Hellboy Protiens</Title>
