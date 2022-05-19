@@ -3,7 +3,7 @@ import TopNav from "../components/Navbar/TopNav";
 import styled from "styled-components";
 import useStore from "../store";
 import { loginSubmitHandeler } from "../Main/login";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Navigate } from "react-router-dom";
 import { checkAuth } from "../utils/checkAuth";
 
