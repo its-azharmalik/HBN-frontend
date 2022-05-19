@@ -105,8 +105,10 @@ let useStore = (set) => ({
         "https://hbn-host.herokuapp.com/api/auth/register",
         cred
       );
+      toast.success(res.message);
     } catch (error) {
       console.log("error");
+      toast.error(error);
     }
   },
 
