@@ -379,9 +379,9 @@ const ProductDetails = () => {
           </React.Fragment> :
             <Features setStep={setStep} flavourNameRef={flavourNameRef} flavourDescriptionRef={flavourDescriptionRef} flavourIngridientsRef={flavourIngridientsRef} flavourPriceRef={flavourPriceRef} flavourDiscountedPriceRef={flavourDiscountedPriceRef} authCodeRef={authCodeRef} featuredProductImagesRef={featuredProductImagesRef} flavourBenefitsRef={flavourBenefitsRef} getFeaturedProductDetails={getFeaturedProductDetails} edit={false} />
           ) : step == 3 ? (
-            <Price getPrice={getProductDetails} price={product?.price} />
+            <Price setStep={setStep} />
           ) : step == 4 ? (
-            <ProdImages />
+            <ProdImages setStep={setStep} />
           ) : (
             ""
           )}
@@ -393,6 +393,14 @@ const ProductDetails = () => {
             ? "Update Product"
             : "Next"}
         </NextButton>
+        {
+          step == 4 &&  <NextButton onClick={()=>{
+            setStep(1)
+          }}>
+            Cancel
+          </NextButton>
+        }
+       
       </ProductDdetailsPageContainer>
       <Footer />
     </>

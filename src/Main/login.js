@@ -15,11 +15,11 @@ export const loginSubmitHandeler = async (
 
   if (Cart != {}) {
     createCart();
-    console.log("created");
   }
   console.log(Cart);
   if (act == "Success") {
     route(from);
+    window.location.reload();
   }
 };
 
@@ -29,12 +29,11 @@ export const signupSubmitHandler = (
   user_name,
   password,
   confirmPassword,
-  is_admin,
   action,
   from,
   route
 ) => {
-  const cred = { name, email, user_name, password, is_admin };
+  const cred = { name, email, user_name, password };
   if (password == confirmPassword) {
     action(cred);
     route(from);

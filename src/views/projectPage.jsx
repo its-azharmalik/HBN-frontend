@@ -14,7 +14,7 @@ import ReviewCard from "../components/CustomerReview/ReviewCard";
 import { Progress } from "antd";
 import ProductCard from "../components/Product/ProductCard";
 import MassGainer5KG from "../assets/images/Massgainer5kg.png";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import useStore from "../store";
 import { checkAuth } from "../utils/checkAuth";
 import Loading from '../components/Atoms/Loading'
@@ -81,22 +81,24 @@ const ProductPage = ({fpidFromProductPage}) => {
       setReviewData(reviews.data?.data)
       setLoadingReview(false)
     }
+    setLoadingReview(false)
   }
 
   const fetchCurrentUser = async () => {
-    if(checkAuth()){
       const user = await fetchUser();
       setUserData(user.data.data);
-    } else {
-      navigate('/login')
-    }
   }
  
   useEffect(() => {
-      fetchCurrentUser();
       get();
       getReviews();
   }, []);
+  
+  useEffect(() => {
+    if(checkAuth()){
+      fetchCurrentUser();
+    }
+  }, [])
 
   const [starCount, setStarCount] = useState(0)
   const [starCount1, setStarCount1] = useState(0)
@@ -498,8 +500,6 @@ const ProductPage = ({fpidFromProductPage}) => {
       console.log(fpr)
   }
 
-  console.log(featuredproduct)
-
   return (
     <React.Fragment>
 
@@ -712,10 +712,7 @@ const ProductPage = ({fpidFromProductPage}) => {
 
             <ReviewCardConatiner>
               {reviewData.map((review, index)=>(<ReviewCard review={review} key={index} />))}
-              
-              <Divider />
 
-              <ReviewEditCard reviewSubmitRef={reviewSubmitRef} handleSubmitReview={handleSubmitReview} userData={userData} setRatingStars={setRatingStars} ratingStars={ratingStars} />
               <Divider />
 
               <SeeAllButton>See all reviews </SeeAllButton>
@@ -723,6 +720,10 @@ const ProductPage = ({fpidFromProductPage}) => {
           </MainReviewBox> 
           : <NoDataFound data={reviewNotFound} />
      }
+
+     <Divider />
+
+{userData ? <ReviewEditCard reviewSubmitRef={reviewSubmitRef} handleSubmitReview={handleSubmitReview} userData={userData} setRatingStars={setRatingStars} ratingStars={ratingStars} /> : <Link to="/login"> <p>Login to Submit a Review</p> </Link>} 
 
      </ReviewContainer>}
         

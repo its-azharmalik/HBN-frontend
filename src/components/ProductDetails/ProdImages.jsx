@@ -30,28 +30,24 @@ const ProdImages = () => {
   return (
     <>
       <ImageDetailContainer>
-        <Heading>Upload Images</Heading>
+        <Heading>Add / Update Your Product</Heading>
         <Instructions>
-          Instructions Instructions Instructions Instructions Instructions
-          Instructions Instructions Instructions Instructions Instructions
-          Instructions Instructions Instructions Instructions Instructions
-          Instructions Instructions Instructions Instructions Instructions
-          Instructions Instructions{" "}
+         Are you sure, You want to add the Product?
         </Instructions>
-        <ImageUploadContainer>
-          <UplaodBox>
-            <UploadVector src={upload} />
-          </UplaodBox>
-          <UplaodBox>
-            <UploadVector src={upload} />
-          </UplaodBox>
-          <UplaodBox>
-            <UploadVector src={upload} />
-          </UplaodBox>
-          <UplaodBox>
-            <UploadVector src={upload} />
-          </UplaodBox>
-        </ImageUploadContainer>
+          {/* <ImageUploadContainer>
+            <UplaodBox>
+              <UploadVector src={upload} />
+            </UplaodBox>
+            <UplaodBox>
+              <UploadVector src={upload} />
+            </UplaodBox>
+            <UplaodBox>
+              <UploadVector src={upload} />
+            </UplaodBox>
+            <UplaodBox>
+              <UploadVector src={upload} />
+            </UplaodBox>
+          </ImageUploadContainer> */}
       </ImageDetailContainer>
     </>
   );

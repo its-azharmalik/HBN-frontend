@@ -138,8 +138,9 @@ const Signup = () => {
                 userName.current.value,
                 password.current.value,
                 confirmPassword.current.value,
-                true,
-                signup, navigate
+                signup,
+                '/login',
+                navigate,
               );
             }}
           >

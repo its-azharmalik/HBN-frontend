@@ -105,7 +105,7 @@ let useStore = (set) => ({
         "https://hbn-host.herokuapp.com/api/auth/register",
         cred
       );
-      toast.success(res.message);
+      console.log(res);
     } catch (error) {
       console.log("error");
       toast.error(error);
@@ -153,12 +153,6 @@ let useStore = (set) => ({
 
   getProductById: async (id) => {
     try {
-      const token = JSON.parse(localStorage.getItem("userInfo"));
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token.AccessToken}`,
-        },
-      };
       const res = await axios.get(
         `https://hbn-host.herokuapp.com/api/product/${id}`
       );
@@ -203,16 +197,8 @@ let useStore = (set) => ({
 
   getAllReviewsById: async (id) => {
     try {
-      const token = JSON.parse(localStorage.getItem("userInfo"));
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token.AccessToken}`,
-        },
-      };
       const res = await axios.get(
-        `https://hbn-host.herokuapp.com/api/reviews/${id}`,
-        config,
-        {}
+        `https://hbn-host.herokuapp.com/api/reviews/${id}`
       );
       set({ AllReviewsById: res.data.data });
       return res;
@@ -318,12 +304,6 @@ let useStore = (set) => ({
   },
   getFeaturedProdById: async (pid, fpid) => {
     try {
-      const token = JSON.parse(localStorage.getItem("userInfo"));
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token.AccessToken}`,
-        },
-      };
       const res = await axios.get(
         `https://hbn-host.herokuapp.com/api/featured_product/${pid}/${fpid}`
       );
@@ -517,6 +497,25 @@ let useStore = (set) => ({
       return res;
     } catch (error) {
       toast.error(error.message);
+      return error;
+    }
+  },
+
+  updateUser: async (id, details) => {
+    try {
+      const token = JSON.parse(localStorage.getItem("userInfo"));
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token.AccessToken}`,
+        },
+      };
+      const res = await axios.patch(
+        `https://hbn-host.herokuapp.com/api/user/updateuser/${id}`,
+        details,
+        config
+      );
+      return res;
+    } catch (error) {
       return error;
     }
   },

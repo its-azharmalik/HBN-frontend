@@ -87,7 +87,6 @@ if(featuredProductEdit){
 updateFeaturedProductOnClick()
 }else {
   addNewFeaturedProductEdit()
-
 }
               
               

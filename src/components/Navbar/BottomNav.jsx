@@ -46,6 +46,14 @@ const BottomNav = () => {
           Authenticity
         </Link>
       </Menu.Item>
+      <Menu.Item key="account">
+        <Link
+          to="/account"
+          style={{ textDecoration: "none", color: "white" }}
+        >
+          Account
+        </Link>
+      </Menu.Item>
 
   { checkAdmin() &&  <Menu.Item key="admin">
         <SubMenu key="SubMenu" title="Admin">

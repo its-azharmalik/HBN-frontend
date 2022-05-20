@@ -83,8 +83,22 @@ function App() {
             path="product-info/:id/:fpidFromProductPage"
             element={<ProductPage />}
           />
-          <Route path="username" element={<UserName />} />
-          <Route path="usernames" element={<UserNamecompo />} />
+          <Route
+            path="account"
+            element={
+              <PrivateRoute>
+                <UserName />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="usernames"
+            element={
+              <PrivateRoute>
+                <UserNamecompo />
+              </PrivateRoute>
+            }
+          />
         </Routes>
         <ToastContainer />
       </div>
