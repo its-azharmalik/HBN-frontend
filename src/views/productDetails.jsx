@@ -149,8 +149,11 @@ const ProductDetails = () => {
         
         if(fpresult.status == 200){
           setStep(1);
+          console.log(result.data)
           toast.success(result.data.message)
-          navigate('/admin/product')
+          if(result.status != 400 || result.status != 404 || result.status != 500){
+            navigate('/admin/product')
+          }
         }
         if(fpresult.status != 200){
           toast.error(fpresult.message)
@@ -169,11 +172,11 @@ const ProductDetails = () => {
           productFormData.append("url", newProductDetails.url);
         }
         const result = await updateProduct(product._id, productFormData);
-
-        console.log(result)
+        toast.success(result.data?.message)
         
-      setStep(1);
-      navigate('/admin/product')
+        if(result.status != 400 || result.status != 404 || result.status != 500){
+          navigate('/admin/product')
+        }
 
     }
 
