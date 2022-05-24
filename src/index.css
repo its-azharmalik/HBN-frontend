@@ -13,6 +13,10 @@ code {
 }
 @import "~antd/dist/antd.css";
 
+a{
+  color: white;
+}
+
 
 @font-face {
   font-family: "Neue Montreal";

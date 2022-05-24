@@ -10,6 +10,7 @@ import phone from "../../assets/images/Phone.png";
 import email from "../../assets/images/Email.png";
 import payment from "../../assets/images/payment.png";
 import payment2 from "../../assets/images/payment2.png";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   const FooterContainer = styled.div`
@@ -145,30 +146,30 @@ const Footer = () => {
           {/* <SocialLogo src={location} /> */}
           <ItemContainer>
             <ItemHead> Categories</ItemHead>
-            <ContactDetails>Product 1</ContactDetails>
-            <ContactDetails>Product 2</ContactDetails>
-            <ContactDetails>Product 3</ContactDetails>
-            <ContactDetails>Product 4</ContactDetails>
+            <ContactDetails><Link to="/products">Gainer</Link></ContactDetails>
+            <ContactDetails><Link  to="/products">Whey Protein</Link></ContactDetails>
+            <ContactDetails><Link  to="/products">Daily Support</Link></ContactDetails>
+            <ContactDetails><Link  to="/products">Peanut Butter</Link></ContactDetails>
           </ItemContainer>
           <ItemContainer>
             <ItemHead>Useful links</ItemHead>
             <ContactDetails>Privacy Policy</ContactDetails>
             <ContactDetails>Terms and Conditions</ContactDetails>
-            <ContactDetails>Pay Now</ContactDetails>
+            <ContactDetails><Link to="/products">Pay Now</Link></ContactDetails>
           </ItemContainer>
           <ItemContainer>
             <ItemHead>Navigate</ItemHead>
-            <ContactDetails>Home</ContactDetails>
-            <ContactDetails>Shop</ContactDetails>
-            <ContactDetails>Account</ContactDetails>
-            <ContactDetails>Authenticity</ContactDetails>
+            <ContactDetails><Link to="/">Home</Link></ContactDetails>
+            <ContactDetails><Link to="/products">Shop</Link></ContactDetails>
+            <ContactDetails><Link to="/account">Account</Link></ContactDetails>
+            <ContactDetails><Link to="/authenticity">Authenticity</Link></ContactDetails>
           </ItemContainer>
           <ItemContainer>
             <ItemHead>Visit</ItemHead>
             <ContactDetails>DA4/A Main Vikas Marg, Shakarpur,</ContactDetails>
             <ContactDetails>Opp Nathu Sweets</ContactDetails>
             <ContactDetails>New Delhi, 110092</ContactDetails>
-            <ContactDetails>+91 9905633992</ContactDetails>
+            <ContactDetails><a href="tel:+919905633992">+91 9905633992</a></ContactDetails>
           </ItemContainer>
         </ContactContainer>
       </FooterTop>
