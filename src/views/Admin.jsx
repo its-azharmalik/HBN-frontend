@@ -134,6 +134,7 @@ const Admin = () => {
                 key={index}
                 handleDeleteProduct={handleDeleteProduct}
                 id={product._id}
+                product={product.url}
               />
             ))}
           </TBody>
@@ -192,6 +193,7 @@ const Admin = () => {
                 id={null}
                 pid={product._id}
                 fpid={product._id}
+                product={product.url[0]}
               />
             ))}
           </TBody>
