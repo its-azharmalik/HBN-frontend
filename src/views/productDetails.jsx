@@ -8,7 +8,7 @@ import Features from "../components/ProductDetails/Features";
 import Price from "../components/ProductDetails/Price";
 import ProdImages from "../components/ProductDetails/ProdImages";
 import useStore from "../store";
-import { useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 const ProductDetails = () => {
 
@@ -23,6 +23,8 @@ const ProductDetails = () => {
   const getFeaturedProdById = useStore((state)=> state.getFeaturedProdById);
   const [product, setProduct] = useState(null);
   const [featuredProductEdit, setFeaturedProductEdit] = useState(null);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (param.id) {
@@ -148,6 +150,7 @@ const ProductDetails = () => {
         if(fpresult.status == 200){
           setStep(1);
           toast.success(result.data.message)
+          navigate('/admin/product')
         }
         if(fpresult.status != 200){
           toast.error(fpresult.message)
@@ -170,6 +173,8 @@ const ProductDetails = () => {
         console.log(result)
         
       setStep(1);
+      navigate('/admin/product')
+
     }
 
     
@@ -402,7 +407,7 @@ const ProductDetails = () => {
         </NextButton>
         {
           step == 4 &&  <NextButton onClick={()=>{
-            setStep(1)
+            navigate('/admin/product')
           }}>
             Cancel
           </NextButton>
