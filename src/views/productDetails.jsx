@@ -125,6 +125,7 @@ const ProductDetails = () => {
       productFormData.append("weight", newProductDetails.weight);
       productFormData.append("details", newProductDetails.details);
       productFormData.append("url", newProductDetails.url);
+      
       const result = await addProduct(productFormData);
 
       if(result.status == 200 || result.status == 304){
@@ -161,9 +162,12 @@ const ProductDetails = () => {
         productFormData.append("name", newProductDetails.name);
         productFormData.append("weight", newProductDetails.weight);
         productFormData.append("details", newProductDetails.details);
-        productFormData.append("url", newProductDetails.url);
+        if(newProductDetails.url?.length > 0){
+          productFormData.append("url", newProductDetails.url);
+        }
         const result = await updateProduct(product._id, productFormData);
 
+        console.log(result)
         
       setStep(1);
     }
@@ -210,9 +214,12 @@ const ProductDetails = () => {
       featuredProductFormData.append("price", settingFeaturedProductDetails.price)
       featuredProductFormData.append("discounted_price", settingFeaturedProductDetails.discounted_price)
       featuredProductFormData.append("auth_code", settingFeaturedProductDetails.auth_code)
-      settingFeaturedProductDetails.url.map((ur)=>{
-        featuredProductFormData.append("url", ur)
-      })
+      if(settingFeaturedProductDetails.url?.length > 0){
+        settingFeaturedProductDetails.url.map((ur)=>{
+          featuredProductFormData.append("url", ur)
+        })
+      }
+     
         const fpresult = await updateFeaturedProduct(product._id, featuredProductEdit._id, featuredProductFormData)
         console.log(fpresult)
       

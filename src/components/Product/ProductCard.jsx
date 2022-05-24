@@ -35,6 +35,7 @@ function ProductCard({ type, title, originalPrice, price, productImage, id, fpid
   `;
   const CardTopContainer = styled.div`
     width: 100%;
+    heigth: 70%;
   `;
   const CardProductDetailsContainer = styled.div`
     border-top: 1px solid #e5e5e5;
@@ -85,7 +86,7 @@ function ProductCard({ type, title, originalPrice, price, productImage, id, fpid
   `;
   const ProductImage = styled.img`
     object-fit: cover;
-
+    height: 63%;
     width: 100%;
   `;
   return (

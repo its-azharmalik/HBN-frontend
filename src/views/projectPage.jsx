@@ -22,6 +22,8 @@ import { toast } from "react-toastify";
 import NoDataFound from "../components/Atoms/NoDataFound";
 import ReviewEditCard from "../components/CustomerReview/ReviewEditCard";
 
+
+
 const ProductPage = ({fpidFromProductPage}) => {
   const [overviewFlag, setOverviewFlag] = useState(false);
   const [benefitsFlag, setBenefitsFlag] = useState(false);
@@ -144,15 +146,17 @@ const ProductPage = ({fpidFromProductPage}) => {
 
   const handleAddToCart = async () => {
     if(checkAuth()){
+      setLoading(true)
       const pid = product?._id
       const fpid = featuredproduct.gotFeaturedProductById?._id
       const result = await addToCart(fpid, pid, qty)
       if(result.staus != 404 || result.status != 500){
         toast.success("Product Successfully Added to Cart")
         navigate("/cart")
+        setLoading(false)
       } else {
         toast.error(result.data.message)
-
+        setLoading(false)
       }
     } else {
       navigate("/login")
@@ -207,11 +211,14 @@ const ProductPage = ({fpidFromProductPage}) => {
   `;
   const ProductImageContainer = styled.div`
     background: #fef9ed;
-    width: 27rem;
-    heigth: 27rem;
     padding: 1vw;
     border-radius: 12px;
     margin-bottom: 20px;
+    width: 30vw;
+    height: 43vh !important;
+    @media(max-width: 820px){
+      width: 300px;
+    }
   `;
   const Overview = styled.div`
     background: #fef9ed;
@@ -226,11 +233,24 @@ const ProductPage = ({fpidFromProductPage}) => {
     min-width: 300px;
   `;
   const ProductImage = styled.img`
-    background: none;
-    min-height: 90%;
-    min-width: 90%;
-    object-fit: cover;
+    width: 30vw;
+    height: 40vh !important;
+    @media(max-width: 820px){
+      width: 300px;
+      height: 300px !important;
+    }
+  
   `;
+
+  const SingleImageContainer = styled.div`
+  width: 30vw;
+  height: 40vh !important;
+  @media(max-width: 820px){
+    width: 300px;
+    height: 300px !important;
+  }
+`
+
   const Arrow = styled.img`
     height: 33px;
     width: 33px;
@@ -299,21 +319,24 @@ const ProductPage = ({fpidFromProductPage}) => {
   `;
   const FeatureButton = styled.div`
     background: #f9c349;
-    width: 10vw;
-    height: 3vw;
+    width: max-content;
+    height: 1.4rem;
     border-radius: 41px;
     display: flex;
+    padding: 0.4rem 0.8rem;
     justify-content: center;
     align-items: center;
     font-weight: 500;
-    font-size: 1.5vw;
-    margin-right: 10px;
+    font-size: 1rem;
+    margin: 5px;
     min-width: 80px;
     min-height: 25px;
     cursor: pointer;
   `;
   const FeatureContainer = styled.div`
     display: flex;
+    max-width: 400px;
+    flex-wrap: wrap;
   `;
   const RatingContainer = styled.div`
     display: flex;
@@ -329,6 +352,7 @@ const ProductPage = ({fpidFromProductPage}) => {
   `;
   const MoreFeatures = styled.div`
     min-width: 300px;
+    max-width: 500px;
   `;
   const FeatureLI = styled.p`
     margin: 0;
@@ -350,6 +374,7 @@ const ProductPage = ({fpidFromProductPage}) => {
     justify-content: space-between;
   `;
   const QuantityText = styled.p`
+    font-family: "Neue Montreal"
     font-weight: 500;
     font-size: 18px;
   `;
@@ -460,11 +485,14 @@ const ProductPage = ({fpidFromProductPage}) => {
     font-weight: 700;
     font-size: 40px;
     text-align: center;
+    @media(max-width: 820px){
+      font-size: 20px;
+    }
   `;
   const OtherProductContainer = styled.div`
     width: 80%;
     max-width: 1400px;
-    margin: 0 auto;
+    margin: 5rem auto;
     display: flex;
     flex-direction: column;
     // flex-wrap: wrap;
@@ -487,6 +515,12 @@ const ProductPage = ({fpidFromProductPage}) => {
   justify-content: center;
   `
 
+  const NoReviews = styled.p`
+    margin: 0.5rem 0;
+  `
+
+
+
   const handleFeatureChnage = async (fp) => {
     
     // get featured product and set it
@@ -499,6 +533,8 @@ const ProductPage = ({fpidFromProductPage}) => {
     setLoading(false)
       console.log(fpr)
   }
+
+
 
   return (
     <React.Fragment>
@@ -514,8 +550,9 @@ const ProductPage = ({fpidFromProductPage}) => {
               {/* <Arrow src={leftarr} /> */}
               
                 <Carousel autoplay dotPosition={'left'} effect="fade">
-
-                {featuredproduct?.gotFeaturedProductById?.url.map((imgUrl)=>(<ProductImage src={imgUrl} />))}
+                    {featuredproduct?.gotFeaturedProductById?.url.map((imgUrl)=>( <SingleImageContainer>
+                      <ProductImage src={imgUrl} />
+                    </SingleImageContainer>))}
                 </Carousel>
               
               {/* <Arrow src={rightarr} /> */}
@@ -571,8 +608,7 @@ const ProductPage = ({fpidFromProductPage}) => {
             </Overview>
           </ProductContainerLeft>
           <ProductContainerRight>
-            <DetailTitle>{product?.name}</DetailTitle>
-            <DetailTitle>{featuredproduct?.gotFeaturedProductById?.flavour}</DetailTitle>
+            <DetailTitle>{product?.name + " " + featuredproduct?.gotFeaturedProductById?.flavour } ( {product?.weight}KG )</DetailTitle>
             <Price>
               <StrikedPrice>Rs. {featuredproduct?.gotFeaturedProductById?.price}</StrikedPrice>
               <DiscountPrice>Rs. {featuredproduct?.gotFeaturedProductById?.discounted_price}</DiscountPrice>
@@ -583,12 +619,9 @@ const ProductPage = ({fpidFromProductPage}) => {
 {featuredProductList?.map(fp=>(  <FeatureButton onClick={()=>{
   handleFeatureChnage(fp);
 }}>{fp.flavour}</FeatureButton>
-))}
-
-               
-             
+))}             
             </FeatureContainer>
-            <RatingContainer>
+        {reviewData?.length > 0 ? <RatingContainer>
               <ReactStars
                 count={5}
                 // onChange={ratingChanged}
@@ -602,24 +635,11 @@ const ProductPage = ({fpidFromProductPage}) => {
                 }}
               />
               <Reviews>{reviewData?.length} Reviews</Reviews>
-            </RatingContainer>
+            </RatingContainer> : <NoReviews>No Reviews Yet</NoReviews>}
             <Divider />
             <MoreFeatures>
                 {featuredproduct?.gotFeaturedProductById?.description}
-              <FeatureLI>Excellent plant-based protein source.</FeatureLI>{" "}
-              <FeatureLI>High protein</FeatureLI>
-              <FeatureLI>Low in carbs</FeatureLI>
-              <FeatureLI>Suitable for people with type 2 diabetes</FeatureLI>
-              <FeatureLI>
-                Suitable for people who follow a low-carb diet
-              </FeatureLI>
-              <FeatureLI>Good source of healthy fats</FeatureLI>
-              <FeatureLI> High in healthy vitamins and minerals</FeatureLI>
-              <FeatureLI>Rich in antioxidants</FeatureLI>
-              <FeatureLI>Rich in nutrients</FeatureLI>
-              <FeatureLI> A decent protein source</FeatureLI>
-              <FeatureLI>Rich in fibre</FeatureLI>
-              <FeatureLI>Potential source of aflatoxins</FeatureLI>
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum
             </MoreFeatures>
             <Divider />
             <BottomContainer>
@@ -650,7 +670,12 @@ const ProductPage = ({fpidFromProductPage}) => {
             </BottomContainer>
           </ProductContainerRight>
         </Container>
+        
+        
         <Divider />
+
+
+
         {loadingReview ? <Loading /> : <ReviewContainer>
           <ReviewTitle>Customer Review</ReviewTitle>
           {reviewData ? 
@@ -732,6 +757,13 @@ const ProductPage = ({fpidFromProductPage}) => {
             Other Customers bought
           </OtherCustomerBroughtTitle>
           <ProductContainer>
+            <ProductCard
+              price={"6,999.00"}
+              originalPrice={"6,999.00"}
+              type={"GAINER"}
+              title={"Mass Gainer(5KG)"}
+              productImage={MassGainer5KG}
+            />
             <ProductCard
               price={"6,999.00"}
               originalPrice={"6,999.00"}

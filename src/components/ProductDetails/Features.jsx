@@ -46,6 +46,17 @@ const Features = ({setStep, getFeaturedProductDetails, flavourNameRef, flavourDe
   const AddVector = styled.img`
   margin-right: 1rem;
   `;
+
+  const Select = styled.select`
+     background: #f9fafa;
+    border-radius: 4px;
+    border: 1px solid #b5bdc4;
+    margin-bottom: 5px;
+    height: 35px;
+    outline: none;
+    padding: 5px;
+  `
+
   return (
     <>
       <FeaturesContainer>
@@ -71,8 +82,14 @@ const Features = ({setStep, getFeaturedProductDetails, flavourNameRef, flavourDe
           <Label>Discounted Price</Label>
           <Input type={"number"} ref={flavourDiscountedPriceRef} placeholder={"Set the Discounted Price of the Product"} />
 
-          <Label>Authenticity Code</Label>
-          <Input type={"text"} ref={authCodeRef} placeholder={"Enter the Authenticity Code for this Product"} />
+          <Label>Category</Label>
+          {/* <Input type={"text"}  placeholder={"Enter the Category for this Product"} /> */}
+          <Select ref={authCodeRef}>
+            <option>Gainer</option>
+            <option>Whey Protein</option>
+            <option>Daily Support</option>
+            <option>Peanut Butter</option>
+          </Select>
 
           <Label>Upload All Photos</Label>
           <Input type={"file"} ref={featuredProductImagesRef} multiple={"multiple"} placeholder={"Upload all the featured product photos together"} />

@@ -64,7 +64,7 @@ const ReviewEditCard = ({reviewSubmitRef, handleSubmitReview, userData, setRatin
   const Input = styled.input`
 
     border: 1px solid;
-    min-width: 350px;
+    min-width: 300px;
     margin: 2rem 0;
     padding: 0.5rem
 

@@ -5,7 +5,7 @@ import PrimaryButton from "../Atoms/Primary Button/PrimaryButton";
 import dot from "../../assets/images/Ellipse3.png";
 import { Link } from "react-router-dom";
 
-function ProductBanner({ img, title, disc }) {
+function ProductBanner({ img, title, disc, rev }) {
   const MainHeadContainer = styled.div`
     width: 100vw;
   `;
@@ -19,7 +19,7 @@ function ProductBanner({ img, title, disc }) {
 
     @media (max-width: 585px) {
       height: auto;
-      flex-direction: column;
+      flex-direction: ${rev ? "column-reverse" : "column"};
     }
   `;
   const ProdBanner = styled.div`
@@ -84,16 +84,58 @@ function ProductBanner({ img, title, disc }) {
   `;
   const BannerImage = styled.img`
     margin: 20px;
-    width: 30vw;
+    width: 25vw;
     height: 30vw;
-    @media (max-width: 750px) {
+    max-width: 320px;
+    max-height: 380px;
+    @media (max-width: 820px) {
       margin: auto;
       width: 199px;
       height: 233px;
     }
   `;
   return (
-    <Container>
+   <React.Fragment>
+     {rev ?  <Container>
+      <ProdBanner>
+        <BannerTitle>{title}</BannerTitle>
+        <PordBannerDisc>
+          <Li
+            style={{
+              listStyleImage: dot,
+            }}
+          >
+            Helps in building lean muscles
+
+
+
+
+
+          </Li>
+          <Li>
+            It is rich in protein supplement with a great taste that provides a
+            rapid increase in strength
+          </Li>
+          <Li>
+          It is an ideal supplement, which aids in providing speed muscle recovery and repair after every workout session
+
+          </Li>
+          <Li>
+          It contains whole grain carbohydrate blend and zero sugar
+
+          </Li>
+          <Li>
+It contains Creatine Ethyl Ester that helps in clean muscle bulking
+
+          </Li>
+        </PordBannerDisc>
+        <Link to={"/products"} style={{marginLeft: '20px', marginTop: '10px' }}>
+          <PrimaryButton btnText={"Shop Now"} />
+        </Link>
+      </ProdBanner>
+      <BannerImage src={img} alt="" />
+ 
+    </Container> :  <Container>
       <BannerImage src={img} alt="" />
       <ProdBanner>
         <BannerTitle>{title}</BannerTitle>
@@ -131,7 +173,8 @@ It contains Creatine Ethyl Ester that helps in clean muscle bulking
           <PrimaryButton btnText={"Shop Now"} />
         </Link>
       </ProdBanner>
-    </Container>
+    </Container>}
+   </React.Fragment>
   );
 }
 

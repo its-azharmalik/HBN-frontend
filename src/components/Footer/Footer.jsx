@@ -168,7 +168,7 @@ const Footer = () => {
             <ContactDetails>DA4/A Main Vikas Marg, Shakarpur,</ContactDetails>
             <ContactDetails>Opp Nathu Sweets</ContactDetails>
             <ContactDetails>New Delhi, 110092</ContactDetails>
-            <ContactDetails>+91 9999999999</ContactDetails>
+            <ContactDetails>+91 9905633992</ContactDetails>
           </ItemContainer>
         </ContactContainer>
       </FooterTop>

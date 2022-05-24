@@ -216,15 +216,20 @@ const Home = () => {
         <CategoryHeadding>Shop By Category</CategoryHeadding>
         <CategoryBoxContainer>
           <CategoryBoxLeft>
-            <Category1>Category 1</Category1>
-            <Category2>Category 2</Category2>
+            <Category1>Whey Protein</Category1>
+            <Category2>Gainer</Category2>
           </CategoryBoxLeft>
-          <Category3>Category 3</Category3>
+          <Category3>Daily Support</Category3>
         </CategoryBoxContainer>
       </CategoryContainer>
       <ProductBanner
         img={LeanGainerProduct}
         title={'Best Quality Hell Boy Nutrition - Lean Gainer'}
+      />
+            <ProductBanner
+        img={LeanGainerProduct}
+        title={'Best Quality Hell Boy Nutrition - Lean Gainer'}
+        rev={true}
       />
       <BestSellerContainer>
         <BestSellerHead>BEST SELLER</BestSellerHead>

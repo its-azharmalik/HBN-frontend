@@ -94,9 +94,9 @@ const TBody = styled.tbody``;
                 </TR>
               </thead>
     <TBody>
-
-      {orderList.map((order, index)=> (        <TableRow key={index}
-          ProductName={order.user_id.name}
+    {console.log(orderList)}
+      {orderList?.map((order, index)=> ( <TableRow key={index}
+          ProductName={order.user_id?.name}
           ProductDesc={order.phone_number}
           ID={order._id}
           Paid={order.payment_done}
