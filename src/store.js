@@ -40,8 +40,11 @@ let useStore = (set) => ({
         },
       };
       const res = await axios.delete(
-        `https://hbn-host.herokuapp.com/api/product/${id}`
+        `https://hbn-host.herokuapp.com/api/product/${id}`,
+        config,
+        {}
       );
+      return res;
     } catch (error) {
       toast.error(error);
     }

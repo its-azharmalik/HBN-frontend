@@ -1,11 +1,55 @@
-import React from 'react'
+import React, { useState } from 'react'
 import BottomNav from "../components/Navbar/BottomNav";
 import TopNav from "../components/Navbar/TopNav";
 import styled from "styled-components";
 import Footer from "../components/Footer/Footer";
 import TableRow from "../components/UserTable/TableRow";
 import img from '../assets/images/Read.png'
+import authCodes from '../assets/authenticityCodes'
+import { useRef } from 'react';
+import { toast } from 'react-toastify';
+import { Result } from 'antd';
+import Loading from '../components/Atoms/Loading';
+import { Alert } from 'antd';
+
 const Read = () => {
+    
+    const [loading, setLoading] = useState(false)
+    const authCodeInputRef = useRef();
+    const [success, setSuccess] = useState(false)
+    const [failure, setFailure] = useState(false)
+
+    const authLoopFunction = () => {
+        let flag = false
+        authCodes.map((authCode) => {
+            if(authCode.Code === authCodeInputRef.current.value){
+                flag = true
+                return flag;
+            }
+        })
+        return flag
+    }
+
+
+    const handleCheckAuthenticity = async () => {
+        setLoading(true)
+        const result = await authLoopFunction();
+            if(result){
+                // logic to display something cool
+                setSuccess(true);
+                setTimeout(() => {
+                    setSuccess(false);
+                }, 5000);
+                setLoading(false)
+            } else {
+                // logic to display something error
+                setFailure(true);
+                setTimeout(() => {
+                    setFailure(false);
+                }, 5000);
+                setLoading(false)
+            }
+    }
     const Container = styled.div`
     width: 80%;
     // border: 1px solid black;
@@ -43,19 +87,19 @@ margin-top:2rem;
 const CheckBoxCon=styled.div`
 display: flex;
 border: 1px solid #b5bdc4;
+padding: 5px;
 border-radius: 22px;
  width: 20rem;
 margin: 50px auto;
 justify-content: center;
+background: white;
 align-items: center;
-height:2.2rem;
 `
 
 const CheckInput = styled.input`
 height: 1rem;
 width: 70%;
-// border: 2px solid #b5bdc4;
-
+border: 2px solid #b5bdc4;
 border: none;
 border-right: none;
 font-size: 20px;
@@ -76,6 +120,11 @@ cursor: pointer;
 font-weight: 500;
 font-size: 16px;
 `;
+
+const Div = styled.div`
+    display: flex;
+    
+`
 
     return (
    <>
@@ -104,12 +153,24 @@ Know if your Hell Boy Nutrition product is authentic?<br/>
 <br/>
 ENTER THE CODE MENTIONED ON THE STICKER PLACED ON YOUR PRODUCT:
 </Para>
+
+<Div>
 <CheckBoxCon>
 
-            <CheckInput placeholder="XXTTZZ" />
-            <CheckBtn>Check</CheckBtn>
+<CheckInput placeholder="XXTTZZ" ref={authCodeInputRef} />
+{loading ? <Loading /> : <CheckBtn onClick={(e)=>{
+    e.preventDefault();
+    handleCheckAuthenticity();
+}}>Check</CheckBtn>}
 </CheckBoxCon>
+{success && <Alert type="success" message="100% Genuine Product" />}
+{failure && <Alert type="error" message="Not a Genuine Product" />}
+
+</Div>
+
     </ChecklistContainer>
+
+
 </Container>
 <Footer/>
 

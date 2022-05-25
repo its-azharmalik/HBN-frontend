@@ -12,9 +12,9 @@ import AllProducts from "./allProducts";
 const Admin = () => {
   const allProducts = useStore((state) => state.AllProducts);
   const getAllProducts = useStore((state) => state.getAllProduct);
+  const deleteProduct = useStore((state)=> state.deleteProduct);
   useEffect(() => {
     getAllProducts();
-    
   }, []);
 
 
@@ -22,8 +22,11 @@ const Admin = () => {
   
 
 
-  const handleDeleteProduct = (id) => {
+  const handleDeleteProduct = async (id) => {
     console.log('delete product', id)
+    const result = await deleteProduct(id)
+    console.log(result)
+
   }
 
   const handleDeleteFeaturedProduct = (pid, fpid) => {
@@ -124,6 +127,7 @@ const Admin = () => {
                           border: "none",
                           cursor: "pointer",
                           borderRadius: "6px",
+                          color: "black",
                         }}
                       >
                         Edit

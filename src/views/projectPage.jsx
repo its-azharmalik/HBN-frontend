@@ -147,7 +147,7 @@ const ProductPage = ({fpidFromProductPage}) => {
   const handleAddToCart = async () => {
     if(checkAuth()){
       setLoading(true)
-      const pid = product?._id
+      const pid = product._id
       const fpid = featuredproduct.gotFeaturedProductById?._id
       const result = await addToCart(fpid, pid, qty)
       if(result.staus != 404 || result.status != 500){
