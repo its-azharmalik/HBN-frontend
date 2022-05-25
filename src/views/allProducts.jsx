@@ -82,6 +82,8 @@ const AllProducts = () => {
 
   }, []);
 
+  console.log(productList)
+
  
 
 
@@ -117,7 +119,7 @@ const AllProducts = () => {
       originalPrice={fpid.price}
       type={fpid.flavour}
       title={prod.name}
-      productImage={fpid.url[0]}
+      productImage={prod.main_url}
       id={prod._id}
       fpidFromProductPage={fpid._id}
     />)))
