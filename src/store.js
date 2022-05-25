@@ -436,7 +436,7 @@ let useStore = (set) => ({
         },
       };
       const res = await axios.get(
-        `http://localhost:8000/api/orders/${id}`,
+        `https://hbn-host.herokuapp.com/api/orders/${id}`,
         config,
         {}
       );
