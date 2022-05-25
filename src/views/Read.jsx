@@ -36,18 +36,20 @@ const Read = () => {
         const result = await authLoopFunction();
             if(result){
                 // logic to display something cool
-                setSuccess(true);
-                setTimeout(() => {
-                    setSuccess(false);
-                }, 5000);
-                setLoading(false)
+                // setSuccess(true);
+                toast.success("This Product is Genuine, from Hell Boy Nutrition")
+                // setTimeout(() => {
+                //     setSuccess(false);
+                // }, 5000);
+                // setLoading(false)
             } else {
                 // logic to display something error
                 setFailure(true);
-                setTimeout(() => {
-                    setFailure(false);
-                }, 5000);
-                setLoading(false)
+                toast.error("Not a Genuine Product, Please either check the code again or You've a product not from us.")
+                // setTimeout(() => {
+                //     setFailure(false);
+                // }, 5000);
+                // setLoading(false)
             }
     }
     const Container = styled.div`
@@ -158,13 +160,11 @@ ENTER THE CODE MENTIONED ON THE STICKER PLACED ON YOUR PRODUCT:
 <CheckBoxCon>
 
 <CheckInput placeholder="XXTTZZ" ref={authCodeInputRef} />
-{loading ? <Loading /> : <CheckBtn onClick={(e)=>{
+<CheckBtn onClick={(e)=>{
     e.preventDefault();
     handleCheckAuthenticity();
-}}>Check</CheckBtn>}
+}}>Check</CheckBtn>
 </CheckBoxCon>
-{success && <Alert type="success" message="100% Genuine Product" />}
-{failure && <Alert type="error" message="Not a Genuine Product" />}
 
 </Div>
 

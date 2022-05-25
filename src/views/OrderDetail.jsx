@@ -63,9 +63,7 @@ const OrderDetail = () => {
         "image": "https://example.com/your_logo",
         "order_id": orderData?.payment_details.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
         "handler": function (response){
-            alert(response.razorpay_payment_id);
-            alert(response.razorpay_order_id);
-            alert(response.razorpay_signature)
+           toast.success("Paid Succesfully, Once the Payment will be verified you will get the details of your delivery")
         }, 
         "notes": {
             "address_line_1": orderData.address_line_1,
@@ -83,13 +81,7 @@ const OrderDetail = () => {
     paymentObject.open()
 
     paymentObject.on('payment.failed', function (response){
-        alert(response.error.code);
-        alert(response.error.description);
-        alert(response.error.source);
-        alert(response.error.step);
-        alert(response.error.reason);
-        alert(response.error.metadata.order_id);
-        alert(response.error.metadata.payment_id);
+       toast.error("Payment Failed, Check your connection or something else is wrong...")
 });
 
   }
@@ -178,11 +170,11 @@ const ProductConatiner=styled.div`
 background: #FAFAFA;
 border: 0.69644px solid #B5BDC4;
 display:flex;
-flex-wrap:wrap;
 align-items: center;
 border-radius:7px;
 margin-top:13px;
 height:68px;
+padding: 5px;
 `
 const ProductConatiners=styled.div`
 
@@ -200,7 +192,11 @@ justify-content: center;
 `
 
 const PTitle=styled.p`
-font-size:9px
+font-size: 9px;
+overflow: hidden;
+white-space: nowrap;
+width: 200px;
+text-overflow: ellipsis;
 `
 const PTitle2=styled.p`
 font-size:12px;
@@ -214,10 +210,12 @@ font-size:12px;
 const Img=styled.img`
 height:35px;
 width:35px;
+margin: 0 5px;
 `
 const Img2=styled.img`
 height:55px;
 width:55px;
+margin-right: 5px;
 `
 const Delivery=styled.p`
 background: #F2F2F2;
@@ -272,6 +270,10 @@ margin: 2rem 0;
 cursor: pointer;
 `
 
+const HeadingBold = styled.p`
+  font-weight: 700;
+`
+
     return (
    <>
 
@@ -287,8 +289,8 @@ cursor: pointer;
     {orderData?.cart_id?.cart_items?.map((item)=>( <ProductConatiners>
         <Img2 src={item.featured_product_id.url[0]} />
         <Productdesc>
-            <PTitle2>{item.product_id.name} {item.featured_product_id.flavour} ( {item.product_id.weight}KG )</PTitle2>
-            <Price2>₹{item.featured_product_id.price}.00</Price2>
+            <PTitle2>{item.product_id?.name} {item.featured_product_id?.flavour} ( {item.product_id?.weight}KG )</PTitle2>
+            <Price2>₹{item.featured_product_id?.price}.00</Price2>
         </Productdesc>
     </ProductConatiners>))}
        
@@ -297,23 +299,27 @@ cursor: pointer;
     
     <InTitle>Shipping details</InTitle>
     <Divflex>
-        <p>Name </p>
+        <HeadingBold>Name </HeadingBold>
         <Left>{orderData.user_id.name}</Left>
     </Divflex>
+
     <Divflex>
-        <p>Phone number</p>
+        <HeadingBold>Phone number</HeadingBold>
         <Left>{orderData.phone_number}</Left>
     </Divflex>
+
+
     <Divflex>
-        <p>Email</p>
+        <HeadingBold>Email</HeadingBold>
         <Left>{orderData.user_id.email}</Left>
     </Divflex>
+
+
     <Divflex>
-        <p >Address</p>
-        <Left></Left>
-        <Left></Left>
+        <HeadingBold>Address</HeadingBold>
         <Left>{orderData.address_line_1} {orderData.address_line_2} {orderData.city + " " + orderData.state + " " + orderData.pincode}</Left>
     </Divflex>
+
     <Delivery>Expected delivery  <Bold>date 28/12/2020 </Bold> </Delivery>
     </Para>
     <Para>
@@ -321,7 +327,7 @@ cursor: pointer;
     
     <InTitle>Payment details</InTitle>
     <Divflex>
-        <p>Paid</p>
+        <HeadingBold>Paid</HeadingBold>
         <Left>{ orderData.payment_done ? 'Successful' : 'Not Yet'}</Left>
     </Divflex>
     </Para>
@@ -349,6 +355,7 @@ cursor: pointer;
     <LeftV>Tax</LeftV>
         <LeftV> + ₹39.00</LeftV>
     </Divflex>
+    <DashedDivider/>
     <Divflex>
         <RightB>Total</RightB>
         <RightB>₹{orderData.cart_id.discounted_cart_price + taxPrice + deliveryPrice}.00</RightB>
@@ -356,10 +363,10 @@ cursor: pointer;
     </Para>
     {orderData.cart_id?.cart_items?.map((item)=>( <ProductConatiner>
     
-    <Img src={item.featured_product_id.url[0]} />
+    <Img src={item.featured_product_id?.url[0]} />
     <Productdesc>
-        <PTitle>{item.product_id.name} {item.featured_product_id.flavour} ( {item.product_id.weight}KG )</PTitle>
-    <Price>₹{item.featured_product_id.price}.00</Price>
+        <PTitle>{item.product_id?.name} {item.featured_product_id?.flavour} ( {item.product_id?.weight}KG )</PTitle>
+    <Price>₹{item.featured_product_id?.price}.00</Price>
     </Productdesc>
 
     </ProductConatiner>))}

@@ -6,7 +6,8 @@ import styled from "styled-components";
 
 
 const BottomNav = () => {
-  const { SubMenu } = Menu;
+  const {SubMenu} = Menu;
+ 
 
   const MenuContainer = styled.div`
   display: block;
@@ -38,6 +39,42 @@ const BottomNav = () => {
           Explore
         </Link>
       </Menu.Item>
+    
+       <SubMenu key="CategoryMenu" title="Categories">
+       <Menu.Item key="gainer">
+        <Link
+          to="/products?q=gainer"
+          style={{ textDecoration: "none", color: "white" }}
+        >
+          Gainer
+        </Link>
+      </Menu.Item>
+      <Menu.Item key="whey">
+        <Link
+          to="/products?q=whey-protein"
+          style={{ textDecoration: "none", color: "white" }}
+        >
+          Whey Protein
+        </Link>
+      </Menu.Item>
+      <Menu.Item key="support">
+        <Link
+          to="/products?q=support-suppliments"
+          style={{ textDecoration: "none", color: "white" }}
+        >
+          Support Suppliments
+        </Link>
+      </Menu.Item>
+      <Menu.Item key="butter">
+        <Link
+          to="/products?q=peanut-butter"
+          style={{ textDecoration: "none", color: "white" }}
+        >
+          Peanut Butter
+        </Link>
+      </Menu.Item>
+       </SubMenu>
+ 
       <Menu.Item key="authenticity">
         <Link
           to="/authenticity"

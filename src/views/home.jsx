@@ -20,6 +20,7 @@ import category3 from "../assets/images/category3.png";
 import useStore from "../store";
 import CommentDivider from "../components/PageDivider/CommentDivider";
 import { Carousel } from "antd";
+import Banner1 from "../assets/images/banner1.jpeg"
 
 const Home = () => {
   const loginUser = useStore((state) => state.LoginUser);
@@ -194,19 +195,7 @@ const Home = () => {
           </div>
           <div>
             <img
-            src={HeaderMain}
-            style={{ width: "100vw", objectFit: "cover" }}
-          ></img> 
-          </div>
-          <div>
-            <img
-            src={HeaderMain}
-            style={{ width: "100vw", objectFit: "cover" }}
-          ></img> 
-          </div>
-          <div>
-            <img
-            src={HeaderMain}
+            src={Banner1}
             style={{ width: "100vw", objectFit: "cover" }}
           ></img> 
           </div>

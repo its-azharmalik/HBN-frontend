@@ -153,8 +153,8 @@ const Footer = () => {
           </ItemContainer>
           <ItemContainer>
             <ItemHead>Useful links</ItemHead>
-            <ContactDetails>Privacy Policy</ContactDetails>
-            <ContactDetails>Terms and Conditions</ContactDetails>
+            <ContactDetails><a href="/ptf/Privacy Policy.docx">Privacy Policy</a></ContactDetails>
+            <ContactDetails><a href="/ptf/terms& cond.docx">Terms and Conditions</a></ContactDetails>
             <ContactDetails><Link to="/products">Pay Now</Link></ContactDetails>
           </ItemContainer>
           <ItemContainer>
@@ -174,10 +174,10 @@ const Footer = () => {
         </ContactContainer>
       </FooterTop>
       <SocialContainer>
-        <SocialLogo src={fblogo} />
-        <SocialLogo src={instalogo} />
-        <SocialLogo src={ytlogo} />
-        <SocialLogo src={twitlogo} />
+        <a href="https://www.facebook.com/hellboynutrition/"><SocialLogo src={fblogo} /></a>
+        <a href="https://www.instagram.com/hellboynutrition/"><SocialLogo src={instalogo} /></a>
+        <a href="https://www.youtube.com/channel/UCdoJJfw_vgpTDqSKDFIy0kg"><SocialLogo src={ytlogo} /></a>
+        <a href="https://twitter.com/hell_nutrition"><SocialLogo src={twitlogo} /></a>
       </SocialContainer>
       <BottomFooter>
         <BottomContent>Copyright © 2022 | Hell Boy Nutrition</BottomContent>

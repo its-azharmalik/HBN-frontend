@@ -117,11 +117,11 @@ const CustomerRview = () => {
           </ReactStar>
 
           <></>
-          <>
+          <p>
             You’ll get the best of what you put in. The team is working at their
             best to provide us variety of space and homes. Had a great
             experience working with them Thanks a lot.
-          </>
+          </p>
         </InnerBox>
       </ReviewBox>
     </ReviewContainer>

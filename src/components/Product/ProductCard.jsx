@@ -49,10 +49,18 @@ function ProductCard({ type, title, originalPrice, price, productImage, id, fpid
     color: rgba(181, 189, 196, 1);
     font-weight: 700;
     margin: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 200px;
+    text-overflow: ellipsis;
   `;
   const ProductName = styled.p`
     font-weight: 500;
     font-size: 16px;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 200px;
+    text-overflow: ellipsis;
   `;
   const PriceLabel = styled.p`
     font-weight: 500;
@@ -64,6 +72,7 @@ function ProductCard({ type, title, originalPrice, price, productImage, id, fpid
     font-weight: 500;
     font-size: 14px;
     margin: 0 0;
+    
   `;
   const StrikedPrice = styled.p`
     font-weight: 500;

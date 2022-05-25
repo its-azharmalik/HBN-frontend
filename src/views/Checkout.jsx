@@ -85,8 +85,6 @@ const Checkout = () => {
   
   
 }
-
-
     const ProductContainer = styled.div`
     width: 80%;
 
@@ -181,6 +179,7 @@ flex-wrap:wrap;
 align-items: center;
 border-radius:7px;
 margin-bottom:5px;
+padding: 5px;
 `
 const Productdesc=styled.div`
 display:flex;
@@ -204,6 +203,12 @@ height: 1px;
 width: 100%;
 `;
 
+const Desc = styled.p`
+  overflow: hidden;
+  white-space: nowrap;
+  width: 200px;
+  text-overflow: ellipsis;
+`
 
 
   return (
@@ -297,6 +302,7 @@ cartInfo ?
 <p style={{fontSize:'11px'}}>Tax</p>
 <span style={{fontSize:'11px'}}> + ₹{taxPrice}.00</span>
 </Divflex>
+<DashedDivider/>
 <Divflex>
 <p style={{fontSize:'13px' , fontWeight:'700'}}>Total</p>
 <span style={{fontSize:'13px',fontWeight:'700'}}>₹{cartDetails.discounted_cart_price + taxPrice + deliveryPrice}.00</span>
@@ -304,9 +310,9 @@ cartInfo ?
 {cartInfo?.cart_items?.map((item, index)=> {
 return (<ProductConatiner key={index}>
 <img src={item.product_id.main_url} style={{width:'35px',
-height:'35px'}}/>
+height:'35px', margin: "0 5px"}}/>
 <Productdesc>
-    <p style={{fontSize:'9px'}}>{item.product_id.name} {item.featured_product_id.flavour} ( {item.product_id.weight}KG )</p>
+    <Desc style={{fontSize:'9px'}}>{item.product_id.name} {item.featured_product_id.flavour} ( {item.product_id.weight}KG )</Desc>
 <span style={{fontSize:'9px'}}>₹{item.featured_product_id.price}.00</span>
 </Productdesc>
 </ProductConatiner>)

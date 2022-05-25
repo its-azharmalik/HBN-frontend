@@ -7,6 +7,7 @@ import Footer from "../components/Footer/Footer";
 import PrimaryButton from "../components/Atoms/Primary Button/PrimaryButton";
 import useStore from "../store";
 import Loading from "../components/Atoms/Loading";
+import { Link, useParams, useSearchParams } from "react-router-dom";
 const AllProducts = () => {
   const ProductContainer = styled.div`
     width: 80%;
@@ -53,6 +54,8 @@ const AllProducts = () => {
     }
   `;
 
+  const params = useParams();
+
   const allProducts = useStore((state) => state.AllProducts);
   const getAllProducts = useStore((state) => state.getAllProduct);
 
@@ -79,9 +82,7 @@ const AllProducts = () => {
 
   }, []);
 
-
-
-
+ 
 
 
 
@@ -104,7 +105,7 @@ const AllProducts = () => {
               >
                 Home
               </p>
-              <p style={{ fontWeight: "500" }}>/All Products</p>
+              <p style={{ fontWeight: "500" }}>/<Link style={{color: "black"}} to="/products">All Products</Link></p>
             </CurrentUrlContainer>
             <p style={{ fontWeight: "500" }}>Showing all results</p>
           </ProductHeadLeft>

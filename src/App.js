@@ -36,6 +36,7 @@ function App() {
       <div className="application">
         <TopNav />
         <BottomNav />
+
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="products" element={<AllProducts />} />

@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import useStore from '../store'
 import Loading from '../components/Atoms/Loading'
 import NoDataFound from '../components/Atoms/NoDataFound'
+import SalesChart from '../components/Atoms/SalesChart';
 const Dashbord = () => {
 
 
@@ -74,9 +75,7 @@ const TBody = styled.tbody``;
           Admin
         </p>
         <PageTitle>Dashboard</PageTitle>
-        <Span><img style={{
-          width: "90%",
-        }} src={ChartImg} /></Span>
+        <Span><SalesChart /></Span>
         <PageTitle>Orders</PageTitle>
 {orderList ? 
 <React.Fragment>
@@ -99,7 +98,7 @@ const TBody = styled.tbody``;
           ProductName={order.user_id?.name}
           ProductDesc={order.phone_number}
           ID={order._id}
-          Paid={order.payment_done}
+          Paid={order.payment_done ? "Yes" : "No"}
           Total={order.cart_id.discounted_cart_price}
           Deliverd={order.isDelivered ? 'Yes' : 'No'}
         />))}

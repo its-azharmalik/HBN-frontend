@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import OptionVector from "../../assets/images/optionvector.png";
-const TableRow = ({ name, Desc, stock, quantity, Date, Rating,Action, handleDeleteProduct, id, pid, fpid, product }) => {
+import OptionVector from "../../assets/images/delete.png";
+const TableRow = ({ name, Desc, stock, quantity, Date, Rating,Action, handleDeleteProduct, id, pid, fpid, productUrl }) => {
   const TD = styled.td`
     padding: 12px 15px;
     border-top: 1px solid #b5bdc4;
@@ -26,8 +26,6 @@ const TableRow = ({ name, Desc, stock, quantity, Date, Rating,Action, handleDele
   const OptionButton = styled.div`
     height: 25px;
     width: 40px;
-    background: #f4f4f5;
-    border-radius: 6px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -39,12 +37,13 @@ const TableRow = ({ name, Desc, stock, quantity, Date, Rating,Action, handleDele
   const Image = styled.img`
     width: 50px;
     height: 50px;
+    margin: 0 0.5rem;
   `;
   return (
     <TR>
       <TD>
         <TdContainer>
-          <Image src={product} />
+          <Image src={productUrl} />
           <div
             style={{
               display: "flex",

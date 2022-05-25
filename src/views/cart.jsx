@@ -208,6 +208,9 @@ const handleQuantityChange = async (fpid, pid, qty) => {
 
   return (
     <React.Fragment>
+      
+    {cartInfo ? <React.Fragment>
+
       <NavHead>
         <p
           style={{
@@ -216,11 +219,10 @@ const handleQuantityChange = async (fpid, pid, qty) => {
             color: "#818181",
           }}
         >
-          Home/All Products/Product 1/
+          <Link style={{color: "black"}} to="/">Home</Link>/<Link style={{color: "black"}} to="/products">All Products</Link>/
         </p>
-        <p style={{ fontWeight: "500" }}>Basket</p>
+        <p style={{ fontWeight: "500" }}><Link style={{color: "black"}} to="/cart">Basket</Link></p>
       </NavHead>
-    {cartInfo ? <React.Fragment>
 
       <CartContainer>
         {cartInfo.cart_items?.length > 0 ? (

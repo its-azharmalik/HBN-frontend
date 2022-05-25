@@ -13,6 +13,9 @@ const Admin = () => {
   const allProducts = useStore((state) => state.AllProducts);
   const getAllProducts = useStore((state) => state.getAllProduct);
   const deleteProduct = useStore((state)=> state.deleteProduct);
+
+
+
   useEffect(() => {
     getAllProducts();
   }, []);
@@ -23,9 +26,8 @@ const Admin = () => {
 
 
   const handleDeleteProduct = async (id) => {
-    console.log('delete product', id)
     const result = await deleteProduct(id)
-    console.log(result)
+    getAllProducts();
 
   }
 
@@ -138,7 +140,7 @@ const Admin = () => {
                 key={index}
                 handleDeleteProduct={handleDeleteProduct}
                 id={product._id}
-                product={product.url}
+                productUrl={product.main_url}
               />
             ))}
           </TBody>
