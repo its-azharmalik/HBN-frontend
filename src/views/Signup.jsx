@@ -125,7 +125,7 @@ const Signup = () => {
       <BoxContainer>
         <Box>
           <Title>Welcome to Hellboy Protiens</Title>
-          <InnerTitle>Content content content contentcontentcontent</InnerTitle>
+          {/* <InnerTitle>Content content content contentcontentcontent</InnerTitle> */}
           <Span>
             <StrikeHead>Create Your Account</StrikeHead>
           </Span>

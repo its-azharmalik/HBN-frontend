@@ -144,7 +144,7 @@ const LoginCart = () => {
           <Title>Welcome to Hellboy Protiens</Title>
           <InnerTitle>Login to your Account</InnerTitle>
           <Span>
-            <Link to='/signup'>
+            <Link to='/signup' style={{color: "black"}}>
             <StrikeHead>
               Don't Have a password? Continue with your Email ID
             </StrikeHead>

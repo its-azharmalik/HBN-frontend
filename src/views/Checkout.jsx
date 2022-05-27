@@ -9,6 +9,8 @@ import useStore from "../store";
 import Loading from '../components/Atoms/Loading';
 import { toast } from 'react-toastify';
 
+import dummy from '../assets/images/leangainer.png'
+
 
 const Checkout = () => {
 
@@ -219,7 +221,7 @@ const Desc = styled.p`
 {loading ? <Loading /> :  <ProductContainer>
 
 <CurrentUrlContainer>
-<p
+<Link to="/"><p
             style={{
               fontWeight: "400",
               fontSize: "14px",
@@ -227,22 +229,17 @@ const Desc = styled.p`
             }}
           >
             Home
-          </p>
-          <p style={{ 
+          </p></Link>
+          <Link to="/products"> <p style={{ 
                                fontWeight: "400",
                                fontSize: "14px",
                                color: "#818181",
-           }}>/All Products</p>
-          <p style={{ 
+           }}>/All Products</p></Link>
+          <Link to="/cart"><p style={{ 
                                fontWeight: "400",
                                fontSize: "14px",
                                color: "#818181",
-           }}>/Product1</p>
-          <p style={{ 
-                               fontWeight: "400",
-                               fontSize: "14px",
-                               color: "#818181",
-           }}>/Basket</p>
+           }}>/Basket</p></Link>
           <p style={{ fontWeight: "500" }}>/Checkout</p>
 
 
@@ -309,11 +306,11 @@ cartInfo ?
 </Divflex>
 {cartInfo?.cart_items?.map((item, index)=> {
 return (<ProductConatiner key={index}>
-<img src={item.product_id.main_url} style={{width:'35px',
+<img src={item.product_id?.main_url || dummy} style={{width:'35px',
 height:'35px', margin: "0 5px"}}/>
 <Productdesc>
-    <Desc style={{fontSize:'9px'}}>{item.product_id.name} {item.featured_product_id.flavour} ( {item.product_id.weight}KG )</Desc>
-<span style={{fontSize:'9px'}}>₹{item.featured_product_id.price}.00</span>
+    <Desc style={{fontSize:'9px'}}>{item.product_id?.name} {item.featured_product_id?.flavour} ( {item.product_id?.weight}KG )</Desc>
+<span style={{fontSize:'9px'}}>₹{item.featured_product_id?.price}.00</span>
 </Productdesc>
 </ProductConatiner>)
 

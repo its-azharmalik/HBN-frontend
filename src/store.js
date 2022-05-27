@@ -121,6 +121,7 @@ let useStore = (set) => ({
         "https://hbn-host.herokuapp.com/api/auth/login",
         cred
       );
+      console.log(res);
       localStorage.setItem("userInfo", JSON.stringify(res.data.data));
       set({ LoginUser: res.data.data, LoginError: false });
       return "Success";

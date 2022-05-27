@@ -88,9 +88,7 @@ const handleQuantityChange = async (fpid, pid, qty) => {
     width: 80%;
     margin: 20px auto;
     display: flex;
-    @media (max-width: 585px) {
-      display: none;
-    }
+   
   `;
   const TotalContainer = styled.div`
     height: 500px;

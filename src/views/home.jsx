@@ -205,10 +205,10 @@ const Home = () => {
         <CategoryHeadding>Shop By Category</CategoryHeadding>
         <CategoryBoxContainer>
           <CategoryBoxLeft>
-            <Category1>Whey Protein</Category1>
-            <Category2>Gainer</Category2>
+           <Category1><Link to="/products?q=whey-protein">Whey Protein</Link></Category1>        
+          <Category2><Link to="/products?q=support-suppliments">Daily Support</Link></Category2>
           </CategoryBoxLeft>
-          <Category3>Daily Support</Category3>
+          <Category3><Link to="/products?q=gainer">Gainer</Link></Category3>         
         </CategoryBoxContainer>
       </CategoryContainer>
       <ProductBanner

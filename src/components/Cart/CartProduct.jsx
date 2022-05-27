@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import massgainer from "../..//assets/images/Massgainer5kg.png";
+import dummy from '../../assets/images/leangainer.png'
 
 const CartProduct = ({item, handleDeleteProductFromCart, handleQuantityChange, loading}) => {
   console.log(item)
@@ -101,10 +102,10 @@ const CartProduct = ({item, handleDeleteProductFromCart, handleQuantityChange, l
     <CartContainer>
       <CartProdContainer>
         <ImageContainer>
-          <ProductImage src={item.product_id.main_url} />
+          <ProductImage src={item.product_id?.main_url || dummy} />
         </ImageContainer>
         <DetailsContainer>
-          <Title>{item.product_id.name} {item.featured_product_id.flavour} ( {item.product_id.weight}KG )</Title>
+          <Title>{item.product_id?.name} {item.featured_product_id?.flavour} ( {item.product_id?.weight}KG )</Title>
           <Price>Rs.{item.featured_product_id.price}.00</Price>
           <QuantityDeleteContainer>
             
