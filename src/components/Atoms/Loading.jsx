@@ -9,7 +9,7 @@ const Loading = () => {
        alignItems: 'center',
        justifyContent: 'center',
        height: '50vh',
-       width: '100vw',
+       width: '100%',
        flexDirection: "column",
    }}><img height={"100px"} width={"100px"} src={gif} />
     <p style={{

@@ -8,10 +8,10 @@ import PrimaryButton from "../components/Atoms/Primary Button/PrimaryButton";
 import useStore from "../store";
 import Loading from "../components/Atoms/Loading";
 import { Link, useParams, useSearchParams } from "react-router-dom";
+import { searchFunction } from "../utils/searchFunction";
 const AllProducts = () => {
   const ProductContainer = styled.div`
     width: 80%;
-
     // border: 1px solid black;
     margin: 20px auto;
     margin-bottom: 200px;
@@ -54,18 +54,25 @@ const AllProducts = () => {
     }
   `;
 
-  const params = useParams();
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const querry = searchParams.get("q");
+
+
 
   const allProducts = useStore((state) => state.AllProducts);
   const getAllProducts = useStore((state) => state.getAllProduct);
 
   const [productList, setProductList] = useState()
   const [featuredProductList, setFeturedProductList] = useState()
+  const [loading, setLoading] = useState();
 
 
   const getProdcuts = async () => {
+    setLoading(true)
     const result = await  getAllProducts();
-    setProductList(result.data.data)
+    const finalSearchedData = searchFunction(querry, result.data.data);
+    setProductList(finalSearchedData)
     const fpListTemp = [];
     result.data.data.map((product)=> {
       product.featured_product_id.map((fp)=>{
@@ -73,22 +80,12 @@ const AllProducts = () => {
       })
     })
     setFeturedProductList(fpListTemp);
-
-
+    setLoading(false)
   }
 
   useEffect(() => {
     getProdcuts();
-
-  }, []);
-
-  console.log(productList)
-
- 
-
-
-
-
+  }, [querry]);
 
   return (
     <>
@@ -113,7 +110,7 @@ const AllProducts = () => {
           </ProductHeadLeft>
           <FilterBox>Showing All Results</FilterBox>
         </ProductContainerHead>
-        <BestSellerProd>
+        {loading ? <Loading /> : <BestSellerProd>
           {productList ? productList?.map((prod) => (prod.featured_product_id.map((fpid)=>(<ProductCard
       price={fpid.discounted_price}
       originalPrice={fpid.price}
@@ -124,7 +121,7 @@ const AllProducts = () => {
       fpidFromProductPage={fpid._id}
     />)))
           ) : <Loading />}
-        </BestSellerProd>
+        </BestSellerProd>}
       </ProductContainer>
       <div
         style={{
