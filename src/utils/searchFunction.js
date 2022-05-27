@@ -42,10 +42,12 @@ export const searchFunction = (querry, data) => {
     } else {
       data.map((product) => {
         product.featured_product_id.map((fp) => {
-          if (fp.flavour.includes(querry)) {
+          if (fp.flavour.toLowerCase().includes(querry.toLowerCase())) {
             tempArr.push(product);
             return;
-          } else if (product.name.includes(querry)) {
+          } else if (
+            product.name.toLowerCase().includes(querry.toLowerCase())
+          ) {
             tempArr.push(product);
             return;
           }

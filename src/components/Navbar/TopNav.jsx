@@ -8,14 +8,17 @@ import {
   ShoppingCartOutlined,
 } from "@ant-design/icons";
 import hellboylogo1 from "../../assets/images/helboylogo1.png";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { checkAdmin, checkAuth } from "../../utils/checkAuth";
+import { useRef } from "react";
 
 const TopNav = ({handleSearch}) => {
 
   const [hambugerMenuDisplay, setHambugerMenuDisplay] = useState(false)
 
   const location = useLocation()
+
+  const searchRef = useRef();
 
   const Hamburger = styled.img`
   position: relative;
@@ -140,6 +143,8 @@ const TopNav = ({handleSearch}) => {
     
   `
 
+  const navigate = useNavigate();
+
   return (
     <NavBarTopContainer>
   
@@ -151,10 +156,11 @@ const TopNav = ({handleSearch}) => {
 
       <RegularFragment>
         <SearchForm>
-          <SearchInput onChange={(e)=>{
-            handleSearch(e.target.value);
-          }} placeholder="Type Here to Search Products...." type="text" />
-          <SearchButton type="submit">
+          <SearchInput ref={searchRef} placeholder="Type Here to Search Products...." type="text" />
+          <SearchButton onClick={(e)=>{
+            e.preventDefault();
+            navigate(`/products?q=${searchRef?.current?.value}`)
+          }}>
             <div style={{ marginRight: "10px" }}>
               <SearchOutlined />
             </div>
