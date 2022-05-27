@@ -153,8 +153,8 @@ const Footer = () => {
           </ItemContainer>
           <ItemContainer>
             <ItemHead>Useful links</ItemHead>
-            <ContactDetails><a href="/ptf/Privacy Policy.docx">Privacy Policy</a></ContactDetails>
-            <ContactDetails><a href="/ptf/terms& cond.docx">Terms and Conditions</a></ContactDetails>
+            <ContactDetails><Link to="/privacy-policy">Privacy Policy</Link></ContactDetails>
+            <ContactDetails><Link to="/terms">Terms and Conditions</Link></ContactDetails>
             <ContactDetails><Link to="/products">Pay Now</Link></ContactDetails>
           </ItemContainer>
           <ItemContainer>

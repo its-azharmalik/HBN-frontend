@@ -29,6 +29,8 @@ import PrivateRoute from "./utils/PrivateRoute";
 import RestrictedRoute from "./utils/RestrictedRoute";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Terms from "./views/Terms";
+import Privacy from "./views/Privacy";
 
 function App() {
   return (
@@ -46,6 +48,8 @@ function App() {
           <Route path="admin/user" element={<User />} />
           <Route path="admin/addproduct/" element={<ProductDetails />} />
           <Route path="admin/updateproduct/:id" element={<ProductDetails />} />
+          <Route path="terms" element={<Terms />} />
+          <Route path="privacy-policy" element={<Privacy />} />
           <Route
             path="admin/product"
             element={
