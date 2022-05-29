@@ -36,7 +36,7 @@ const BottomNav = () => {
 
       <Menu.Item key="products">
         <Link to="/products" style={{ textDecoration: "none", color: "white" }}>
-          Explore
+          Products
         </Link>
       </Menu.Item>
     
