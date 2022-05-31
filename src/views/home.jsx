@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import BottomNav from "../components/Navbar/BottomNav";
 import TopNav from "../components/Navbar/TopNav";
 import HeaderMain from "../assets/images/headermain.png";
@@ -14,17 +14,43 @@ import CustomerRview from "../components/CustomerReview/CustomerReview";
 import { Link } from "react-router-dom";
 import PrimaryButton from "../components/Atoms/Primary Button/PrimaryButton";
 import categorybanner from "../assets/images/categorybanner.png";
-import category1 from "../assets/images/category1.png";
-import category2 from "../assets/images/category2.png";
-import category3 from "../assets/images/category3.png";
+import category1 from "../assets/images/category3.jpeg";
+import category2 from "../assets/images/category1.jpeg";
+import category3 from "../assets/images/category2.jpeg";
 import useStore from "../store";
 import CommentDivider from "../components/PageDivider/CommentDivider";
 import { Carousel } from "antd";
 import Banner1 from "../assets/images/banner1.jpeg"
+import Loading from '../components/Atoms/Loading'
 
 const Home = () => {
   const loginUser = useStore((state) => state.LoginUser);
+  const getFeaturedProdById = useStore((state)=> state.getFeaturedProdById);
   console.log(loginUser);
+
+
+
+
+  // api calls for 4 products later will be changed to api calls for all data
+
+  const [products, setProducts] = useState()
+
+  const handleProductCalls = async () => {
+    const product1 = await getFeaturedProdById('628de37ebcbac516123944d9', '628de3f5bcbac5161239456a')
+    const product2 = await getFeaturedProdById('628ddf34a95efeb655c84b64', '628ddf88a95efeb655c84be8')
+    const product3 = await getFeaturedProdById('628c64f7290ab1058326fd21', '628ddadda95efeb655c84786')
+    const product4 = await getFeaturedProdById('628df7e7bcbac51612394b55', '628df7ecbcbac51612394b75')
+    console.log(product1)
+    const tempArr = []
+    tempArr.push(product1, product2, product3, product4)
+    setProducts(tempArr)
+  }
+
+  useEffect(() => {
+    handleProductCalls();
+  }, [])
+
+
   const MainHeadContainer = styled.div`
     width: 100%;
   `;
@@ -223,34 +249,15 @@ const Home = () => {
       <BestSellerContainer>
         <BestSellerHead>BEST SELLER</BestSellerHead>
         <BestSellerProd>
-          <ProductCard
-            price={"6,999.00"}
-            originalPrice={"6,999.00"}
-            type={"GAINER"}
-            title={"Mass Gainer(5KG)"}
-            productImage={MassGainer5KG}
-          />
-          <ProductCard
-            price={"6,999.00"}
-            originalPrice={"6,999.00"}
-            type={"GAINER"}
-            title={"Mass Gainer(5KG)"}
-            productImage={MassGainer5KG}
-          />
-          <ProductCard
-            price={"6,999.00"}
-            originalPrice={"6,999.00"}
-            type={"GAINER"}
-            title={"Mass Gainer(5KG)"}
-            productImage={MassGainer5KG}
-          />
-           <ProductCard
-            price={"6,999.00"}
-            originalPrice={"6,999.00"}
-            type={"GAINER"}
-            title={"Mass Gainer(5KG)"}
-            productImage={MassGainer5KG}
-          />
+          {products ? products.map((product)=> (<ProductCard
+            price={product.gotFeaturedProductById.discounted_price}
+            originalPrice={product.gotFeaturedProductById.price}
+            type={product.gotFeaturedProductById.flavour}
+            title={product.parentproduct[0].name}
+            productImage={product.parentproduct[0].main_url}
+            id={product.parentproduct[0]._id}
+            fpidFromProductPage={product.gotFeaturedProductById._id}
+          />)) : <Loading />}
         </BestSellerProd>
         <Link to={"/products"}>
           <PrimaryButton btnText={"View All"} />

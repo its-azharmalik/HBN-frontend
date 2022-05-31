@@ -102,6 +102,7 @@ function ProductCard({ type, title, originalPrice, price, productImage, id, fpid
     <CardContainer
       onClick={() => {
         Navigate(`/product-info/${id}/${fpidFromProductPage}`);
+        window.scrollTo(0, 0)
       }}
     >
       <CardTopContainer>

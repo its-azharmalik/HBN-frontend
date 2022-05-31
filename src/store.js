@@ -162,7 +162,9 @@ let useStore = (set) => ({
       );
       // set({ Product: res.data.data });
       return res.data.data;
-    } catch (error) {}
+    } catch (error) {
+      return { error };
+    }
   },
 
   updateProduct: async (id, details) => {

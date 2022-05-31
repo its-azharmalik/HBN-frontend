@@ -242,12 +242,17 @@ console.log(userData)
                         <IsPaid><strong>Delivery</strong></IsPaid>
                     </SingleOrder>
                     {userData?.previous_orders.map((order)=> (
-                        <SingleOrder>
-                            <OrderID>{order._id}</OrderID>
-                            <TotalCost>Rs. {order.payment_details.amount}</TotalCost>
-                            <IsPaid>{order.payment_done ? "Paid" : "Due"}</IsPaid>
-                            <IsPaid>{order.isDelivered ? "Delivered" : "Pending"}</IsPaid>
-                        </SingleOrder>
+                        <Link to={`/orderdetail/${order._id}`} style={{
+                            color: 'black'
+                        }}>
+                            <SingleOrder>
+                                <OrderID>{order._id}</OrderID>
+                                <TotalCost>Rs. {order.payment_details?.amount}</TotalCost>
+                                <IsPaid>{order.payment_done ? "Paid" : "Due"}</IsPaid>
+                                <IsPaid>{order.isDelivered ? "Delivered" : "Pending"}</IsPaid>
+                            </SingleOrder>
+                        </Link>
+                        
                     ))}
                     
             </OrderListContainer> : <p style={{

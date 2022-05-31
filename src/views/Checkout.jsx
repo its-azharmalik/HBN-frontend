@@ -49,6 +49,7 @@ const Checkout = () => {
   const stateInputRef = useRef();
   const pincodeInputRef = useRef();
   const phoneInputRef = useRef();
+  const deliveryMethodRef = useRef();
 
   // const [addressLine1, setAddressLine1] = useState('')
   // const [addressLine2, setAddressLine2] = useState('')
@@ -66,8 +67,10 @@ const Checkout = () => {
     state: stateInputRef.current?.value,
     pincode: parseInt(pincodeInputRef.current?.value),
     phone_number: phoneInputRef.current?.value,
+    payment_method: deliveryMethodRef.current?.value,
   }
-  if(config.address_line_1 && config.city && config.state && config.pincode){
+
+  if(config.address_line_1 && config.city && config.state && config.pincode && config.pincode != NaN){
     // call the order api
     setLoading(true)
     const result = await addOrderByCartId(config)
@@ -274,7 +277,15 @@ cartInfo ?
        <Label>State</Label>
        <Input ref={stateInputRef} style={{width:'107px'}} placeholder={'State'} id="state" name="state" />
    </Form>
+   {/* deliveryMethodRef */}
 </Divflex>
+<Form>
+       <h3>Payment Method</h3>
+       <Select ref={deliveryMethodRef} placeholder={'Select Payment Method'}>
+          <option value="COD">Cash on Delivery</option>
+          <option value="Prepaid">Pay Online</option>
+       </Select>
+   </Form>
 </Form>
 </DeliveryBox>
 <PaymentBox>
