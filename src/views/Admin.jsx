@@ -13,12 +13,26 @@ const Admin = () => {
   const allProducts = useStore((state) => state.AllProducts);
   const getAllProducts = useStore((state) => state.getAllProduct);
   const deleteProduct = useStore((state)=> state.deleteProduct);
+  const deleteFeaturedProdById = useStore((state)=> state.deleteFeaturedProdById);
 
+  const [allFeaturedProducts, setAllFeaturedProducts] = useState()
 
 
   useEffect(() => {
     getAllProducts();
   }, []);
+
+  useEffect(() => {
+   const tempArr = []
+   if(allProducts){
+     allProducts.map((product)=>{
+       product.featured_product_id.map((featuredProduct)=>{
+         tempArr.push(featuredProduct);
+       })
+     })
+     setAllFeaturedProducts(tempArr);
+   }
+  }, [allProducts])
 
 
   const [editState, setEditState] = useState("products")
@@ -28,11 +42,14 @@ const Admin = () => {
   const handleDeleteProduct = async (id) => {
     const result = await deleteProduct(id)
     getAllProducts();
-
   }
 
-  const handleDeleteFeaturedProduct = (pid, fpid) => {
-    console.log('delete fp', pid, fpid)
+  console.log(allProducts)
+
+  const handleDeleteFeaturedProduct = async (pid, fpid) => {
+    const result = await deleteFeaturedProdById(pid, fpid)
+    getAllProducts()
+    console.log(result)
   }
 
   const ProductContainer = styled.div`
@@ -44,11 +61,11 @@ const Admin = () => {
   `;
   const ProductContainerHead = styled.div`
     width: 100%;
-    height: 100px;
     // margin-bottom: 20px;
     display: flex;
     justify-content: space-between;
-    align-items: flex-end;
+    align-items: center;
+    padding-top: 3rem;
     // border: 1px solid black;
   `;
   const PageTitle = styled.p`
@@ -102,6 +119,9 @@ const Admin = () => {
           <Link to="/admin/addproduct">
             <PrimaryButton btnText={"Add Product"} />
           </Link>
+          <Productbtn onClick={()=>{
+        setEditState('featuredProducts');
+      }}>Delete Featured Products</Productbtn>
         </ProductContainerHead>
         <Table>
           <thead>
@@ -157,9 +177,11 @@ const Admin = () => {
         </p>
         <ProductContainerHead>
           <PageTitle>Flavours</PageTitle>
-          <Link to="/admin/addproduct">
-            <PrimaryButton btnText={"Add Flavour"} />
-          </Link>
+          
+            <PrimaryButton onClick={()=>{
+              setEditState('products')
+            }} btnText={"Back to Products"} />
+   
         </ProductContainerHead>
         <Table>
           <thead>
@@ -174,34 +196,27 @@ const Admin = () => {
             </TR>
           </thead>
           <TBody>
-            {allProducts.map((product, index) => (
-              <TableRow
-                name={product.name}
+            {allProducts.map((product, index)=>{
+              return product.featured_product_id?.map((featuredProduct)=>( <TableRow
+                name={featuredProduct.flavour + " " + product.name}
                 Desc={product.details}
                 stock={"In Stock"}
                 Action={
                   <>
-                    <Link to={`/admin/updateproduct/${product._id}`}>
-                      <button
-                        style={{
-                          border: "none",
-                          cursor: "pointer",
-                          borderRadius: "6px",
-                        }}
-                      >
-                        Edit
-                      </button>
-                    </Link>
+                    
                   </>
                 }
                 key={index}
                 handleDeleteProduct={handleDeleteFeaturedProduct}
                 id={null}
                 pid={product._id}
-                fpid={product._id}
-                product={product.url[0]}
+                fpid={featuredProduct._id}
+                productUrl={featuredProduct.url[0]}
               />
-            ))}
+              ))
+            })}
+             
+            
           </TBody>
         </Table>
       </ProductContainer>}

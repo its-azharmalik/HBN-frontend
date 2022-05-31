@@ -317,6 +317,15 @@ let useStore = (set) => ({
       return res.data.data;
     } catch (error) {}
   },
+  getAllFeaturedProducts: async (pid, fpid) => {
+    try {
+      const res = await axios.get(
+        `https://hbn-host.herokuapp.com/api/featured_product/${pid}/${fpid}`
+      );
+      // set({ FeaturedProdById: res.data.data });
+      return res.data.data;
+    } catch (error) {}
+  },
   updateFeaturedProduct: async (pid, fpid, details) => {
     try {
       const token = JSON.parse(localStorage.getItem("userInfo"));
@@ -335,7 +344,7 @@ let useStore = (set) => ({
       return error;
     }
   },
-  deleteFeaturedProdById: async (prod_id, id, details) => {
+  deleteFeaturedProdById: async (prod_id, id) => {
     try {
       const token = JSON.parse(localStorage.getItem("userInfo"));
       const config = {
@@ -344,9 +353,13 @@ let useStore = (set) => ({
         },
       };
       const res = await axios.delete(
-        `}https://hbn-host.herokuapp.com/api/featured_product/${prod_id}/${id}`
+        `https://hbn-host.herokuapp.com/api/featured_product/${prod_id}/${id}`,
+        config
       );
-    } catch (error) {}
+      return res;
+    } catch (error) {
+      return error;
+    }
   },
   getCartDetails: async () => {
     try {
