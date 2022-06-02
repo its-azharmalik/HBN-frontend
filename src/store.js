@@ -19,12 +19,12 @@ let useStore = (set) => ({
   LoginError: false,
   Cart: {},
 
-  //
+  // https://hbn-host.azurewebsites.net/
 
   getAllProduct: async () => {
     try {
       const res = await axios.get(
-        "https://hbn-host.herokuapp.com/api/product/getproduct/"
+        "https://hbn-host.azurewebsites.net/api/product/getproduct/"
       );
       set({ AllProducts: res.data.data });
       return res;
@@ -40,7 +40,7 @@ let useStore = (set) => ({
         },
       };
       const res = await axios.delete(
-        `https://hbn-host.herokuapp.com/api/product/${id}`,
+        `https://hbn-host.azurewebsites.net/api/product/${id}`,
         config,
         {}
       );
@@ -59,7 +59,7 @@ let useStore = (set) => ({
         },
       };
       const res = await axios.get(
-        "https://hbn-host.herokuapp.com/api/user/alluser",
+        "https://hbn-host.azurewebsites.net/api/user/alluser",
         config,
         {}
       );
@@ -78,7 +78,7 @@ let useStore = (set) => ({
         },
       };
       const res = await axios.get(
-        "https://hbn-host.herokuapp.com/api/user/fetchuser",
+        "https://hbn-host.azurewebsites.net/api/user/fetchuser",
         config,
         {}
       );
@@ -97,7 +97,7 @@ let useStore = (set) => ({
         },
       };
       const res = await axios.delete(
-        `https://hbn-host.herokuapp.com/api/user/deleteuser/${id}`
+        `https://hbn-host.azurewebsites.net/api/user/deleteuser/${id}`
       );
     } catch (error) {}
   },
@@ -105,7 +105,7 @@ let useStore = (set) => ({
   register: async (cred) => {
     try {
       const res = await axios.post(
-        "https://hbn-host.herokuapp.com/api/auth/register",
+        "https://hbn-host.azurewebsites.net/api/auth/register",
         cred
       );
       console.log(res);
@@ -118,7 +118,7 @@ let useStore = (set) => ({
   login: async (cred) => {
     try {
       const res = await axios.post(
-        "https://hbn-host.herokuapp.com/api/auth/login",
+        "https://hbn-host.azurewebsites.net/api/auth/login",
         cred
       );
       console.log(res);
@@ -146,7 +146,7 @@ let useStore = (set) => ({
       };
 
       const res = await axios.post(
-        "https://hbn-host.herokuapp.com/api/product/addproduct",
+        "https://hbn-host.azurewebsites.net/api/product/addproduct",
         proddetails,
         config
       );
@@ -158,7 +158,7 @@ let useStore = (set) => ({
   getProductById: async (id) => {
     try {
       const res = await axios.get(
-        `https://hbn-host.herokuapp.com/api/product/${id}`
+        `https://hbn-host.azurewebsites.net/api/product/${id}`
       );
       // set({ Product: res.data.data });
       return res.data.data;
@@ -176,7 +176,7 @@ let useStore = (set) => ({
         },
       };
       const res = await axios.patch(
-        `https://hbn-host.herokuapp.com/api/product/${id}`,
+        `https://hbn-host.azurewebsites.net/api/product/${id}`,
         details,
         config
       );
@@ -195,7 +195,7 @@ let useStore = (set) => ({
         },
       };
       const res = await axios.get(
-        "https://hbn-host.herokuapp.com/api/reviews/getall"
+        "https://hbn-host.azurewebsites.net/api/reviews/getall"
       );
       set({ AllReviews: res.data.data });
     } catch (error) {}
@@ -204,7 +204,7 @@ let useStore = (set) => ({
   getAllReviewsById: async (id) => {
     try {
       const res = await axios.get(
-        `https://hbn-host.herokuapp.com/api/reviews/${id}`
+        `https://hbn-host.azurewebsites.net/api/reviews/${id}`
       );
       set({ AllReviewsById: res.data.data });
       return res;
@@ -222,7 +222,7 @@ let useStore = (set) => ({
         },
       };
       const res = await axios.post(
-        `https://hbn-host.herokuapp.com/api/reviews/${id}`,
+        `https://hbn-host.azurewebsites.net/api/reviews/${id}`,
         details,
         config
       );
@@ -241,7 +241,7 @@ let useStore = (set) => ({
         },
       };
       const res = await axios.put(
-        `https://hbn-host.herokuapp.com/api/reviews/${prod_id}/${id}`,
+        `https://hbn-host.azurewebsites.net/api/reviews/${prod_id}/${id}`,
         details
       );
     } catch (error) {}
@@ -256,7 +256,7 @@ let useStore = (set) => ({
         },
       };
       const res = await axios.delete(
-        `https://hbn-host.herokuapp.com/api/reviews/${prod_id}/${id}`
+        `https://hbn-host.azurewebsites.net/api/reviews/${prod_id}/${id}`
       );
     } catch (error) {}
   },
@@ -270,7 +270,7 @@ let useStore = (set) => ({
         },
       };
       const res = await axios.get(
-        `https://hbn-host.herokuapp.com/api/reviews/user_reviews`
+        `https://hbn-host.azurewebsites.net/api/reviews/user_reviews`
       );
       set({ ReviewByUserId: res.data.data });
     } catch (error) {}
@@ -284,7 +284,7 @@ let useStore = (set) => ({
         },
       };
       const res = await axios.get(
-        `https://hbn-host.herokuapp.com/api/reviews/${id}`
+        `https://hbn-host.azurewebsites.net/api/reviews/${id}`
       );
       set({ ReviewByReviewId: res.data.data });
     } catch (error) {}
@@ -299,7 +299,7 @@ let useStore = (set) => ({
         },
       };
       const res = await axios.post(
-        `https://hbn-host.herokuapp.com/api/featured_product/${id}`,
+        `https://hbn-host.azurewebsites.net/api/featured_product/${id}`,
         details,
         config
       );
@@ -311,7 +311,7 @@ let useStore = (set) => ({
   getFeaturedProdById: async (pid, fpid) => {
     try {
       const res = await axios.get(
-        `https://hbn-host.herokuapp.com/api/featured_product/${pid}/${fpid}`
+        `https://hbn-host.azurewebsites.net/api/featured_product/${pid}/${fpid}`
       );
       // set({ FeaturedProdById: res.data.data });
       return res.data.data;
@@ -320,7 +320,7 @@ let useStore = (set) => ({
   getAllFeaturedProducts: async (pid, fpid) => {
     try {
       const res = await axios.get(
-        `https://hbn-host.herokuapp.com/api/featured_product/${pid}/${fpid}`
+        `https://hbn-host.azurewebsites.net/api/featured_product/${pid}/${fpid}`
       );
       // set({ FeaturedProdById: res.data.data });
       return res.data.data;
@@ -335,7 +335,7 @@ let useStore = (set) => ({
         },
       };
       const res = await axios.patch(
-        `https://hbn-host.herokuapp.com/api/featured_product/${pid}/${fpid}`,
+        `https://hbn-host.azurewebsites.net/api/featured_product/${pid}/${fpid}`,
         details,
         config
       );
@@ -353,7 +353,7 @@ let useStore = (set) => ({
         },
       };
       const res = await axios.delete(
-        `https://hbn-host.herokuapp.com/api/featured_product/${prod_id}/${id}`,
+        `https://hbn-host.azurewebsites.net/api/featured_product/${prod_id}/${id}`,
         config
       );
       return res;
@@ -370,7 +370,7 @@ let useStore = (set) => ({
         },
       };
       const res = await axios.get(
-        "https://hbn-host.herokuapp.com/api/cart/getcart",
+        "https://hbn-host.azurewebsites.net/api/cart/getcart",
         config,
         {}
       );
@@ -388,7 +388,7 @@ let useStore = (set) => ({
         },
       };
       const res = await axios.get(
-        `https://hbn-host.herokuapp.com/api/cart/${id}`
+        `https://hbn-host.azurewebsites.net/api/cart/${id}`
       );
       set({ AllCartDetailsById: res.data.data });
     } catch (error) {}
@@ -402,7 +402,7 @@ let useStore = (set) => ({
         },
       };
       const res = await axios.post(
-        `https://hbn-host.herokuapp.com/api/orders/createorder/`,
+        `https://hbn-host.azurewebsites.net/api/orders/createorder/`,
         details,
         config
       );
@@ -419,7 +419,7 @@ let useStore = (set) => ({
         },
       };
       const res = await axios.post(
-        `https://hbn-host.herokuapp.com/api/orders/getallorder/`,
+        `https://hbn-host.azurewebsites.net/api/orders/getallorder/`,
         {},
         config
       );
@@ -437,7 +437,7 @@ let useStore = (set) => ({
         },
       };
       const res = await axios.patch(
-        `https://hbn-host.herokuapp.com/api/orders/${id}`,
+        `https://hbn-host.azurewebsites.net/api/orders/${id}`,
         details
       );
     } catch (error) {}
@@ -452,7 +452,7 @@ let useStore = (set) => ({
         },
       };
       const res = await axios.get(
-        `https://hbn-host.herokuapp.com/api/orders/${id}`,
+        `https://hbn-host.azurewebsites.net/api/orders/${id}`,
         config,
         {}
       );
@@ -468,7 +468,7 @@ let useStore = (set) => ({
         },
       };
       const res = await axios.post(
-        `https://hbn-host.herokuapp.com/api/cart/create`,
+        `https://hbn-host.azurewebsites.net/api/cart/create`,
         {},
         config
       );
@@ -487,7 +487,7 @@ let useStore = (set) => ({
       };
       console.log(fpid, pid, qty);
       const res = await axios.patch(
-        `https://hbn-host.herokuapp.com/api/cart/${pid}/${fpid}/add`,
+        `https://hbn-host.azurewebsites.net/api/cart/${pid}/${fpid}/add`,
         { quantity: qty },
         config
       );
@@ -509,7 +509,7 @@ let useStore = (set) => ({
       };
       console.log(fpid, pid);
       const res = await axios.patch(
-        `https://hbn-host.herokuapp.com/api/cart/${pid}/${fpid}/remove`,
+        `https://hbn-host.azurewebsites.net/api/cart/${pid}/${fpid}/remove`,
         {},
         config
       );
@@ -529,7 +529,7 @@ let useStore = (set) => ({
         },
       };
       const res = await axios.patch(
-        `https://hbn-host.herokuapp.com/api/user/updateuser/${id}`,
+        `https://hbn-host.azurewebsites.net/api/user/updateuser/${id}`,
         details,
         config
       );
