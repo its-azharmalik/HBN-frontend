@@ -18,6 +18,7 @@ let useStore = (set) => ({
   AllCartDetailsById: {},
   LoginError: false,
   Cart: {},
+  AllOrders: [],
 
   // https://hbn-host.azurewebsites.net/
 
@@ -423,7 +424,7 @@ let useStore = (set) => ({
         {},
         config
       );
-      return res;
+      set({ AllOrders: res });
     } catch (error) {
       return error;
     }

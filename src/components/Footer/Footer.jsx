@@ -29,7 +29,7 @@ const Footer = () => {
     @media (max-width: 820px) {
       width: 100%;
     }
-    max-width: 1700px
+    max-width: 1700px;
   `;
   const FooterLogo = styled.img`
     margin-right: 100px;
@@ -60,7 +60,7 @@ const Footer = () => {
   `;
   const ContactDetails = styled.p`
     font-weight: 400;
-    font-size: 12px;
+    font-size: 16px;
     color: white;
     margin: 10px 10px;
   `;
@@ -146,38 +146,147 @@ const Footer = () => {
           {/* <SocialLogo src={location} /> */}
           <ItemContainer>
             <ItemHead> Categories</ItemHead>
-            <ContactDetails><Link to="/products">Gainer</Link></ContactDetails>
-            <ContactDetails><Link  to="/products">Whey Protein</Link></ContactDetails>
-            <ContactDetails><Link  to="/products">Daily Support</Link></ContactDetails>
-            <ContactDetails><Link  to="/products">Peanut Butter</Link></ContactDetails>
+            <ContactDetails>
+              <Link
+                to="/products?q=gainer"
+                onClick={() => {
+                  window.scrollTo(0, 0);
+                }}
+              >
+                Gainer
+              </Link>
+            </ContactDetails>
+            <ContactDetails>
+              <Link
+                to="/products?q=whey-protein"
+                onClick={() => {
+                  window.scrollTo(0, 0);
+                }}
+              >
+                Whey Protein
+              </Link>
+            </ContactDetails>
+            <ContactDetails>
+              <Link
+                to="/products?q=support-suppliments"
+                onClick={() => {
+                  window.scrollTo(0, 0);
+                }}
+              >
+                Daily Support
+              </Link>
+            </ContactDetails>
+            <ContactDetails>
+              <Link
+                to="/products?q=peanut-butter"
+                onClick={() => {
+                  window.scrollTo(0, 0);
+                }}
+              >
+                Peanut Butter
+              </Link>
+            </ContactDetails>
           </ItemContainer>
           <ItemContainer>
             <ItemHead>Useful links</ItemHead>
-            <ContactDetails><Link to="/privacy-policy">Privacy Policy</Link></ContactDetails>
-            <ContactDetails><Link to="/terms">Terms and Conditions</Link></ContactDetails>
-            <ContactDetails><Link to="/products">Pay Now</Link></ContactDetails>
+            <ContactDetails>
+              <Link
+                to="/privacy-policy"
+                onClick={() => {
+                  window.scrollTo(0, 0);
+                }}
+              >
+                Privacy Policy
+              </Link>
+            </ContactDetails>
+            <ContactDetails>
+              <Link
+                to="/terms"
+                onClick={() => {
+                  window.scrollTo(0, 0);
+                }}
+              >
+                Terms and Conditions
+              </Link>
+            </ContactDetails>
+            <ContactDetails>
+              <Link
+                to="/products"
+                onClick={() => {
+                  window.scrollTo(0, 0);
+                }}
+              >
+                Pay Now
+              </Link>
+            </ContactDetails>
           </ItemContainer>
           <ItemContainer>
             <ItemHead>Navigate</ItemHead>
-            <ContactDetails><Link to="/">Home</Link></ContactDetails>
-            <ContactDetails><Link to="/products">Shop</Link></ContactDetails>
-            <ContactDetails><Link to="/account">Account</Link></ContactDetails>
-            <ContactDetails><Link to="/authenticity">Authenticity</Link></ContactDetails>
+            <ContactDetails>
+              <Link
+                to="/"
+                onClick={() => {
+                  window.scrollTo(0, 0);
+                }}
+              >
+                Home
+              </Link>
+            </ContactDetails>
+            <ContactDetails>
+              <Link
+                to="/products"
+                onClick={() => {
+                  window.scrollTo(0, 0);
+                }}
+              >
+                Shop
+              </Link>
+            </ContactDetails>
+            <ContactDetails>
+              <Link
+                to="/account"
+                onClick={() => {
+                  window.scrollTo(0, 0);
+                }}
+              >
+                Account
+              </Link>
+            </ContactDetails>
+            <ContactDetails>
+              <Link
+                to="/authenticity"
+                onClick={() => {
+                  window.scrollTo(0, 0);
+                }}
+              >
+                Authenticity
+              </Link>
+            </ContactDetails>
           </ItemContainer>
           <ItemContainer>
             <ItemHead>Visit</ItemHead>
             <ContactDetails>DA4/A Main Vikas Marg, Shakarpur,</ContactDetails>
             <ContactDetails>Opp Nathu Sweets</ContactDetails>
             <ContactDetails>New Delhi, 110092</ContactDetails>
-            <ContactDetails><a href="tel:+919905633992">+91 9905633992</a></ContactDetails>
+            <ContactDetails>
+              <a href="tel:+919905633992">+91 9905633992</a>
+            </ContactDetails>
           </ItemContainer>
         </ContactContainer>
       </FooterTop>
       <SocialContainer>
-        <a href="https://www.facebook.com/hellboynutrition/"><SocialLogo src={fblogo} /></a>
-        <a href="https://www.instagram.com/hellboynutrition/"><SocialLogo src={instalogo} /></a>
-        <a href="https://www.youtube.com/channel/UCdoJJfw_vgpTDqSKDFIy0kg"><SocialLogo src={ytlogo} /></a>
-        <a href="https://twitter.com/hell_nutrition"><SocialLogo src={twitlogo} /></a>
+        <a href="https://www.facebook.com/hellboynutrition/">
+          <SocialLogo src={fblogo} />
+        </a>
+        <a href="https://www.instagram.com/hellboynutrition/">
+          <SocialLogo src={instalogo} />
+        </a>
+        <a href="https://www.youtube.com/channel/UCdoJJfw_vgpTDqSKDFIy0kg">
+          <SocialLogo src={ytlogo} />
+        </a>
+        <a href="https://twitter.com/hell_nutrition">
+          <SocialLogo src={twitlogo} />
+        </a>
       </SocialContainer>
       <BottomFooter>
         <BottomContent>Copyright © 2022 | Hell Boy Nutrition</BottomContent>

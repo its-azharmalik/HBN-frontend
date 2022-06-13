@@ -12,45 +12,43 @@ import AllProducts from "./allProducts";
 const Admin = () => {
   const allProducts = useStore((state) => state.AllProducts);
   const getAllProducts = useStore((state) => state.getAllProduct);
-  const deleteProduct = useStore((state)=> state.deleteProduct);
-  const deleteFeaturedProdById = useStore((state)=> state.deleteFeaturedProdById);
+  const deleteProduct = useStore((state) => state.deleteProduct);
+  const deleteFeaturedProdById = useStore(
+    (state) => state.deleteFeaturedProdById
+  );
 
-  const [allFeaturedProducts, setAllFeaturedProducts] = useState()
-
+  const [allFeaturedProducts, setAllFeaturedProducts] = useState();
 
   useEffect(() => {
     getAllProducts();
   }, []);
 
   useEffect(() => {
-   const tempArr = []
-   if(allProducts){
-     allProducts.map((product)=>{
-       product.featured_product_id.map((featuredProduct)=>{
-         tempArr.push(featuredProduct);
-       })
-     })
-     setAllFeaturedProducts(tempArr);
-   }
-  }, [allProducts])
+    const tempArr = [];
+    if (allProducts) {
+      allProducts.map((product) => {
+        product.featured_product_id.map((featuredProduct) => {
+          tempArr.push(featuredProduct);
+        });
+      });
+      setAllFeaturedProducts(tempArr);
+    }
+  }, [allProducts]);
 
-
-  const [editState, setEditState] = useState("products")
-  
-
+  const [editState, setEditState] = useState("products");
 
   const handleDeleteProduct = async (id) => {
-    const result = await deleteProduct(id)
+    const result = await deleteProduct(id);
     getAllProducts();
-  }
+  };
 
-  console.log(allProducts)
+  console.log(allProducts);
 
   const handleDeleteFeaturedProduct = async (pid, fpid) => {
-    const result = await deleteFeaturedProdById(pid, fpid)
-    getAllProducts()
-    console.log(result)
-  }
+    const result = await deleteFeaturedProdById(pid, fpid);
+    getAllProducts();
+    console.log(result);
+  };
 
   const ProductContainer = styled.div`
     width: 80%;
@@ -77,6 +75,19 @@ const Admin = () => {
     border-radius: 12px;
     border: none;
     padding: 21px 42px;
+
+    height: 60px;
+    background: #f9c349;
+    border-radius: 12px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 8px 30px 0px rgba(249, 195, 73, 0.8);
+    cursor: pointer;
   `;
   const Table = styled.table`
     border-collapse: separate;
@@ -101,125 +112,127 @@ const Admin = () => {
 
   return (
     <>
+      {editState == "products" ? (
+        <ProductContainer>
+          <p
+            style={{
+              fontWeight: "400",
+              fontSize: "14px",
+              color: "#000000",
+            }}
+          >
+            Admin
+          </p>
+          <ProductContainerHead>
+            <PageTitle>Products</PageTitle>
+            <Link to="/admin/addproduct">
+              <PrimaryButton btnText={"Add Product"} />
+            </Link>
+            <Productbtn
+              onClick={() => {
+                setEditState("featuredProducts");
+              }}
+            >
+              Delete Featured Products
+            </Productbtn>
+          </ProductContainerHead>
+          <Table>
+            <thead>
+              <TR>
+                <TH>Product</TH>
+                <TH>stock</TH>
+                <TH>Quantity</TH>
+                <TH>Date</TH>
+                <TH>Rating</TH>
+                <TH>Actions</TH>
+                <TH></TH>
+              </TR>
+            </thead>
+            <TBody>
+              {allProducts.map((product, index) => (
+                <TableRow
+                  name={product.name}
+                  Desc={product.details}
+                  stock={"In Stock"}
+                  Action={
+                    <>
+                      <Link to={`/admin/updateproduct/${product._id}`}>
+                        <button
+                          style={{
+                            border: "none",
+                            cursor: "pointer",
+                            borderRadius: "6px",
+                            color: "black",
+                          }}
+                        >
+                          Edit
+                        </button>
+                      </Link>
+                    </>
+                  }
+                  key={index}
+                  handleDeleteProduct={handleDeleteProduct}
+                  id={product._id}
+                  productUrl={product.main_url}
+                />
+              ))}
+            </TBody>
+          </Table>
+        </ProductContainer>
+      ) : (
+        <ProductContainer>
+          <p
+            style={{
+              fontWeight: "400",
+              fontSize: "14px",
+              color: "#000000",
+            }}
+          >
+            Admin
+          </p>
+          <ProductContainerHead>
+            <PageTitle>Flavours</PageTitle>
 
-
-      {editState == "products" ? 
-      <ProductContainer>
-        <p
-          style={{
-            fontWeight: "400",
-            fontSize: "14px",
-            color: "#000000",
-          }}
-        >
-          Admin
-        </p>
-        <ProductContainerHead>
-          <PageTitle>Products</PageTitle>
-          <Link to="/admin/addproduct">
-            <PrimaryButton btnText={"Add Product"} />
-          </Link>
-          <Productbtn onClick={()=>{
-        setEditState('featuredProducts');
-      }}>Delete Featured Products</Productbtn>
-        </ProductContainerHead>
-        <Table>
-          <thead>
-            <TR>
-              <TH>Product</TH>
-              <TH>stock</TH>
-              <TH>Quantity</TH>
-              <TH>Date</TH>
-              <TH>Rating</TH>
-              <TH>Actions</TH>
-              <TH></TH>
-            </TR>
-          </thead>
-          <TBody>
-            {allProducts.map((product, index) => (
-              <TableRow
-                name={product.name}
-                Desc={product.details}
-                stock={"In Stock"}
-                Action={
-                  <>
-                    <Link to={`/admin/updateproduct/${product._id}`}>
-                      <button
-                        style={{
-                          border: "none",
-                          cursor: "pointer",
-                          borderRadius: "6px",
-                          color: "black",
-                        }}
-                      >
-                        Edit
-                      </button>
-                    </Link>
-                  </>
-                }
-                key={index}
-                handleDeleteProduct={handleDeleteProduct}
-                id={product._id}
-                productUrl={product.main_url}
-              />
-            ))}
-          </TBody>
-        </Table>
-      </ProductContainer> : <ProductContainer>
-        <p
-          style={{
-            fontWeight: "400",
-            fontSize: "14px",
-            color: "#000000",
-          }}
-        >
-          Admin
-        </p>
-        <ProductContainerHead>
-          <PageTitle>Flavours</PageTitle>
-          
-            <PrimaryButton onClick={()=>{
-              setEditState('products')
-            }} btnText={"Back to Products"} />
-   
-        </ProductContainerHead>
-        <Table>
-          <thead>
-            <TR>
-              <TH>Flavour</TH>
-              <TH>stock</TH>
-              <TH>Quantity</TH>
-              <TH>Product</TH>
-              <TH>Rating</TH>
-              <TH>Actions</TH>
-              <TH></TH>
-            </TR>
-          </thead>
-          <TBody>
-            {allProducts.map((product, index)=>{
-              return product.featured_product_id?.map((featuredProduct)=>( <TableRow
-                name={featuredProduct.flavour + " " + product.name}
-                Desc={product.details}
-                stock={"In Stock"}
-                Action={
-                  <>
-                    
-                  </>
-                }
-                key={index}
-                handleDeleteProduct={handleDeleteFeaturedProduct}
-                id={null}
-                pid={product._id}
-                fpid={featuredProduct._id}
-                productUrl={featuredProduct.url[0]}
-              />
-              ))
-            })}
-             
-            
-          </TBody>
-        </Table>
-      </ProductContainer>}
+            <PrimaryButton
+              onClick={() => {
+                setEditState("products");
+              }}
+              btnText={"Back to Products"}
+            />
+          </ProductContainerHead>
+          <Table>
+            <thead>
+              <TR>
+                <TH>Flavour</TH>
+                <TH>stock</TH>
+                <TH>Quantity</TH>
+                <TH>Product</TH>
+                <TH>Rating</TH>
+                <TH>Actions</TH>
+                <TH></TH>
+              </TR>
+            </thead>
+            <TBody>
+              {allProducts.map((product, index) => {
+                return product.featured_product_id?.map((featuredProduct) => (
+                  <TableRow
+                    name={featuredProduct.flavour + " " + product.name}
+                    Desc={product.details}
+                    stock={"In Stock"}
+                    Action={<></>}
+                    key={index}
+                    handleDeleteProduct={handleDeleteFeaturedProduct}
+                    id={null}
+                    pid={product._id}
+                    fpid={featuredProduct._id}
+                    productUrl={featuredProduct.url[0]}
+                  />
+                ));
+              })}
+            </TBody>
+          </Table>
+        </ProductContainer>
+      )}
       <Footer />
     </>
   );

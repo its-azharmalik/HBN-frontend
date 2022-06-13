@@ -10,85 +10,67 @@ import { toast } from "react-toastify";
 import Loading from "../components/Atoms/Loading";
 
 const Cart = () => {
-
   const [cartInfo, setCartInfo] = useState();
-
-
 
   const cartDetails = useStore((state) => state.CartDetails);
   const getCartDetails = useStore((state) => state.getCartDetails);
 
-  const deleteCartItems = useStore((state)=> state.deleteCartItems);
-  const addToCart = useStore((state)=> state.addToCart);
+  const deleteCartItems = useStore((state) => state.deleteCartItems);
+  const addToCart = useStore((state) => state.addToCart);
 
   const [refresh, setRefresh] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const afunction = async () => {
-    setLoading(true)
+    setLoading(true);
     const result = await getCartDetails();
-    setCartInfo(result.data.data)
-    if(result.status != 404 || result.status != 500){
-      setLoading(false)
-
+    setCartInfo(result.data.data);
+    if (result.status != 404 || result.status != 500) {
+      setLoading(false);
     }
-  }
+  };
 
   const handleDeleteProductFromCart = async (fpid, pid) => {
-    console.log('handleDeleteProductFromCart', fpid, pid)
+    console.log("handleDeleteProductFromCart", fpid, pid);
 
-  // logic for delete product from cart
-    setLoading(true)
-    const result = await deleteCartItems(fpid, pid)
- 
-    if(result.status != 404 || result.status != 500){
-      toast.success("Product Deleted Successfully")
-      const result = await afunction()
-      if(result.status != 500 || result.status != 404){
-        setLoading(false)
+    // logic for delete product from cart
+    setLoading(true);
+    const result = await deleteCartItems(fpid, pid);
+
+    if (result.status != 404 || result.status != 500) {
+      toast.success("Product Deleted Successfully");
+      const result = await afunction();
+      if (result.status != 500 || result.status != 404) {
+        setLoading(false);
       }
     }
+  };
+  const handleQuantityChange = async (fpid, pid, qty) => {
+    console.log("handleQuantityChange", fpid, pid, qty);
 
-}
-const handleQuantityChange = async (fpid, pid, qty) => {
-  console.log('handleQuantityChange', fpid, pid, qty)
+    // logic for handle quantity change
+    setLoading(true);
+    const result = await addToCart(fpid, pid, qty);
 
-  // logic for handle quantity change
-  setLoading(true)
-  const result = await addToCart(fpid, pid, qty)
-
-  if(result.status != 404 || result.status != 500){
-    toast.success("Product Quantity Changed Succesfully")
-    const result = await afunction()
-    if(result.status != 500 || result.status != 404){
-      setLoading(false)
+    if (result.status != 404 || result.status != 500) {
+      toast.success("Product Quantity Changed Succesfully");
+      const result = await afunction();
+      if (result.status != 500 || result.status != 404) {
+        setLoading(false);
+      }
     }
-  }
+  };
 
-}
-
-  useEffect( () => {
-
-      afunction();
-
+  useEffect(() => {
+    afunction();
   }, []);
 
-
-
-  console.log(cartDetails)
-
-
-
-
-
-
-
+  console.log(cartDetails);
 
   const NavHead = styled.div`
     width: 80%;
     margin: 20px auto;
     display: flex;
-   
   `;
   const TotalContainer = styled.div`
     height: 500px;
@@ -195,75 +177,136 @@ const handleQuantityChange = async (fpid, pid, qty) => {
     font-size: 18px;
     cursor: pointer;
   `;
+  const ReturnBtn = styled.div`
+    display: flex;
+    border: 2px solid #b5bdc4;
+    border-radius: 12px;
+    width: 200px;
+    margin: 30px auto;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    padding: 5px 0;
+    background: #f9c349;
+    color: #ffffff;
+    font-weight: 500;
+    font-size: 18px;
+    cursor: pointer;
+  `;
 
-  console.log(loading)
+  console.log(loading);
 
-  const discountDisplayPrice = cartInfo?.total_cart_price - cartInfo?.discounted_cart_price;
+  const discountDisplayPrice =
+    cartInfo?.total_cart_price - cartInfo?.discounted_cart_price;
 
-  const discountDisplayPercentage = Math.round(((discountDisplayPrice/cartInfo?.total_cart_price)*100 + Number.EPSILON) * 100) / 100 || 0;
+  const discountDisplayPercentage =
+    Math.round(
+      ((discountDisplayPrice / cartInfo?.total_cart_price) * 100 +
+        Number.EPSILON) *
+        100
+    ) / 100 || 0;
 
-  console.log(cartInfo)
+  console.log(cartInfo);
 
   return (
     <React.Fragment>
-      
-    {cartInfo ? <React.Fragment>
+      {cartInfo ? (
+        <React.Fragment>
+          <NavHead>
+            <p
+              style={{
+                fontWeight: "400",
+                fontSize: "14px",
+                color: "#818181",
+              }}
+            >
+              <Link style={{ color: "black" }} to="/">
+                Home
+              </Link>
+              /
+              <Link style={{ color: "black" }} to="/products">
+                All Products
+              </Link>
+              /
+            </p>
+            <p style={{ fontWeight: "500" }}>
+              <Link style={{ color: "black" }} to="/cart">
+                Basket
+              </Link>
+            </p>
+          </NavHead>
 
-      <NavHead>
-        <p
-          style={{
-            fontWeight: "400",
-            fontSize: "14px",
-            color: "#818181",
-          }}
-        >
-          <Link style={{color: "black"}} to="/">Home</Link>/<Link style={{color: "black"}} to="/products">All Products</Link>/
-        </p>
-        <p style={{ fontWeight: "500" }}><Link style={{color: "black"}} to="/cart">Basket</Link></p>
-      </NavHead>
-
-      <CartContainer>
-        {cartInfo.cart_items?.length > 0 ? (
-          <ProductListContainer>
-            {cartInfo.cart_items.map((item, index) => (<CartProduct item={item} loading={loading} key={index} handleDeleteProductFromCart={handleDeleteProductFromCart} handleQuantityChange={handleQuantityChange} />         
-            ))}
-          </ProductListContainer>
-        ) : (
-          <p>No Items in the Cart...</p>
-        )}
-        <TotalContainer>
-          {/* <PromocodeContainer>
+          <CartContainer>
+            {cartInfo.cart_items?.length > 0 ? (
+              <ProductListContainer>
+                {cartInfo.cart_items.map((item, index) => (
+                  <CartProduct
+                    item={item}
+                    loading={loading}
+                    key={index}
+                    handleDeleteProductFromCart={handleDeleteProductFromCart}
+                    handleQuantityChange={handleQuantityChange}
+                  />
+                ))}
+              </ProductListContainer>
+            ) : (
+              <p>No Items in the Cart...</p>
+            )}
+            {cartInfo.cart_items?.length > 0 ? (
+              <>
+                <TotalContainer>
+                  {/* <PromocodeContainer>
             <Promocode placeholder="Promocode" />
             <PromocodeAppyButton>Apply</PromocodeAppyButton>
           </PromocodeContainer> */}
-          {/* <DashedDivider /> */}
-          <CostDetailsContainer>
-            <DetailContainer>
-              <Subtotal>Subtotal</Subtotal>
-              <SubtotlPrice>{loading ?  'Loading...' : 'Rs.'  + cartInfo.total_cart_price + '.00' } </SubtotlPrice>
-            </DetailContainer>
-            <DetailContainer>
-              <Title>Discount</Title>
-              
-              <Subtitle>{loading ? 'Loading...' :  + discountDisplayPercentage + '%' + '->' + 'Rs.' + discountDisplayPrice}</Subtitle>
-            </DetailContainer>
-            <DetailContainer>
-              <Title>Delivery</Title>
-              <Subtitle>₹00.00</Subtitle>
-            </DetailContainer>
-            <DetailContainer>
-              <Title>Tax</Title>
-              <Subtitle> + ₹39.00</Subtitle>
-            </DetailContainer>
-          </CostDetailsContainer>
-          <DashedDivider />
-          <Link to="/checkout">
-            <CheckoutButton>Proceed To Checkout</CheckoutButton>
-          </Link>
-        </TotalContainer>
-      </CartContainer>
-    </React.Fragment> : <Loading />
-    }
+                  {/* <DashedDivider /> */}
+                  <CostDetailsContainer>
+                    <DetailContainer>
+                      <Subtotal>Subtotal</Subtotal>
+                      <SubtotlPrice>
+                        {loading
+                          ? "Loading..."
+                          : "Rs." + cartInfo.total_cart_price + ".00"}{" "}
+                      </SubtotlPrice>
+                    </DetailContainer>
+                    <DetailContainer>
+                      <Title>Discount</Title>
+
+                      <Subtitle>
+                        {loading
+                          ? "Loading..."
+                          : +discountDisplayPercentage +
+                            "%" +
+                            "->" +
+                            "Rs." +
+                            discountDisplayPrice}
+                      </Subtitle>
+                    </DetailContainer>
+                    <DetailContainer>
+                      <Title>Delivery</Title>
+                      <Subtitle>₹00.00</Subtitle>
+                    </DetailContainer>
+                    <DetailContainer>
+                      <Title>Tax</Title>
+                      <Subtitle> + ₹39.00</Subtitle>
+                    </DetailContainer>
+                  </CostDetailsContainer>
+                  <DashedDivider />
+                  <Link to="/checkout">
+                    <CheckoutButton>Proceed To Checkout</CheckoutButton>
+                  </Link>
+                </TotalContainer>
+              </>
+            ) : (
+              <Link to="/products">
+                <ReturnBtn>Continue Shopping</ReturnBtn>
+              </Link>
+            )}
+          </CartContainer>
+        </React.Fragment>
+      ) : (
+        <Loading />
+      )}
       <Footer />
     </React.Fragment>
   );

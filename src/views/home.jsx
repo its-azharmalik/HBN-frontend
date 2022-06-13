@@ -20,36 +20,44 @@ import category3 from "../assets/images/category2.jpeg";
 import useStore from "../store";
 import CommentDivider from "../components/PageDivider/CommentDivider";
 import { Carousel } from "antd";
-import Banner1 from "../assets/images/banner1.jpeg"
-import Loading from '../components/Atoms/Loading'
+import Banner1 from "../assets/images/banner1.jpeg";
+import Loading from "../components/Atoms/Loading";
 
 const Home = () => {
   const loginUser = useStore((state) => state.LoginUser);
-  const getFeaturedProdById = useStore((state)=> state.getFeaturedProdById);
+  const getFeaturedProdById = useStore((state) => state.getFeaturedProdById);
   console.log(loginUser);
-
-
-
 
   // api calls for 4 products later will be changed to api calls for all data
 
-  const [products, setProducts] = useState()
+  const [products, setProducts] = useState();
 
   const handleProductCalls = async () => {
-    const product1 = await getFeaturedProdById('628de37ebcbac516123944d9', '628de3f5bcbac5161239456a')
-    const product2 = await getFeaturedProdById('628ddf34a95efeb655c84b64', '628ddf88a95efeb655c84be8')
-    const product3 = await getFeaturedProdById('628c64f7290ab1058326fd21', '628ddadda95efeb655c84786')
-    const product4 = await getFeaturedProdById('628df7e7bcbac51612394b55', '628df7ecbcbac51612394b75')
-    console.log(product1)
-    const tempArr = []
-    tempArr.push(product1, product2, product3, product4)
-    setProducts(tempArr)
-  }
+    const product1 = await getFeaturedProdById(
+      "628de37ebcbac516123944d9",
+      "628de3f5bcbac5161239456a"
+    );
+    const product2 = await getFeaturedProdById(
+      "628ddf34a95efeb655c84b64",
+      "628ddf88a95efeb655c84be8"
+    );
+    const product3 = await getFeaturedProdById(
+      "628c64f7290ab1058326fd21",
+      "628ddadda95efeb655c84786"
+    );
+    const product4 = await getFeaturedProdById(
+      "628df7e7bcbac51612394b55",
+      "628df7ecbcbac51612394b75"
+    );
+    console.log(product1);
+    const tempArr = [];
+    tempArr.push(product1, product2, product3, product4);
+    setProducts(tempArr);
+  };
 
   useEffect(() => {
     handleProductCalls();
-  }, [])
-
+  }, []);
 
   const MainHeadContainer = styled.div`
     width: 100%;
@@ -205,8 +213,6 @@ const Home = () => {
   `;
   return (
     <HomeContainer>
-
-
       <MainHeadContainer>
         {/* <img
           src={HeaderMain}
@@ -215,15 +221,15 @@ const Home = () => {
         <Carousel autoplay>
           <div>
             <img
-            src={HeaderMain}
-            style={{ width: "100vw", objectFit: "cover" }}
-          ></img> 
+              src={HeaderMain}
+              style={{ width: "100vw", objectFit: "cover" }}
+            ></img>
           </div>
           <div>
             <img
-            src={Banner1}
-            style={{ width: "100vw", objectFit: "cover" }}
-          ></img> 
+              src={Banner1}
+              style={{ width: "100vw", objectFit: "cover" }}
+            ></img>
           </div>
         </Carousel>
       </MainHeadContainer>
@@ -231,35 +237,73 @@ const Home = () => {
         <CategoryHeadding>Shop By Category</CategoryHeadding>
         <CategoryBoxContainer>
           <CategoryBoxLeft>
-           <Category1><Link to="/products?q=whey-protein">Whey Protein</Link></Category1>        
-          <Category2><Link to="/products?q=support-suppliments">Daily Support</Link></Category2>
+            <Category1>
+              <Link
+                to="/products?q=whey-protein"
+                onClick={() => {
+                  window.scrollTo(0, 0);
+                }}
+              >
+                Whey Protein
+              </Link>
+            </Category1>
+            <Category2>
+              <Link
+                to="/products?q=support-suppliments"
+                onClick={() => {
+                  window.scrollTo(0, 0);
+                }}
+              >
+                Daily Support
+              </Link>
+            </Category2>
           </CategoryBoxLeft>
-          <Category3><Link to="/products?q=gainer">Gainer</Link></Category3>         
+          <Category3>
+            <Link
+              to="/products?q=gainer"
+              onClick={() => {
+                window.scrollTo(0, 0);
+              }}
+            >
+              Gainer
+            </Link>
+          </Category3>
         </CategoryBoxContainer>
       </CategoryContainer>
       <ProductBanner
         img={LeanGainerProduct}
-        title={'Best Quality Hell Boy Nutrition - Lean Gainer'}
+        title={"Best Quality Hell Boy Nutrition - Lean Gainer"}
       />
-            <ProductBanner
+      <ProductBanner
         img={LeanGainerProduct}
-        title={'Best Quality Hell Boy Nutrition - Lean Gainer'}
+        title={"Best Quality Hell Boy Nutrition - Lean Gainer"}
         rev={true}
       />
       <BestSellerContainer>
         <BestSellerHead>BEST SELLER</BestSellerHead>
         <BestSellerProd>
-          {products ? products.map((product)=> (<ProductCard
-            price={product.gotFeaturedProductById.discounted_price}
-            originalPrice={product.gotFeaturedProductById.price}
-            type={product.gotFeaturedProductById.flavour}
-            title={product.parentproduct[0].name}
-            productImage={product.parentproduct[0].main_url}
-            id={product.parentproduct[0]._id}
-            fpidFromProductPage={product.gotFeaturedProductById._id}
-          />)) : <Loading />}
+          {products ? (
+            products.map((product) => (
+              <ProductCard
+                price={product.gotFeaturedProductById.discounted_price}
+                originalPrice={product.gotFeaturedProductById.price}
+                type={product.gotFeaturedProductById.flavour}
+                title={product.parentproduct[0].name}
+                productImage={product.parentproduct[0].main_url}
+                id={product.parentproduct[0]._id}
+                fpidFromProductPage={product.gotFeaturedProductById._id}
+              />
+            ))
+          ) : (
+            <Loading />
+          )}
         </BestSellerProd>
-        <Link to={"/products"}>
+        <Link
+          to={"/products"}
+          onClick={() => {
+            window.scrollTo(0, 0);
+          }}
+        >
           <PrimaryButton btnText={"View All"} />
         </Link>
       </BestSellerContainer>

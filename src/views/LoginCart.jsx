@@ -6,12 +6,10 @@ import { loginSubmitHandeler } from "../Main/login";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Navigate } from "react-router-dom";
 import { checkAuth } from "../utils/checkAuth";
+import { useState } from "react";
+import { useEffect } from "react";
 
 const LoginCart = () => {
-
-
-  
-
   const emailRef = useRef();
   const passwordRef = useRef();
 
@@ -26,7 +24,8 @@ const LoginCart = () => {
   const createCart = useStore((state) => state.createCart);
 
   const loginError = useStore((state) => state.LoginError);
-
+  // const [errorFlag, setErrorFlag] = useState(false);
+  const errorFlag = useRef(false);
   const BoxContainer = styled.div`
     display: flex;
     align-items: center;
@@ -131,65 +130,61 @@ const LoginCart = () => {
     color: white;
     border-radius: 12px;
   `;
-
-
   return (
     <>
-    {checkAuth() ? <Navigate to={from} replace /> :
-    <>
-
-      <BoxContainer>
-        <Box>
-          {loginError ? <ErrorBox>{loginError}</ErrorBox> : ""}
-          <Title>Welcome to Hellboy Protiens</Title>
-          <InnerTitle>Login to your Account</InnerTitle>
-          <Span>
-            <Link to='/signup' style={{color: "black"}}>
-            <StrikeHead>
-              Don't Have a password? Continue with your Email ID
-            </StrikeHead>
-            </Link>
-            
-          </Span>
-          <LoginForm
-            onSubmit={(e) => {
-              e.preventDefault();
-              loginSubmitHandeler(
-                emailRef.current.value,
-                passwordRef.current.value,
-                login,
-                navigate,
-                createCart,
-                Cart,
-                from
-              );
-            }}
-          >
-            
-            <InputLabel>Email</InputLabel>
-            <LoginInput type="email" ref={emailRef} />
-            <InputLabel>Password</InputLabel>
-            <LoginInput type="password" ref={passwordRef} />
-            <Check>
-              <input type="checkbox" />{" "}
-              <p
-                style={{
-                  margin: "0 10px",
+      {checkAuth() ? (
+        <Navigate to={from} replace />
+      ) : (
+        <>
+          <BoxContainer>
+            <Box>
+              {loginError ? <ErrorBox>{loginError}</ErrorBox> : ""}
+              <Title>Welcome to Hellboy Protiens</Title>
+              <InnerTitle>Login to your Account</InnerTitle>
+              <Span>
+                <Link to="/signup" style={{ color: "black" }}>
+                  <StrikeHead>
+                    Don't Have a password? Continue with your Email ID
+                  </StrikeHead>
+                </Link>
+              </Span>
+              <LoginForm
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  loginSubmitHandeler(
+                    emailRef.current.value,
+                    passwordRef.current.value,
+                    login,
+                    navigate,
+                    createCart,
+                    Cart,
+                    from
+                  );
                 }}
               >
-                {" "}
-                Remember me
-              </p>
-            </Check>
-            <FPass>I forgot my password</FPass>
-            <CheckoutButton type="submit">Sign In</CheckoutButton>
-          </LoginForm>
-        </Box>
-      </BoxContainer>
-    </>  }
+                <InputLabel>Email</InputLabel>
+                <LoginInput type="email" ref={emailRef} />
+                <InputLabel>Password</InputLabel>
+                <LoginInput type="password" ref={passwordRef} />
+                <Check>
+                  <input type="checkbox" />{" "}
+                  <p
+                    style={{
+                      margin: "0 10px",
+                    }}
+                  >
+                    {" "}
+                    Remember me
+                  </p>
+                </Check>
+
+                <CheckoutButton type="submit">Sign In</CheckoutButton>
+              </LoginForm>
+            </Box>
+          </BoxContainer>
+        </>
+      )}
     </>
- 
-    
   );
 };
 

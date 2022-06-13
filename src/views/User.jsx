@@ -4,8 +4,16 @@ import TopNav from "../components/Navbar/TopNav";
 import styled from "styled-components";
 import Footer from "../components/Footer/Footer";
 import TableRow from "../components/UserTable/TableRow";
+import useStore from "../store";
+import { useEffect } from "react";
 
 const User = () => {
+  const AllUsers = useStore((state) => state.AllUsers);
+  const getAllUsers = useStore((state) => state.getAllUsers);
+  useEffect(() => {
+    getAllUsers();
+  }, []);
+  console.log(AllUsers);
   const ProductContainer = styled.div`
     width: 80%;
     // border: 1px solid black;
@@ -25,15 +33,12 @@ const User = () => {
     color: #b5bdc4;
   `;
   const TBody = styled.tbody``;
-  const PageTitle=styled.p`
-  font-weight: 700; 
-  font-size: 30px; 
-  
-  `
+  const PageTitle = styled.p`
+    font-weight: 700;
+    font-size: 30px;
+  `;
   return (
     <>
-
-
       <ProductContainer>
         <p
           style={{
@@ -67,7 +72,6 @@ const User = () => {
               role={"Admin"}
               date={"12/03/2021"}
               value={"xyz@example.com"}
-
             />
             <TableRow
               name={"User Name"}
@@ -82,7 +86,6 @@ const User = () => {
               role={"Admin"}
               date={"12/03/2021"}
               value={"xyz@example.com"}
-
             />
           </TBody>
         </Table>

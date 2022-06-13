@@ -12,18 +12,16 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { checkAdmin, checkAuth } from "../../utils/checkAuth";
 import { useRef } from "react";
 
-const TopNav = ({handleSearch}) => {
+const TopNav = ({ handleSearch }) => {
+  const [hambugerMenuDisplay, setHambugerMenuDisplay] = useState(false);
 
-  const [hambugerMenuDisplay, setHambugerMenuDisplay] = useState(false)
-
-  const location = useLocation()
+  const location = useLocation();
 
   const searchRef = useRef();
 
   const Hamburger = styled.img`
-  position: relative;
-  width: 30px;
-  
+    position: relative;
+    width: 30px;
   `;
   const HamburgerContainer = styled.div`
     display: none;
@@ -110,7 +108,6 @@ const TopNav = ({handleSearch}) => {
     }
   `;
 
-
   const HamburgerMenu = styled.div`
     display: none;
     @media (max-width: 963px) {
@@ -135,205 +132,232 @@ const TopNav = ({handleSearch}) => {
   const ListItem = styled.li`
     font-size: 1rem;
     cursor: pointer;
-    color: #F1C40F;
+    color: #f1c40f;
   `;
 
-
-  const LogoImg = styled.img`
-    
-  `
+  const LogoImg = styled.img``;
 
   const navigate = useNavigate();
 
   return (
     <NavBarTopContainer>
-  
-  <Link to="/">
+      <Link to="/">
         <LogoImg src={hellboylogo1} alt="Hellby Protein Logo" />
       </Link>
-   
-    
 
       <RegularFragment>
-        <SearchForm>
-          <SearchInput ref={searchRef} placeholder="Type Here to Search Products...." type="text" />
-          <SearchButton onClick={(e)=>{
+        <SearchForm
+          onSubmit={(e) => {
             e.preventDefault();
-            navigate(`/products?q=${searchRef?.current?.value}`)
-          }}>
+            navigate(`/products?q=${searchRef?.current?.value}`);
+          }}
+        >
+          <SearchInput
+            ref={searchRef}
+            value={searchRef.current?.value}
+            placeholder="Type Here to Search Products...."
+            type="text"
+            required
+          />
+          <SearchButton type="submit">
             <div style={{ marginRight: "10px" }}>
               <SearchOutlined />
             </div>
             Search
           </SearchButton>
-        </SearchForm>   
+        </SearchForm>
       </RegularFragment>
 
       <RegularFragment>
-
-      <LinksContainer>
-     {checkAuth() ? <React.Fragment>
-            <AccButton onClick={()=>{
-              localStorage.clear();
-              window.location.reload()
-            }}>
-              <UserOutlined
-                style={{
-                  fontSize: "20px",
-                  border: "1px solid black",
-                  borderRadius: "50%",
-                  padding: "5px",
-                }}
-              />
-              <button
-                style={{
-                  border: "none",
-                  outline: "none",
-                  backgroundColor: "white",
-                  cursor: "pointer",
+        <LinksContainer>
+          {checkAuth() ? (
+            <React.Fragment>
+              <AccButton
+                onClick={() => {
+                  localStorage.clear();
+                  window.location.reload();
                 }}
               >
-                Sign Out
-              </button>
-            </AccButton>
+                <UserOutlined
+                  style={{
+                    fontSize: "20px",
+                    border: "1px solid black",
+                    borderRadius: "50%",
+                    padding: "5px",
+                  }}
+                />
+                <button
+                  style={{
+                    border: "none",
+                    outline: "none",
+                    backgroundColor: "white",
+                    cursor: "pointer",
+                  }}
+                >
+                  Sign Out
+                </button>
+              </AccButton>
 
-      <Link to="/cart" style={{ textDecoration: "none", color: "black" }}>
-            <CartButton>
-              <ShoppingCartOutlined
-                style={{
-                  fontSize: "20px",
-                  border: "1px solid black",
-                  borderRadius: "50%",
-                  padding: "5px",
-                }}
-              />
-              <button
-                style={{
-                  border: "none",
-                  outline: "none",
-                  backgroundColor: "white",
-                  cursor: "pointer",
-                }}
+              <Link
+                to="/cart"
+                style={{ textDecoration: "none", color: "black" }}
               >
-                Cart
-              </button>
-            </CartButton>
-          </Link></React.Fragment>  : <React.Fragment>
-
-            {location.pathname == "/login" ? <React.Fragment>
-            <Link to="/signup" style={{ textDecoration: "none", color: "black" }}>
-            <AccButton>
-              <UserOutlined
-                style={{
-                  fontSize: "20px",
-                  border: "1px solid black",
-                  borderRadius: "50%",
-                  padding: "5px",
-                }}
-              />
-              <button
-                style={{
-                  border: "none",
-                  outline: "none",
-                  backgroundColor: "white",
-                  cursor: "pointer",
-                }}
-              >
-                Create Account
-              </button>
-            </AccButton>
-        </Link> </React.Fragment> : <React.Fragment>  <Link to="/login" style={{ textDecoration: "none", color: "black" }}>
-            <AccButton>
-              <UserOutlined
-                style={{
-                  fontSize: "20px",
-                  border: "1px solid black",
-                  borderRadius: "50%",
-                  padding: "5px",
-                }}
-              />
-              <button
-                style={{
-                  border: "none",
-                  outline: "none",
-                  backgroundColor: "white",
-                  cursor: "pointer",
-                }}
-              >
-                Login
-              </button>
-            </AccButton>
-        </Link>         <Link to="/cart" style={{ textDecoration: "none", color: "black" }}>
-            <CartButton>
-              <ShoppingCartOutlined
-                style={{
-                  fontSize: "20px",
-                  border: "1px solid black",
-                  borderRadius: "50%",
-                  padding: "5px",
-                }}
-              />
-              <button
-                style={{
-                  border: "none",
-                  outline: "none",
-                  backgroundColor: "white",
-                  cursor: "pointer",
-                }}
-              >
-                Cart
-              </button>
-            </CartButton>
-          </Link>   </React.Fragment>}
-
-
-            
-            
-               </React.Fragment>}
+                <CartButton>
+                  <ShoppingCartOutlined
+                    style={{
+                      fontSize: "20px",
+                      border: "1px solid black",
+                      borderRadius: "50%",
+                      padding: "5px",
+                    }}
+                  />
+                  <button
+                    style={{
+                      border: "none",
+                      outline: "none",
+                      backgroundColor: "white",
+                      cursor: "pointer",
+                    }}
+                  >
+                    Cart
+                  </button>
+                </CartButton>
+              </Link>
+            </React.Fragment>
+          ) : (
+            <React.Fragment>
+              {location.pathname == "/login" ? (
+                <React.Fragment>
+                  <Link
+                    to="/signup"
+                    style={{ textDecoration: "none", color: "black" }}
+                  >
+                    <AccButton>
+                      <UserOutlined
+                        style={{
+                          fontSize: "20px",
+                          border: "1px solid black",
+                          borderRadius: "50%",
+                          padding: "5px",
+                        }}
+                      />
+                      <button
+                        style={{
+                          border: "none",
+                          outline: "none",
+                          backgroundColor: "white",
+                          cursor: "pointer",
+                        }}
+                      >
+                        Create Account
+                      </button>
+                    </AccButton>
+                  </Link>{" "}
+                </React.Fragment>
+              ) : (
+                <React.Fragment>
+                  {" "}
+                  <Link
+                    to="/login"
+                    style={{ textDecoration: "none", color: "black" }}
+                  >
+                    <AccButton>
+                      <UserOutlined
+                        style={{
+                          fontSize: "20px",
+                          border: "1px solid black",
+                          borderRadius: "50%",
+                          padding: "5px",
+                        }}
+                      />
+                      <button
+                        style={{
+                          border: "none",
+                          outline: "none",
+                          backgroundColor: "white",
+                          cursor: "pointer",
+                        }}
+                      >
+                        Login
+                      </button>
+                    </AccButton>
+                  </Link>{" "}
+                  <Link
+                    to="/cart"
+                    style={{ textDecoration: "none", color: "black" }}
+                  >
+                    <CartButton>
+                      <ShoppingCartOutlined
+                        style={{
+                          fontSize: "20px",
+                          border: "1px solid black",
+                          borderRadius: "50%",
+                          padding: "5px",
+                        }}
+                      />
+                      <button
+                        style={{
+                          border: "none",
+                          outline: "none",
+                          backgroundColor: "white",
+                          cursor: "pointer",
+                        }}
+                      >
+                        Cart
+                      </button>
+                    </CartButton>
+                  </Link>{" "}
+                </React.Fragment>
+              )}
+            </React.Fragment>
+          )}
         </LinksContainer>
       </RegularFragment>
 
-      <HamburgerContainer onClick={()=>{
-        setHambugerMenuDisplay(!hambugerMenuDisplay)
-      }}>
+      <HamburgerContainer
+        onClick={() => {
+          setHambugerMenuDisplay(!hambugerMenuDisplay);
+        }}
+      >
         <Hamburger src={hambugerMenuDisplay ? cross : ham} />
-        {hambugerMenuDisplay && <HamburgerMenu>
-        <List>
-          <ListItem>
-              <Link to='/'>Home</Link> 
-          </ListItem>
-          <ListItem>
-           <Link to='/products'>Explore</Link>   
-          </ListItem>
-          <ListItem>
-           <Link to='/cart'>Cart</Link>   
-          </ListItem>
-          <ListItem>
-             <Link to='/authenticity'>
-             Authenticity
-             </Link> 
-          </ListItem>
-          {checkAdmin() && <ListItem>
-           <Link to='/admin/dashboard'> 
-           Admin
-           </Link>   
-          </ListItem>}
-         {checkAuth() ? <ListItem onClick={()=>{
-            localStorage.clear()
-            window.location.reload()
-          }}>
-            
-           Sign Out
-          
-          </ListItem> : <ListItem>
-            
-          <Link to='/login'>Login</Link> 
-          
-          </ListItem>}
-        </List>
-      </HamburgerMenu>}
+        {hambugerMenuDisplay && (
+          <HamburgerMenu>
+            <List>
+              <ListItem>
+                <Link to="/">Home</Link>
+              </ListItem>
+              <ListItem>
+                <Link to="/products">Explore</Link>
+              </ListItem>
+              <ListItem>
+                <Link to="/cart">Cart</Link>
+              </ListItem>
+              <ListItem>
+                <Link to="/authenticity">Authenticity</Link>
+              </ListItem>
+              {checkAdmin() && (
+                <ListItem>
+                  <Link to="/admin/dashboard">Admin</Link>
+                </ListItem>
+              )}
+              {checkAuth() ? (
+                <ListItem
+                  onClick={() => {
+                    localStorage.clear();
+                    window.location.reload();
+                  }}
+                >
+                  Sign Out
+                </ListItem>
+              ) : (
+                <ListItem>
+                  <Link to="/login">Login</Link>
+                </ListItem>
+              )}
+            </List>
+          </HamburgerMenu>
+        )}
       </HamburgerContainer>
-
     </NavBarTopContainer>
   );
 };

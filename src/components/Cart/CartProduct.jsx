@@ -1,20 +1,27 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import massgainer from "../..//assets/images/Massgainer5kg.png";
-import dummy from '../../assets/images/leangainer.png'
+import dummy from "../../assets/images/leangainer.png";
 
-const CartProduct = ({item, handleDeleteProductFromCart, handleQuantityChange, loading}) => {
-  console.log(item)
+const CartProduct = ({
+  item,
+  handleDeleteProductFromCart,
+  handleQuantityChange,
+  loading,
+}) => {
+  console.log(item);
 
-  const [qty, setQty] = useState(item.quantity)
+  const [qty, setQty] = useState(item.quantity);
 
   useEffect(() => {
-    if(qty != item.quantity){
-      handleQuantityChange(item.featured_product_id._id, item.product_id._id, qty)
+    if (qty != item.quantity) {
+      handleQuantityChange(
+        item.featured_product_id._id,
+        item.product_id._id,
+        qty
+      );
     }
-  }, [qty])
-
-  
+  }, [qty]);
 
   const CartProdContainer = styled.div`
     border: 1px solid #b5bdc4;
@@ -32,8 +39,7 @@ const CartProduct = ({item, handleDeleteProductFromCart, handleQuantityChange, l
     //   height: 150px;
     //   width: 80%;
     // }
-    `
-  ;
+  `;
   const CartContainer = styled.div`
     width: 100%;
     margin: auto;
@@ -98,6 +104,7 @@ const CartProduct = ({item, handleDeleteProductFromCart, handleQuantityChange, l
   const QValue = styled.p`
     margin: 0;
   `;
+  console.log(item.featured_product_id);
   return (
     <CartContainer>
       <CartProdContainer>
@@ -105,26 +112,47 @@ const CartProduct = ({item, handleDeleteProductFromCart, handleQuantityChange, l
           <ProductImage src={item.product_id?.main_url || dummy} />
         </ImageContainer>
         <DetailsContainer>
-          <Title>{item.product_id?.name} {item.featured_product_id?.flavour} ( {item.product_id?.weight}KG )</Title>
-          <Price>Rs.{item.featured_product_id.price}.00</Price>
+          <Title>
+            {item.product_id?.name} {item.featured_product_id?.flavour} ({" "}
+            {item.product_id?.weight}KG )
+          </Title>
+          <Price>Rs.{item.featured_product_id.discounted_price}.00</Price>
           <QuantityDeleteContainer>
-            
-             {loading ? 'Loading...' : <Quantity>
-             <AddItem onClick={()=>{
-                setQty(qty + 1)
+            {loading ? (
+              "Loading..."
+            ) : (
+              <Quantity>
+                <AddItem
+                  onClick={() => {
+                    setQty(qty + 1);
+                  }}
+                >
+                  {" "}
+                  +{" "}
+                </AddItem>
+                <QValue>{qty}</QValue>
+                <RemoveItem
+                  onClick={() => {
+                    if (qty > 1) {
+                      setQty(qty - 1);
+                    }
+                  }}
+                >
+                  {" "}
+                  -{" "}
+                </RemoveItem>
+              </Quantity>
+            )}
+            <DeleteButton
+              onClick={() => {
+                handleDeleteProductFromCart(
+                  item.featured_product_id._id,
+                  item.product_id._id
+                );
               }}
-              > + </AddItem>
-              <QValue>{qty}</QValue>
-              <RemoveItem onClick={()=>{
-                if(qty > 1){
-                  setQty(qty - 1)
-                }
-              }} > - </RemoveItem>
-             
-            </Quantity>}
-            <DeleteButton onClick={()=>{
-              handleDeleteProductFromCart(item.featured_product_id._id, item.product_id._id)
-            }}>Delete</DeleteButton> 
+            >
+              Delete
+            </DeleteButton>
           </QuantityDeleteContainer>
         </DetailsContainer>
       </CartProdContainer>

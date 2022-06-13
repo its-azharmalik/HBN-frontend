@@ -6,8 +6,11 @@ import img3 from "../../assets/images/Ellipse3.png";
 import ReactStars from "react-rating-stars-component";
 import LArrow from "../../assets/images/Larrow.png";
 import RArrow from "../../assets/images/Rarrow.png";
+import user from "../../assets/images/user.png";
+import { useState } from "react";
 
 const CustomerRview = () => {
+  const [currentRev, setCurrentRev] = useState(1);
   const ReviewContainer = styled.div`
     // margin: 6rem;
     min-width: 300px;
@@ -47,7 +50,9 @@ const CustomerRview = () => {
   margin:auto;
     justify-content: space-between;
     `;
-  const LeftArrow = styled.div``;
+  const LeftArrow = styled.div`
+    cursor: pointer;
+  `;
   const RightArrow = styled.div`
     border-radius: 60%;
   `;
@@ -75,7 +80,37 @@ const CustomerRview = () => {
   `;
   const ImageMain = styled.img`
     margin: 0;
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid #f0ebeb;
   `;
+
+  const homeReviews = [
+    {
+      id: 1,
+      img: user,
+      name: "Harsh Tiwari",
+      stars: 5,
+      review: "Great products at reasonable price. Awsome service. Must try.",
+    },
+    {
+      id: 2,
+      img: user,
+      name: "Hammad Ahmed",
+      stars: 4,
+      review:
+        "Fast Delivery good products..I speciallt liked the chocolate gainer",
+    },
+    {
+      id: 3,
+      img: user,
+      name: "Nitish Sharma",
+      stars: 4,
+      review: "Loved the products....protein supplements are very effective",
+    },
+  ];
   return (
     <ReviewContainer>
       <ReviewBox>
@@ -84,45 +119,63 @@ const CustomerRview = () => {
           Our clients send us bunch of smilies with our services and we love
           them
         </Reaviewp>
-        <InnerBox>
-          <ImagePrev src={img2} alt="img2" />
-          <ImageNext src={img3} alt="img3" />
 
-          <ImageMain src={img1} alt="jj" />
-          <Name>Nishant Singh</Name>
-          <p>Marketing</p>
-          <ReactStar>
-            <LeftArrow>
-              <img src={LArrow} alt="" />
-            </LeftArrow>
-            <ReactStars
-              count={5}
-              // onChange={ratingChanged}
-              size={24}
-              activeColor="#ffd700"
-              style={{
-                display: "flex",
-                alignitem: "center",
-              }}
-            />
-            <RightArrow>
-              <img
-                src={RArrow}
-                alt=""
-                style={{
-                  cursor: "pointer",
-                }}
-              />
-            </RightArrow>
-          </ReactStar>
+        {homeReviews.map((rev) => (
+          <>
+            {rev.id == currentRev ? (
+              <InnerBox>
+                {/* <ImagePrev src={img2} alt="img2" />
+          <ImageNext src={img3} alt="img3" /> */}
 
-          <></>
-          <p>
-            You’ll get the best of what you put in. The team is working at their
-            best to provide us variety of space and homes. Had a great
-            experience working with them Thanks a lot.
-          </p>
-        </InnerBox>
+                <ImageMain src={rev.img} alt="jj" />
+                <Name>{rev.name}</Name>
+                {/* <p>Marketing</p> */}
+                <ReactStar>
+                  <LeftArrow
+                    onClick={() => {
+                      if (currentRev > 1) {
+                        setCurrentRev(currentRev - 1);
+                      }
+                    }}
+                  >
+                    <img src={LArrow} alt="" />
+                  </LeftArrow>
+                  <ReactStars
+                    count={5}
+                    value={rev.stars}
+                    // onChange={ratingChanged}
+                    size={24}
+                    activeColor="#ffd700"
+                    style={{
+                      display: "flex",
+                      alignitem: "center",
+                    }}
+                  />
+                  <RightArrow
+                    onClick={() => {
+                      if (currentRev < 3) {
+                        setCurrentRev(currentRev + 1);
+                      }
+                    }}
+                  >
+                    <img
+                      src={RArrow}
+                      alt=""
+                      style={{
+                        cursor: "pointer",
+                      }}
+                    />
+                  </RightArrow>
+                </ReactStar>
+
+                <></>
+                <p>{rev.review}</p>
+              </InnerBox>
+            ) : (
+              ""
+            )}
+          </>
+        ))}
       </ReviewBox>
     </ReviewContainer>
   );

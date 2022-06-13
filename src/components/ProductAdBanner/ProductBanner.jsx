@@ -95,86 +95,80 @@ function ProductBanner({ img, title, disc, rev }) {
     }
   `;
   return (
-   <React.Fragment>
-     {rev ?  <Container>
-      <ProdBanner>
-        <BannerTitle>{title}</BannerTitle>
-        <PordBannerDisc>
-          <Li
-            style={{
-              listStyleImage: dot,
-            }}
-          >
-            Helps in building lean muscles
-
-
-
-
-
-          </Li>
-          <Li>
-            It is rich in protein supplement with a great taste that provides a
-            rapid increase in strength
-          </Li>
-          <Li>
-          It is an ideal supplement, which aids in providing speed muscle recovery and repair after every workout session
-
-          </Li>
-          <Li>
-          It contains whole grain carbohydrate blend and zero sugar
-
-          </Li>
-          <Li>
-It contains Creatine Ethyl Ester that helps in clean muscle bulking
-
-          </Li>
-        </PordBannerDisc>
-        <Link to={"/products"} style={{marginLeft: '20px', marginTop: '10px' }}>
-          <PrimaryButton btnText={"Shop Now"} />
-        </Link>
-      </ProdBanner>
-      <BannerImage src={img} alt="" />
- 
-    </Container> :  <Container>
-      <BannerImage src={img} alt="" />
-      <ProdBanner>
-        <BannerTitle>{title}</BannerTitle>
-        <PordBannerDisc>
-          <Li
-            style={{
-              listStyleImage: dot,
-            }}
-          >
-            Helps in building lean muscles
-
-
-
-
-
-          </Li>
-          <Li>
-            It is rich in protein supplement with a great taste that provides a
-            rapid increase in strength
-          </Li>
-          <Li>
-          It is an ideal supplement, which aids in providing speed muscle recovery and repair after every workout session
-
-          </Li>
-          <Li>
-          It contains whole grain carbohydrate blend and zero sugar
-
-          </Li>
-          <Li>
-It contains Creatine Ethyl Ester that helps in clean muscle bulking
-
-          </Li>
-        </PordBannerDisc>
-        <Link to={"/products"} style={{marginLeft: '20px', marginTop: '10px' }}>
-          <PrimaryButton btnText={"Shop Now"} />
-        </Link>
-      </ProdBanner>
-    </Container>}
-   </React.Fragment>
+    <React.Fragment>
+      {rev ? (
+        <Container>
+          <ProdBanner>
+            <BannerTitle>{title}</BannerTitle>
+            <PordBannerDisc>
+              <Li
+                style={{
+                  listStyleImage: dot,
+                }}
+              >
+                Helps in building lean muscles
+              </Li>
+              <Li>
+                It is rich in protein supplement with a great taste that
+                provides a rapid increase in strength
+              </Li>
+              <Li>
+                It is an ideal supplement, which aids in providing speed muscle
+                recovery and repair after every workout session
+              </Li>
+              <Li>It contains whole grain carbohydrate blend and zero sugar</Li>
+              <Li>
+                It contains Creatine Ethyl Ester that helps in clean muscle
+                bulking
+              </Li>
+            </PordBannerDisc>
+            <Link
+              to={"/products"}
+              style={{ marginLeft: "20px", marginTop: "10px" }}
+            >
+              <PrimaryButton btnText={"Shop Now"} />
+            </Link>
+          </ProdBanner>
+          <BannerImage src={img} alt="" />
+        </Container>
+      ) : (
+        <Container>
+          <BannerImage src={img} alt="" />
+          <ProdBanner>
+            <BannerTitle>{title}</BannerTitle>
+            <PordBannerDisc>
+              <Li
+                style={{
+                  listStyleImage: dot,
+                }}
+              >
+                Helps in building lean muscles
+              </Li>
+              <Li>
+                It is rich in protein supplement with a great taste that
+                provides a rapid increase in strength
+              </Li>
+              <Li>
+                It is an ideal supplement, which aids in providing speed muscle
+                recovery and repair after every workout session
+              </Li>
+              <Li>It contains whole grain carbohydrate blend and zero sugar</Li>
+              <Li>
+                It contains Creatine Ethyl Ester that helps in clean muscle
+                bulking
+              </Li>
+            </PordBannerDisc>
+            <Link
+              to={"/products"}
+              style={{ marginLeft: "20px", marginTop: "10px" }}
+            >
+              <PrimaryButton btnText={"Shop Now"} />
+              <PrimaryButton btnText={"Shop Now"} />
+            </Link>
+          </ProdBanner>
+        </Container>
+      )}
+    </React.Fragment>
   );
 }
 

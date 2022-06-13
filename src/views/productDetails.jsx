@@ -8,19 +8,19 @@ import Features from "../components/ProductDetails/Features";
 import Price from "../components/ProductDetails/Price";
 import ProdImages from "../components/ProductDetails/ProdImages";
 import useStore from "../store";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 const ProductDetails = () => {
-
-  
   const [step, setStep] = useState(1);
   const addProduct = useStore((state) => state.addProduct);
   const addFeaturedProdById = useStore((state) => state.addFeaturedProdById);
   const updateProduct = useStore((state) => state.updateProduct);
-  const updateFeaturedProduct = useStore((state)=> state.updateFeaturedProduct);
+  const updateFeaturedProduct = useStore(
+    (state) => state.updateFeaturedProduct
+  );
   const param = useParams();
   const getProductById = useStore((state) => state.getProductById);
-  const getFeaturedProdById = useStore((state)=> state.getFeaturedProdById);
+  const getFeaturedProdById = useStore((state) => state.getFeaturedProdById);
   const [product, setProduct] = useState(null);
   const [featuredProductEdit, setFeaturedProductEdit] = useState(null);
 
@@ -31,13 +31,11 @@ const ProductDetails = () => {
       const get = async () => {
         const pr = await getProductById(param.id);
         setProduct(pr);
-        console.log(pr)
+        console.log(pr);
       };
       get();
     }
   }, []);
-
-
 
   let nameRef = useRef();
   let detailsRef = useRef();
@@ -45,40 +43,37 @@ const ProductDetails = () => {
   let mainUrlRef = useRef();
   let [newProductDetails, setNewProductDetails] = useState(null);
 
-
-    let flavourNameRef = useRef();
-    let flavourDescriptionRef = useRef();
-    let flavourIngridientsRef = useRef();
-    let flavourBenefitsRef = useRef();
-    let flavourPriceRef = useRef();
-    let flavourDiscountedPriceRef = useRef();
-    let authCodeRef = useRef();
-    let featuredProductImagesRef = useRef();
-    let [newFeaturedProductDetails, setNewFeaturedProductDetails] = useState(undefined);
-
- 
-
-
+  let flavourNameRef = useRef();
+  let flavourDescriptionRef = useRef();
+  let flavourIngridientsRef = useRef();
+  let flavourBenefitsRef = useRef();
+  let flavourPriceRef = useRef();
+  let flavourDiscountedPriceRef = useRef();
+  let authCodeRef = useRef();
+  let featuredProductImagesRef = useRef();
+  let [newFeaturedProductDetails, setNewFeaturedProductDetails] =
+    useState(undefined);
 
   useEffect(() => {
-    if(step==1 && product?.name && product?.details && product?.weight){
-      nameRef.current.value = product?.name
-      detailsRef.current.value = product?.details
-      weightRef.current.value = product?.weight
+    if (step == 1 && product?.name && product?.details && product?.weight) {
+      nameRef.current.value = product?.name;
+      detailsRef.current.value = product?.details;
+      weightRef.current.value = product?.weight;
     }
-  }, [product])
+  }, [product]);
 
   useEffect(() => {
-   if(step == 2 && featuredProductEdit){
-    flavourNameRef.current.value = featuredProductEdit?.flavour
-    flavourDescriptionRef.current.value = featuredProductEdit?.description
-    flavourIngridientsRef.current.value = featuredProductEdit?.ingredients
-    flavourBenefitsRef.current.value = featuredProductEdit?.benefits
-    flavourPriceRef.current.value = featuredProductEdit?.price
-    flavourDiscountedPriceRef.current.value = featuredProductEdit?.discounted_price
-    authCodeRef.current.value = featuredProductEdit?.auth_code
-   }
-  }, [featuredProductEdit])
+    if (step == 2 && featuredProductEdit) {
+      flavourNameRef.current.value = featuredProductEdit?.flavour;
+      flavourDescriptionRef.current.value = featuredProductEdit?.description;
+      flavourIngridientsRef.current.value = featuredProductEdit?.ingredients;
+      flavourBenefitsRef.current.value = featuredProductEdit?.benefits;
+      flavourPriceRef.current.value = featuredProductEdit?.price;
+      flavourDiscountedPriceRef.current.value =
+        featuredProductEdit?.discounted_price;
+      authCodeRef.current.value = featuredProductEdit?.auth_code;
+    }
+  }, [featuredProductEdit]);
 
   const getProductDetails = (name, details, weight, mainUrl) => {
     const settingProductDetails = {
@@ -86,11 +81,20 @@ const ProductDetails = () => {
       details,
       weight,
       url: mainUrl,
-    }
-    return settingProductDetails
-  }
+    };
+    return settingProductDetails;
+  };
 
-  const getFeaturedProductDetails = (flavour, ingredients, description, benefits, price, discounted_price, auth_code, url) => {
+  const getFeaturedProductDetails = (
+    flavour,
+    ingredients,
+    description,
+    benefits,
+    price,
+    discounted_price,
+    auth_code,
+    url
+  ) => {
     const settingFeaturedProductDetails = {
       flavour,
       ingredients,
@@ -99,184 +103,288 @@ const ProductDetails = () => {
       price,
       discounted_price,
       auth_code,
-      url
-    }
-    return settingFeaturedProductDetails
-  }
+      url,
+    };
+    return settingFeaturedProductDetails;
+  };
 
   const handleFeaturedProductEditChange = async (pid, fpid) => {
-    if(fpid != 'new'){
-      const result = await getFeaturedProdById(pid, fpid)
-      console.log(result)
-      setFeaturedProductEdit(result.gotFeaturedProductById)
+    if (fpid != "new") {
+      const result = await getFeaturedProdById(pid, fpid);
+      console.log(result);
+      setFeaturedProductEdit(result.gotFeaturedProductById);
     } else {
-      setFeaturedProductEdit(undefined)
+      setFeaturedProductEdit(undefined);
     }
-    
-  }
+  };
 
   const changeStep = async () => {
-    if(step != 4){
-        setStep(step + 1)
-    }
-    else if (step == 4 && !product) {
+    if (step != 4) {
+      setStep(step + 1);
+    } else if (step == 4 && !product) {
       // add product logic
-      console.log(newProductDetails)
+      console.log(newProductDetails);
       var productFormData = new FormData();
       productFormData.append("name", newProductDetails.name);
       productFormData.append("weight", newProductDetails.weight);
       productFormData.append("details", newProductDetails.details);
       productFormData.append("url", newProductDetails.url);
-      
+
       const result = await addProduct(productFormData);
 
-      if(result.status == 200 || result.status == 304){
+      if (result.status == 200 || result.status == 304) {
         // add featured product logic
-        console.log(newFeaturedProductDetails)
+        console.log(newFeaturedProductDetails);
         var featuredProductFormData = new FormData();
-        featuredProductFormData.append("flavour", newFeaturedProductDetails.flavour)
-        featuredProductFormData.append("description", newFeaturedProductDetails.description)
-        featuredProductFormData.append("ingredients", newFeaturedProductDetails.ingredients)
-        featuredProductFormData.append("benefits", newFeaturedProductDetails.benefits)
-        featuredProductFormData.append("price", newFeaturedProductDetails.price)
-        featuredProductFormData.append("discounted_price", newFeaturedProductDetails.discounted_price)
-        featuredProductFormData.append("auth_code", newFeaturedProductDetails.auth_code)
-        newFeaturedProductDetails.url.map((ur)=>{
-          featuredProductFormData.append("url", ur)
-        })
-        const fpresult = await addFeaturedProdById(result.data.data._id, featuredProductFormData)
-        console.log(result.data.data._id, fpresult)
-        
-        if(fpresult.status == 200){
+        featuredProductFormData.append(
+          "flavour",
+          newFeaturedProductDetails.flavour
+        );
+        featuredProductFormData.append(
+          "description",
+          newFeaturedProductDetails.description
+        );
+        featuredProductFormData.append(
+          "ingredients",
+          newFeaturedProductDetails.ingredients
+        );
+        featuredProductFormData.append(
+          "benefits",
+          newFeaturedProductDetails.benefits
+        );
+        featuredProductFormData.append(
+          "price",
+          newFeaturedProductDetails.price
+        );
+        featuredProductFormData.append(
+          "discounted_price",
+          newFeaturedProductDetails.discounted_price
+        );
+        featuredProductFormData.append(
+          "auth_code",
+          newFeaturedProductDetails.auth_code
+        );
+        newFeaturedProductDetails.url.map((ur) => {
+          featuredProductFormData.append("url", ur);
+        });
+        const fpresult = await addFeaturedProdById(
+          result.data.data._id,
+          featuredProductFormData
+        );
+        console.log(result.data.data._id, fpresult);
+
+        if (fpresult.status == 200) {
           setStep(1);
-          console.log(result.data)
-          toast.success(result.data.message)
-          if(result.status != 400 || result.status != 404 || result.status != 500){
-            navigate('/admin/product')
+          console.log(result.data);
+          toast.success(result.data.message);
+          if (
+            result.status != 400 ||
+            result.status != 404 ||
+            result.status != 500
+          ) {
+            navigate("/admin/product");
           }
         }
-        if(fpresult.status != 200){
-          toast.error(fpresult.message)
+        if (fpresult.status != 200) {
+          toast.error(fpresult.message);
         }
       }
-
-
     } else if (step == 4 && product) {
-        // setSendingProductDetials Updated Version
-        console.log(newProductDetails)
-        var productFormData = new FormData();
-        productFormData.append("name", newProductDetails.name);
-        productFormData.append("weight", newProductDetails.weight);
-        productFormData.append("details", newProductDetails.details);
-        if(newProductDetails.url?.length > 0){
-          productFormData.append("url", newProductDetails.url);
-        }
-        const result = await updateProduct(product._id, productFormData);
-        toast.success(result.data?.message)
-        
-        if(result.status != 400 || result.status != 404 || result.status != 500){
-          navigate('/admin/product')
-        }
+      // setSendingProductDetials Updated Version
+      console.log(newProductDetails);
+      var productFormData = new FormData();
+      productFormData.append("name", newProductDetails.name);
+      productFormData.append("weight", newProductDetails.weight);
+      productFormData.append("details", newProductDetails.details);
+      if (newProductDetails.url?.length > 0) {
+        productFormData.append("url", newProductDetails.url);
+      }
+      const result = await updateProduct(product._id, productFormData);
+      toast.success(result.data?.message);
 
+      if (
+        result.status != 400 ||
+        result.status != 404 ||
+        result.status != 500
+      ) {
+        navigate("/admin/product");
+      }
     }
 
-    
-
-    if (step == 1){
-      const newProductDetails = getProductDetails(nameRef.current?.value, detailsRef.current?.value, weightRef.current?.value, mainUrlRef.current?.files[0]);
+    if (step == 1) {
+      const newProductDetails = getProductDetails(
+        nameRef.current?.value,
+        detailsRef.current?.value,
+        weightRef.current?.value,
+        mainUrlRef.current?.files[0]
+      );
       setNewProductDetails(newProductDetails);
- 
     }
-    if(step == 2){
-      const urlArr = Object.keys(featuredProductImagesRef.current?.files)
-      const arrUploadUrl = []
-      urlArr.map((url)=>{
-        let urlConfig = {}
-        urlConfig = featuredProductImagesRef.current?.files[url]
-        arrUploadUrl.push(urlConfig)
-      })
-      const settingFeaturedProductDetails = getFeaturedProductDetails(flavourNameRef.current.value,  flavourIngridientsRef.current.value, flavourDescriptionRef.current?.value, flavourBenefitsRef.current?.value,  flavourPriceRef.current?.value, flavourDiscountedPriceRef.current?.value, authCodeRef.current?.value, arrUploadUrl,)
-      setNewFeaturedProductDetails(settingFeaturedProductDetails)
+    if (step == 2) {
+      const urlArr = Object.keys(featuredProductImagesRef.current?.files);
+      const arrUploadUrl = [];
+      urlArr.map((url) => {
+        let urlConfig = {};
+        urlConfig = featuredProductImagesRef.current?.files[url];
+        arrUploadUrl.push(urlConfig);
+      });
+      const settingFeaturedProductDetails = getFeaturedProductDetails(
+        flavourNameRef.current.value,
+        flavourIngridientsRef.current.value,
+        flavourDescriptionRef.current?.value,
+        flavourBenefitsRef.current?.value,
+        flavourPriceRef.current?.value,
+        flavourDiscountedPriceRef.current?.value,
+        authCodeRef.current?.value,
+        arrUploadUrl
+      );
+      setNewFeaturedProductDetails(settingFeaturedProductDetails);
     }
   };
 
   const updateFeaturedProductOnClick = async () => {
-    if(step == 2 && product && featuredProductEdit){
-      const urlArr = Object.keys(featuredProductImagesRef.current?.files)
-      const arrUploadUrl = []
-      urlArr.map((url)=>{
-        let urlConfig = {}
-        urlConfig = featuredProductImagesRef.current?.files[url]
-        arrUploadUrl.push(urlConfig)
-      })
-      const settingFeaturedProductDetails = getFeaturedProductDetails(flavourNameRef.current.value,  flavourIngridientsRef.current.value, flavourDescriptionRef.current?.value, flavourBenefitsRef.current?.value,  flavourPriceRef.current?.value, flavourDiscountedPriceRef.current?.value, authCodeRef.current?.value, arrUploadUrl,)
-      setNewFeaturedProductDetails(settingFeaturedProductDetails)
-     
+    if (step == 2 && product && featuredProductEdit) {
+      const urlArr = Object.keys(featuredProductImagesRef.current?.files);
+      const arrUploadUrl = [];
+      urlArr.map((url) => {
+        let urlConfig = {};
+        urlConfig = featuredProductImagesRef.current?.files[url];
+        arrUploadUrl.push(urlConfig);
+      });
+      const settingFeaturedProductDetails = getFeaturedProductDetails(
+        flavourNameRef.current.value,
+        flavourIngridientsRef.current.value,
+        flavourDescriptionRef.current?.value,
+        flavourBenefitsRef.current?.value,
+        flavourPriceRef.current?.value,
+        flavourDiscountedPriceRef.current?.value,
+        authCodeRef.current?.value,
+        arrUploadUrl
+      );
+      setNewFeaturedProductDetails(settingFeaturedProductDetails);
+
       // update featured product logic
-      console.log(newFeaturedProductDetails)
+      console.log(newFeaturedProductDetails);
       const featuredProductFormData = new FormData();
-      featuredProductFormData.append("flavour", settingFeaturedProductDetails.flavour)
-      featuredProductFormData.append("description", settingFeaturedProductDetails.description)
-      featuredProductFormData.append("ingredients", settingFeaturedProductDetails.ingredients)
-      featuredProductFormData.append("benefits", settingFeaturedProductDetails.benefits)
-      featuredProductFormData.append("price", settingFeaturedProductDetails.price)
-      featuredProductFormData.append("discounted_price", settingFeaturedProductDetails.discounted_price)
-      featuredProductFormData.append("auth_code", settingFeaturedProductDetails.auth_code)
-      if(settingFeaturedProductDetails.url?.length > 0){
-        settingFeaturedProductDetails.url.map((ur)=>{
-          featuredProductFormData.append("url", ur)
-        })
+      featuredProductFormData.append(
+        "flavour",
+        settingFeaturedProductDetails.flavour
+      );
+      featuredProductFormData.append(
+        "description",
+        settingFeaturedProductDetails.description
+      );
+      featuredProductFormData.append(
+        "ingredients",
+        settingFeaturedProductDetails.ingredients
+      );
+      featuredProductFormData.append(
+        "benefits",
+        settingFeaturedProductDetails.benefits
+      );
+      featuredProductFormData.append(
+        "price",
+        settingFeaturedProductDetails.price
+      );
+      featuredProductFormData.append(
+        "discounted_price",
+        settingFeaturedProductDetails.discounted_price
+      );
+      featuredProductFormData.append(
+        "auth_code",
+        settingFeaturedProductDetails.auth_code
+      );
+      if (settingFeaturedProductDetails.url?.length > 0) {
+        settingFeaturedProductDetails.url.map((ur) => {
+          featuredProductFormData.append("url", ur);
+        });
       }
-     
-        const fpresult = await updateFeaturedProduct(product._id, featuredProductEdit._id, featuredProductFormData)
-        console.log(fpresult)
-      
-        if(fpresult.status == 200){
-          toast.success("Product Updated")
-        }
-        if(fpresult.status != 200){
-          toast.error(fpresult.message)
-        }
+
+      const fpresult = await updateFeaturedProduct(
+        product._id,
+        featuredProductEdit._id,
+        featuredProductFormData
+      );
+      console.log(fpresult);
+
+      if (fpresult.status == 200) {
+        toast.success("Product Updated");
+      }
+      if (fpresult.status != 200) {
+        toast.error(fpresult.message);
       }
     }
+  };
 
-    const addNewFeaturedProductEdit = async () => {
-      if(step == 2 && product){
-        const urlArr = Object.keys(featuredProductImagesRef.current?.files)
-        const arrUploadUrl = []
-        urlArr.map((url)=>{
-          let urlConfig = {}
-          urlConfig = featuredProductImagesRef.current?.files[url]
-          arrUploadUrl.push(urlConfig)
-        })
-        const settingFeaturedProductDetails = getFeaturedProductDetails(flavourNameRef.current.value,  flavourIngridientsRef.current.value, flavourDescriptionRef.current?.value, flavourBenefitsRef.current?.value,  flavourPriceRef.current?.value, flavourDiscountedPriceRef.current?.value, authCodeRef.current?.value, arrUploadUrl,)
-        setNewFeaturedProductDetails(settingFeaturedProductDetails)
-       
-        // update featured product logic
-        console.log(newFeaturedProductDetails)
-        const featuredProductFormData = new FormData();
-        featuredProductFormData.append("flavour", settingFeaturedProductDetails.flavour)
-        featuredProductFormData.append("description", settingFeaturedProductDetails.description)
-        featuredProductFormData.append("ingredients", settingFeaturedProductDetails.ingredients)
-        featuredProductFormData.append("benefits", settingFeaturedProductDetails.benefits)
-        featuredProductFormData.append("price", settingFeaturedProductDetails.price)
-        featuredProductFormData.append("discounted_price", settingFeaturedProductDetails.discounted_price)
-        featuredProductFormData.append("auth_code", settingFeaturedProductDetails.auth_code)
-        settingFeaturedProductDetails.url.map((ur)=>{
-          featuredProductFormData.append("url", ur)
-        })
-          const fpresult = await addFeaturedProdById(product._id, featuredProductFormData)
-          console.log(fpresult)
-        
-          if(fpresult.status == 200){
-            toast.success("Product Updated")
-          }
-          if(fpresult.status != 200){
-            toast.error(fpresult.message)
-          }
-        }
+  const addNewFeaturedProductEdit = async () => {
+    if (step == 2 && product) {
+      const urlArr = Object.keys(featuredProductImagesRef.current?.files);
+      const arrUploadUrl = [];
+      urlArr.map((url) => {
+        let urlConfig = {};
+        urlConfig = featuredProductImagesRef.current?.files[url];
+        arrUploadUrl.push(urlConfig);
+      });
+      const settingFeaturedProductDetails = getFeaturedProductDetails(
+        flavourNameRef.current.value,
+        flavourIngridientsRef.current.value,
+        flavourDescriptionRef.current?.value,
+        flavourBenefitsRef.current?.value,
+        flavourPriceRef.current?.value,
+        flavourDiscountedPriceRef.current?.value,
+        authCodeRef.current?.value,
+        arrUploadUrl
+      );
+      setNewFeaturedProductDetails(settingFeaturedProductDetails);
+
+      // update featured product logic
+      console.log(newFeaturedProductDetails);
+      const featuredProductFormData = new FormData();
+      featuredProductFormData.append(
+        "flavour",
+        settingFeaturedProductDetails.flavour
+      );
+      featuredProductFormData.append(
+        "description",
+        settingFeaturedProductDetails.description
+      );
+      featuredProductFormData.append(
+        "ingredients",
+        settingFeaturedProductDetails.ingredients
+      );
+      featuredProductFormData.append(
+        "benefits",
+        settingFeaturedProductDetails.benefits
+      );
+      featuredProductFormData.append(
+        "price",
+        settingFeaturedProductDetails.price
+      );
+      featuredProductFormData.append(
+        "discounted_price",
+        settingFeaturedProductDetails.discounted_price
+      );
+      featuredProductFormData.append(
+        "auth_code",
+        settingFeaturedProductDetails.auth_code
+      );
+      settingFeaturedProductDetails.url.map((ur) => {
+        featuredProductFormData.append("url", ur);
+      });
+      const fpresult = await addFeaturedProdById(
+        product._id,
+        featuredProductFormData
+      );
+      console.log(fpresult);
+
+      if (fpresult.status == 200) {
+        toast.success("Product Updated");
       }
-  
+      if (fpresult.status != 200) {
+        toast.error(fpresult.message);
+      }
+    }
+  };
 
   const NavHead = styled.div`
     width: 80%;
@@ -332,29 +440,23 @@ const ProductDetails = () => {
   `;
 
   const SetFpi = styled.div`
-  background: #f9fafa;
-  border-radius: 4px;
-  border: 1px solid #b5bdc4;
-  margin-bottom: 5px;
-  outline: none;
-  width: 150px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer
+    background: #f9fafa;
+    border-radius: 4px;
+    border: 1px solid #b5bdc4;
+    margin-bottom: 5px;
+    outline: none;
+    width: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
   `;
-
-
-
-
-
 
   return (
     <>
-
-
       <NavHead>
-        <p
+        <Link
+          to="/admin/dashboard"
           style={{
             fontWeight: "400",
             fontSize: "14px",
@@ -362,7 +464,7 @@ const ProductDetails = () => {
           }}
         >
           Admin/
-        </p>
+        </Link>
         <p style={{ fontWeight: "500" }}>Product</p>
       </NavHead>
       <ProductDdetailsPageContainer>
@@ -376,23 +478,59 @@ const ProductDetails = () => {
               mainUrlRef={mainUrlRef}
               product={product}
             />
-          ) : step == 2 ? ( product ? <React.Fragment>
-            <Features setStep={setStep} flavourNameRef={flavourNameRef} flavourDescriptionRef={flavourDescriptionRef} flavourIngridientsRef={flavourIngridientsRef} flavourPriceRef={flavourPriceRef} flavourDiscountedPriceRef={flavourDiscountedPriceRef} authCodeRef={authCodeRef} featuredProductImagesRef={featuredProductImagesRef} flavourBenefitsRef={flavourBenefitsRef} getFeaturedProductDetails={getFeaturedProductDetails} updateFeaturedProductOnClick={updateFeaturedProductOnClick} edit={true} addNewFeaturedProductEdit={addNewFeaturedProductEdit} featuredProductEdit={featuredProductEdit} />
-            
-            <SetFpi onClick={()=>{
-                handleFeaturedProductEditChange(product._id, 'new');
-              }}>
-                <p>New Featured Product</p>
-              </SetFpi>
-          
-           {product.featured_product_id.map((fpi)=>( <SetFpi onClick={()=>{
-             handleFeaturedProductEditChange(product._id, fpi._id)
-           }}>
-             <p>{fpi.flavour}</p>
-              </SetFpi>))}
-             
-          </React.Fragment> :
-            <Features setStep={setStep} flavourNameRef={flavourNameRef} flavourDescriptionRef={flavourDescriptionRef} flavourIngridientsRef={flavourIngridientsRef} flavourPriceRef={flavourPriceRef} flavourDiscountedPriceRef={flavourDiscountedPriceRef} authCodeRef={authCodeRef} featuredProductImagesRef={featuredProductImagesRef} flavourBenefitsRef={flavourBenefitsRef} getFeaturedProductDetails={getFeaturedProductDetails} edit={false} />
+          ) : step == 2 ? (
+            product ? (
+              <React.Fragment>
+                <Features
+                  setStep={setStep}
+                  flavourNameRef={flavourNameRef}
+                  flavourDescriptionRef={flavourDescriptionRef}
+                  flavourIngridientsRef={flavourIngridientsRef}
+                  flavourPriceRef={flavourPriceRef}
+                  flavourDiscountedPriceRef={flavourDiscountedPriceRef}
+                  authCodeRef={authCodeRef}
+                  featuredProductImagesRef={featuredProductImagesRef}
+                  flavourBenefitsRef={flavourBenefitsRef}
+                  getFeaturedProductDetails={getFeaturedProductDetails}
+                  updateFeaturedProductOnClick={updateFeaturedProductOnClick}
+                  edit={true}
+                  addNewFeaturedProductEdit={addNewFeaturedProductEdit}
+                  featuredProductEdit={featuredProductEdit}
+                />
+
+                <SetFpi
+                  onClick={() => {
+                    handleFeaturedProductEditChange(product._id, "new");
+                  }}
+                >
+                  <p>New Featured Product</p>
+                </SetFpi>
+
+                {product.featured_product_id.map((fpi) => (
+                  <SetFpi
+                    onClick={() => {
+                      handleFeaturedProductEditChange(product._id, fpi._id);
+                    }}
+                  >
+                    <p>{fpi.flavour}</p>
+                  </SetFpi>
+                ))}
+              </React.Fragment>
+            ) : (
+              <Features
+                setStep={setStep}
+                flavourNameRef={flavourNameRef}
+                flavourDescriptionRef={flavourDescriptionRef}
+                flavourIngridientsRef={flavourIngridientsRef}
+                flavourPriceRef={flavourPriceRef}
+                flavourDiscountedPriceRef={flavourDiscountedPriceRef}
+                authCodeRef={authCodeRef}
+                featuredProductImagesRef={featuredProductImagesRef}
+                flavourBenefitsRef={flavourBenefitsRef}
+                getFeaturedProductDetails={getFeaturedProductDetails}
+                edit={false}
+              />
+            )
           ) : step == 3 ? (
             <Price setStep={setStep} />
           ) : step == 4 ? (
@@ -408,19 +546,19 @@ const ProductDetails = () => {
             ? "Update Product"
             : "Next"}
         </NextButton>
-        {
-          step == 4 &&  <NextButton onClick={()=>{
-            navigate('/admin/product')
-          }}>
+        {step == 4 && (
+          <NextButton
+            onClick={() => {
+              navigate("/admin/product");
+            }}
+          >
             Cancel
           </NextButton>
-        }
-       
+        )}
       </ProductDdetailsPageContainer>
       <Footer />
     </>
-  )
-
+  );
 };
 
 export default ProductDetails;

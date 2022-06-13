@@ -9,6 +9,7 @@ import useStore from "../store";
 import Loading from "../components/Atoms/Loading";
 import { Link, useParams, useSearchParams } from "react-router-dom";
 import { searchFunction } from "../utils/searchFunction";
+import NoResult from "../assets/images/noresult.gif";
 const AllProducts = () => {
   const ProductContainer = styled.div`
     width: 80%;
@@ -53,49 +54,56 @@ const AllProducts = () => {
       justify-content: center;
     }
   `;
+  const NoResultContainer = styled.div`
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  `;
+  const NoResultImg = styled.img``;
 
   const [searchParams, setSearchParams] = useSearchParams();
 
   const querry = searchParams.get("q");
 
-
-
   const allProducts = useStore((state) => state.AllProducts);
   const getAllProducts = useStore((state) => state.getAllProduct);
 
-  const [productList, setProductList] = useState()
-  const [featuredProductList, setFeturedProductList] = useState()
+  const [productList, setProductList] = useState([]);
+  const [featuredProductList, setFeturedProductList] = useState();
   const [loading, setLoading] = useState();
 
-
   const getProdcuts = async () => {
-    setLoading(true)
-    const result = await  getAllProducts();
+    setLoading(true);
+    const result = await getAllProducts();
     const finalSearchedData = searchFunction(querry, result.data.data);
-    setProductList(finalSearchedData)
+    setProductList(finalSearchedData);
     const fpListTemp = [];
-    result.data.data.map((product)=> {
-      product.featured_product_id.map((fp)=>{
+    result.data.data.map((product) => {
+      product.featured_product_id.map((fp) => {
         fpListTemp.push(fp);
-      })
-    })
+      });
+    });
     setFeturedProductList(fpListTemp);
-    setLoading(false)
-  }
+    setLoading(false);
+  };
 
   useEffect(() => {
-    getProdcuts();
+    if (productList?.length == 0) {
+      console.log("hello", productList);
+      getProdcuts();
+    }
   }, [querry]);
 
   return (
     <>
-
-
       <ProductContainer>
         <ProductContainerHead>
           <ProductHeadLeft>
             <CurrentUrlContainer>
-              <p
+              <Link
+                to="/"
                 style={{
                   fontWeight: "400",
                   fontSize: "14px",
@@ -103,25 +111,43 @@ const AllProducts = () => {
                 }}
               >
                 Home
+              </Link>
+              <p style={{ fontWeight: "500" }}>
+                /
+                <Link style={{ color: "black" }} to="/products">
+                  All Products
+                </Link>
               </p>
-              <p style={{ fontWeight: "500" }}>/<Link style={{color: "black"}} to="/products">All Products</Link></p>
             </CurrentUrlContainer>
             <p style={{ fontWeight: "500" }}>Showing all results</p>
           </ProductHeadLeft>
           <FilterBox>Showing All Results</FilterBox>
         </ProductContainerHead>
-        {loading ? <Loading /> : <BestSellerProd>
-          {productList ? productList?.map((prod) => (prod.featured_product_id.map((fpid)=>(<ProductCard
-      price={fpid.discounted_price}
-      originalPrice={fpid.price}
-      type={fpid.flavour}
-      title={prod.name}
-      productImage={prod.main_url}
-      id={prod._id}
-      fpidFromProductPage={fpid._id}
-    />)))
-          ) : <Loading />}
-        </BestSellerProd>}
+        {loading ? (
+          <Loading />
+        ) : (
+          <BestSellerProd>
+            {productList.length > 0 ? (
+              productList?.map((prod) =>
+                prod.featured_product_id.map((fpid) => (
+                  <ProductCard
+                    price={fpid.discounted_price}
+                    originalPrice={fpid.price}
+                    type={fpid.flavour}
+                    title={prod.name}
+                    productImage={prod.main_url}
+                    id={prod._id}
+                    fpidFromProductPage={fpid._id}
+                  />
+                ))
+              )
+            ) : (
+              <NoResultContainer>
+                <NoResultImg src={NoResult} />
+              </NoResultContainer>
+            )}
+          </BestSellerProd>
+        )}
       </ProductContainer>
       <div
         style={{
@@ -133,7 +159,7 @@ const AllProducts = () => {
       >
         {/* <PrimaryButton btnText={"Load More"} /> */}
       </div>
-      <Footer />
+      {/* <Loading /> */}
     </>
   );
 };
