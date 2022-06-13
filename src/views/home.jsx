@@ -25,9 +25,14 @@ import Loading from "../components/Atoms/Loading";
 
 const Home = () => {
   const loginUser = useStore((state) => state.LoginUser);
+  const login = useStore((state) => state.login);
   const getFeaturedProdById = useStore((state) => state.getFeaturedProdById);
   console.log(loginUser);
-
+  useEffect(() => {
+    if (!loginUser) {
+      login({ isDummy: true });
+    }
+  }, []);
   // api calls for 4 products later will be changed to api calls for all data
 
   const [products, setProducts] = useState();
