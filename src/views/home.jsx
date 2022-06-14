@@ -22,6 +22,10 @@ import CommentDivider from "../components/PageDivider/CommentDivider";
 import { Carousel } from "antd";
 import Banner1 from "../assets/images/banner1.jpeg";
 import Loading from "../components/Atoms/Loading";
+import bn1 from '../assets/images/bn1.jpg';
+import bn2 from '../assets/images/bn2.jpg';
+import bn3 from '../assets/images/bn3.jpg';
+
 
 const Home = () => {
   const loginUser = useStore((state) => state.LoginUser);
@@ -224,9 +228,21 @@ const Home = () => {
           style={{ width: "100vw", objectFit: "cover" }}
         ></img> */}
         <Carousel autoplay>
-          <div>
+        <div>
             <img
               src={HeaderMain}
+              style={{ width: "100vw", objectFit: "cover" }}
+            ></img>
+          </div>
+          <div>
+            <img
+              src={bn1}
+              style={{ width: "100vw", objectFit: "cover" }}
+            ></img>
+          </div>
+          <div>
+            <img
+              src={bn2}
               style={{ width: "100vw", objectFit: "cover" }}
             ></img>
           </div>
@@ -342,7 +358,7 @@ const Home = () => {
       <CommentDivider />
       <MainHeadContainer>
         <img
-          src={HeaderMain}
+          src={bn3}
           style={{ width: "100%", objectFit: "cover" }}
         ></img>
       </MainHeadContainer>
