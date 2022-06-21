@@ -11,6 +11,10 @@ import { Link, useParams, useSearchParams } from "react-router-dom";
 import { searchFunction } from "../utils/searchFunction";
 import NoResult from "../assets/images/noresult.gif";
 const AllProducts = () => {
+  const setActiveNav = useStore((state) => state.setActiveNav);
+  useEffect(() => {
+    setActiveNav("/products");
+  });
   const ProductContainer = styled.div`
     width: 80%;
     // border: 1px solid black;
@@ -77,9 +81,12 @@ const AllProducts = () => {
   const getProdcuts = async () => {
     setLoading(true);
     const result = await getAllProducts();
-    console.log(result)
+    console.log(result);
     const finalSearchedData = searchFunction(querry, result.data.data);
     setProductList(finalSearchedData);
+    if (productList.length == result.data.data) {
+      setActiveNav(querry);
+    }
     const fpListTemp = [];
     result.data.data.map((product) => {
       product.featured_product_id.map((fp) => {

@@ -17,35 +17,32 @@ import MassGainer5KG from "../assets/images/Massgainer5kg.png";
 import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import useStore from "../store";
 import { checkAuth } from "../utils/checkAuth";
-import Loading from '../components/Atoms/Loading'
+import Loading from "../components/Atoms/Loading";
 import { toast } from "react-toastify";
 import NoDataFound from "../components/Atoms/NoDataFound";
 import ReviewEditCard from "../components/CustomerReview/ReviewEditCard";
 
-
-
-const ProductPage = ({fpidFromProductPage}) => {
+const ProductPage = ({ fpidFromProductPage }) => {
   const [overviewFlag, setOverviewFlag] = useState(false);
   const [benefitsFlag, setBenefitsFlag] = useState(false);
   const [ingredientFlag, setIngredientFlag] = useState(false);
 
   const reviewSubmitRef = useRef();
 
-  let [qty, setQty]  = useState(1);
+  let [qty, setQty] = useState(1);
 
   const param = useParams();
- 
+
   const getProductById = useStore((state) => state.getProductById);
   const getFeaturedProdBYid = useStore((state) => state.getFeaturedProdById);
   const getReviewById = useStore((state) => state.getAllReviewsById);
-  const fetchUser = useStore((state)=> state.fetchUser);
-  const addReviewsById = useStore((state)=> state.addReviewsById);
+  const fetchUser = useStore((state) => state.fetchUser);
+  const addReviewsById = useStore((state) => state.addReviewsById);
   const user = useStore((state) => state.LoginUser);
   const addToCart = useStore((state) => state.addToCart);
   const AllReviews = useStore((state) => state.AllReviewsById);
   const ProductById = useStore((state) => state.Product);
   const login = useStore((state) => state.login);
-
 
   const [product, setProduct] = useState({});
   const [featuredproduct, setFeaturedProduct] = useState({});
@@ -54,158 +51,153 @@ const ProductPage = ({fpidFromProductPage}) => {
   const [reviewData, setReviewData] = useState(null);
   const [userData, setUserData] = useState(null);
 
-  const [loading, setLoading] = useState(true)
-  const [loadingReview, setLoadingReview] = useState(true)
-  const [reviewNotFound, setreviewNotFound] = useState(null)
+  const [loading, setLoading] = useState(true);
+  const [loadingReview, setLoadingReview] = useState(true);
+  const [reviewNotFound, setreviewNotFound] = useState(null);
 
   const navigate = useNavigate();
 
   const get = async () => {
-    setLoading(true)
-      const pr = await getProductById(param.id);
-      setProduct(pr);
-      const fpr = await getFeaturedProdBYid(
-        param.id,
-        param.fpidFromProductPage
-      );
-      setFeaturedProduct(fpr);
-      setFeaturedProductList(pr.featured_product_id)  
-      setLoading(false)
-  }
+    setLoading(true);
+    const pr = await getProductById(param.id);
+    setProduct(pr);
+    const fpr = await getFeaturedProdBYid(param.id, param.fpidFromProductPage);
+    setFeaturedProduct(fpr);
+    setFeaturedProductList(pr.featured_product_id);
+    setLoading(false);
+  };
 
   const getReviews = async () => {
-    setLoadingReview(true)
-    const reviews = await getReviewById(param.id)
-    if(reviews.response?.status == 404){
+    setLoadingReview(true);
+    const reviews = await getReviewById(param.id);
+    if (reviews.response?.status == 404) {
       setreviewNotFound(reviews.response.data.message);
-      setLoadingReview(false)
+      setLoadingReview(false);
     }
-    if(reviews.status != 500 || reviews.status != 404){
-      setReviewData(reviews.data?.data)
-      setLoadingReview(false)
+    if (reviews.status != 500 || reviews.status != 404) {
+      setReviewData(reviews.data?.data);
+      setLoadingReview(false);
     }
-    setLoadingReview(false)
-  }
+    setLoadingReview(false);
+  };
 
   const fetchCurrentUser = async () => {
-      const user = await fetchUser();
-      setUserData(user.data.data);
-  }
- 
+    const user = await fetchUser();
+    setUserData(user.data.data);
+  };
+
   useEffect(() => {
-      get();
-      getReviews();
+    get();
+    getReviews();
   }, []);
-  
+
   useEffect(() => {
-    if(checkAuth()){
+    if (checkAuth()) {
       fetchCurrentUser();
     }
-  }, [])
+  }, []);
 
-  const [starCount, setStarCount] = useState(0)
-  const [starCount1, setStarCount1] = useState(0)
-  const [starCount2, setStarCount2] = useState(0)
-  const [starCount3, setStarCount3] = useState(0)
-  const [starCount4, setStarCount4] = useState(0)
-  const [starCount5, setStarCount5] = useState(0)
+  const [starCount, setStarCount] = useState(0);
+  const [starCount1, setStarCount1] = useState(0);
+  const [starCount2, setStarCount2] = useState(0);
+  const [starCount3, setStarCount3] = useState(0);
+  const [starCount4, setStarCount4] = useState(0);
+  const [starCount5, setStarCount5] = useState(0);
 
   // review counter system
   useEffect(() => {
-    let count = 0
-    let count1 = 0
-    let count2 = 0
-    let count3 = 0
-    let count4 = 0
-    let count5 = 0
-    reviewData?.map((review)=>{
-      if(review.rating == 1){
-        count1 += 1
+    let count = 0;
+    let count1 = 0;
+    let count2 = 0;
+    let count3 = 0;
+    let count4 = 0;
+    let count5 = 0;
+    reviewData?.map((review) => {
+      if (review.rating == 1) {
+        count1 += 1;
       }
-      if(review.rating == 2){
-        count2 += 1
+      if (review.rating == 2) {
+        count2 += 1;
       }
-      if(review.rating == 3){
-        count3 += 1
+      if (review.rating == 3) {
+        count3 += 1;
       }
-      if(review.rating == 4){
-        count4 += 1
+      if (review.rating == 4) {
+        count4 += 1;
       }
-      if(review.rating == 5){
-        count5 += 1
+      if (review.rating == 5) {
+        count5 += 1;
       }
-      count += review.rating  
-    })
-    setStarCount(count)
-    setStarCount1(count1)
-    setStarCount2(count2)
-    setStarCount3(count3)
-    setStarCount4(count4)
-    setStarCount5(count5)
-  }, [reviewData])
-
+      count += review.rating;
+    });
+    setStarCount(count);
+    setStarCount1(count1);
+    setStarCount2(count2);
+    setStarCount3(count3);
+    setStarCount4(count4);
+    setStarCount5(count5);
+  }, [reviewData]);
 
   const handleAddToCart = async () => {
-    if(checkAuth()){
-      setLoading(true)
+    if (checkAuth()) {
+      setLoading(true);
       const guest = false;
       const AuthToken = undefined;
-      const pid = product._id
-      const fpid = featuredproduct.gotFeaturedProductById?._id
-      const result = await addToCart(fpid, pid, qty, guest, AuthToken)
-      if(result.staus != 404 || result.status != 500){
-        toast.success("Product Successfully Added to Cart")
-        navigate("/cart")
-        setLoading(false)
+      const pid = product._id;
+      const fpid = featuredproduct.gotFeaturedProductById?._id;
+      const result = await addToCart(fpid, pid, qty, guest, AuthToken);
+      if (result.staus != 404 || result.status != 500) {
+        toast.success("Product Successfully Added to Cart");
+        navigate("/cart");
+        setLoading(false);
       } else {
-        toast.error(result.data.message)
-        setLoading(false)
+        toast.error(result.data.message);
+        setLoading(false);
       }
     } else {
-      const resultLogin = await login({ isDummy: true })
-      console.log(resultLogin.data.data.data.AccessToken)
-      if(resultLogin){
-        setLoading(true)
+      const resultLogin = await login({ isDummy: true });
+      console.log(resultLogin.data.data.data.AccessToken);
+      if (resultLogin) {
+        setLoading(true);
         const AuthToken = resultLogin.data.data.data.AccessToken;
         const guest = true;
-        const pid = product._id
-        const fpid = featuredproduct.gotFeaturedProductById?._id
-        const result = await addToCart(fpid, pid, qty, guest, AuthToken)
-        if(result.staus != 404 || result.status != 500){
-          toast.success("Product Successfully Added to Cart")
-          navigate("/cart")
-          setLoading(false)
+        const pid = product._id;
+        const fpid = featuredproduct.gotFeaturedProductById?._id;
+        const result = await addToCart(fpid, pid, qty, guest, AuthToken);
+        if (result.staus != 404 || result.status != 500) {
+          toast.success("Product Successfully Added to Cart");
+          navigate("/cart");
+          setLoading(false);
         } else {
-          toast.error(result.data.message)
-          setLoading(false)
+          toast.error(result.data.message);
+          setLoading(false);
         }
       }
     }
-  }
+  };
 
-  const [ratingStars, setRatingStars] = useState(4)
+  const [ratingStars, setRatingStars] = useState(4);
 
   const handleSubmitReview = async () => {
-    const pid = product?._id
-    const fpid = featuredproduct.gotFeaturedProductById?._id
+    const pid = product?._id;
+    const fpid = featuredproduct.gotFeaturedProductById?._id;
     const config = {
       rating: ratingStars,
-      review_desc : reviewSubmitRef.current?.value
-    }
-    if(reviewSubmitRef.current?.value != '' && reviewSubmitRef.current?.value && reviewSubmitRef.current?.value.length > 5){
-      const result = await addReviewsById(pid, config)
-      if(result.status != 404 || result.status != 500){
-        toast.success(result.data.message)
+      review_desc: reviewSubmitRef.current?.value,
+    };
+    if (
+      reviewSubmitRef.current?.value != "" &&
+      reviewSubmitRef.current?.value &&
+      reviewSubmitRef.current?.value.length > 5
+    ) {
+      const result = await addReviewsById(pid, config);
+      if (result.status != 404 || result.status != 500) {
+        toast.success(result.data.message);
       }
+    } else {
+      toast.error("Write Something to submit a review, atleast 3 words");
     }
-    else {
-      toast.error("Write Something to submit a review, atleast 3 words")
-    }
-  }
-
-
-
-
+  };
 
   const MainContainer = styled.div`
     height: max-content;
@@ -236,7 +228,7 @@ const ProductPage = ({fpidFromProductPage}) => {
     margin-bottom: 20px;
     width: 30vw;
     height: 43vh !important;
-    @media(max-width: 820px){
+    @media (max-width: 820px) {
       width: 300px;
     }
   `;
@@ -255,21 +247,20 @@ const ProductPage = ({fpidFromProductPage}) => {
   const ProductImage = styled.img`
     width: 30vw;
     height: 40vh !important;
-    @media(max-width: 820px){
+    @media (max-width: 820px) {
       width: 300px;
       height: 300px !important;
     }
-  
   `;
 
   const SingleImageContainer = styled.div`
-  width: 30vw;
-  height: 40vh !important;
-  @media(max-width: 820px){
-    width: 300px;
-    height: 300px !important;
-  }
-`
+    width: 30vw;
+    height: 40vh !important;
+    @media (max-width: 820px) {
+      width: 300px;
+      height: 300px !important;
+    }
+  `;
 
   const Arrow = styled.img`
     height: 33px;
@@ -505,7 +496,7 @@ const ProductPage = ({fpidFromProductPage}) => {
     font-weight: 700;
     font-size: 40px;
     text-align: center;
-    @media(max-width: 820px){
+    @media (max-width: 820px) {
       font-size: 20px;
     }
   `;
@@ -525,298 +516,361 @@ const ProductPage = ({fpidFromProductPage}) => {
     flex-wrap: wrap;
   `;
 
-  const ReviewSubmitButton = styled.a`
-  
-  `
+  const ReviewSubmitButton = styled.a``;
 
   const ReviewSubmitContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  `
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  `;
 
   const NoReviews = styled.p`
     margin: 0.5rem 0;
-  `
-
-
+  `;
 
   const handleFeatureChnage = async (fp) => {
-    
     // get featured product and set it
     setLoading(true);
-    const fpr = await getFeaturedProdBYid(
-      param.id,
-      fp._id
-    );
+    const fpr = await getFeaturedProdBYid(param.id, fp._id);
     setFeaturedProduct(fpr);
-    setLoading(false)
-      console.log(fpr)
-  }
-
-
+    setLoading(false);
+    console.log(fpr);
+  };
 
   return (
     <React.Fragment>
+      {loading ? (
+        <Loading />
+      ) : (
+        <>
+          <MainContainer>
+            <Container>
+              <ProductContainerLeft>
+                <ProductImageContainer>
+                  {/* <Arrow src={leftarr} /> */}
 
+                  <Carousel autoplay dotPosition={"left"} effect="fade">
+                    {featuredproduct?.gotFeaturedProductById?.url.map(
+                      (imgUrl) => (
+                        <SingleImageContainer>
+                          <ProductImage src={imgUrl} />
+                        </SingleImageContainer>
+                      )
+                    )}
+                  </Carousel>
 
-    {loading ? <Loading /> : <> 
-    
+                  {/* <Arrow src={rightarr} /> */}
+                </ProductImageContainer>
+                <Overview>
+                  <OverviewTitleContainer>
+                    <OverviewTitle>Overview</OverviewTitle>
+                    <ArrowUp
+                      src={overviewFlag ? arrowup : arrowdown}
+                      onClick={() => {
+                        setOverviewFlag(!overviewFlag);
+                      }}
+                    />
+                  </OverviewTitleContainer>
+                  {overviewFlag ? <p>{product.details}</p> : ""}
+                </Overview>
+                <Overview>
+                  <OverviewTitleContainer>
+                    <OverviewTitle>Benefits</OverviewTitle>
+                    <ArrowUp
+                      src={benefitsFlag ? arrowup : arrowdown}
+                      onClick={() => {
+                        setBenefitsFlag(!benefitsFlag);
+                      }}
+                    />
+                  </OverviewTitleContainer>
+                  {benefitsFlag ? (
+                    <p>
+                      {featuredproduct?.gotFeaturedProductById?.benefits
+                        .split(",")
+                        .map((bnft) => (
+                          <li>{bnft}</li>
+                        ))}
+                    </p>
+                  ) : (
+                    ""
+                  )}
+                </Overview>
+                <Overview>
+                  <OverviewTitleContainer>
+                    <OverviewTitle>Ingredients</OverviewTitle>
+                    <ArrowUp
+                      src={ingredientFlag ? arrowup : arrowdown}
+                      onClick={() => {
+                        setIngredientFlag(!ingredientFlag);
+                      }}
+                    />
+                  </OverviewTitleContainer>
+                  {ingredientFlag ? (
+                    <p>
+                      {featuredproduct?.gotFeaturedProductById?.ingredients}
+                    </p>
+                  ) : (
+                    ""
+                  )}
+                </Overview>
+              </ProductContainerLeft>
+              <ProductContainerRight>
+                <DetailTitle>
+                  {product?.name +
+                    " " +
+                    featuredproduct?.gotFeaturedProductById?.flavour}{" "}
+                  ( {product?.weight}KG )
+                </DetailTitle>
+                <Price>
+                  <StrikedPrice>
+                    Rs. {featuredproduct?.gotFeaturedProductById?.price}
+                  </StrikedPrice>
+                  <DiscountPrice>
+                    Rs.{" "}
+                    {featuredproduct?.gotFeaturedProductById?.discounted_price}
+                  </DiscountPrice>
+                  <SavePrice>
+                    Save Rs.{" "}
+                    {featuredproduct?.gotFeaturedProductById?.price -
+                      featuredproduct?.gotFeaturedProductById?.discounted_price}
+                  </SavePrice>
+                </Price>
+                <FeatureContainer>
+                  {featuredProductList?.map((fp) => (
+                    <FeatureButton
+                      onClick={() => {
+                        handleFeatureChnage(fp);
+                      }}
+                    >
+                      {fp.flavour}
+                    </FeatureButton>
+                  ))}
+                </FeatureContainer>
+                {reviewData?.length > 0 ? (
+                  <RatingContainer>
+                    <ReactStars
+                      count={5}
+                      // onChange={ratingChanged}
+                      size={32}
+                      value={Math.floor(starCount / reviewData?.length)}
+                      edit={false}
+                      activeColor="#ffd700"
+                      style={{
+                        display: "flex",
+                        alignitem: "center",
+                      }}
+                    />
+                    <Reviews>{reviewData?.length} Reviews</Reviews>
+                  </RatingContainer>
+                ) : (
+                  <NoReviews>No Reviews Yet</NoReviews>
+                )}
+                <Divider />
+                <MoreFeatures>
+                  <ul>
+                    {featuredproduct?.gotFeaturedProductById?.description
+                      .split(",")
+                      .map((desc) => (
+                        <FeatureLI>{desc}</FeatureLI>
+                      ))}
+                  </ul>
+                </MoreFeatures>
+                <Divider />
+                <BottomContainer>
+                  <QuantityContainer>
+                    <QuantityText>Quantity</QuantityText>
+                    <Quantity>
+                      <AddItem
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setQty(qty + 1);
+                        }}
+                      >
+                        {" "}
+                        +{" "}
+                      </AddItem>
+                      <QValue>{qty}</QValue>
+                      <RemoveItem
+                        onClick={(e) => {
+                          e.preventDefault();
+                          if (qty > 1) {
+                            setQty(qty - 1);
+                          }
+                        }}
+                      >
+                        {" "}
+                        -{" "}
+                      </RemoveItem>
+                    </Quantity>
+                  </QuantityContainer>
+                  <AddToBasketButton
+                    onClick={() => {
+                      handleAddToCart();
+                    }}
+                  >
+                    Add to Basket
+                  </AddToBasketButton>
+                </BottomContainer>
+              </ProductContainerRight>
+            </Container>
 
-      <MainContainer>
-        <Container>
-          <ProductContainerLeft>
-            <ProductImageContainer>
-              {/* <Arrow src={leftarr} /> */}
-              
-                <Carousel autoplay dotPosition={'left'} effect="fade">
-                    {featuredproduct?.gotFeaturedProductById?.url.map((imgUrl)=>( <SingleImageContainer>
-                      <ProductImage src={imgUrl} />
-                    </SingleImageContainer>))}
-                </Carousel>
-              
-              {/* <Arrow src={rightarr} /> */}
-            </ProductImageContainer>
-            <Overview>
-              <OverviewTitleContainer>
-                <OverviewTitle>Overview</OverviewTitle>
-                <ArrowUp
-                  src={overviewFlag ? arrowup : arrowdown}
-                  onClick={() => {
-                    setOverviewFlag(!overviewFlag);
-                  }}
-                />
-              </OverviewTitleContainer>
-              {overviewFlag ? <p>{product.details}</p> : ""}
-            </Overview>
-            <Overview>
-              <OverviewTitleContainer>
-                <OverviewTitle>Benefits</OverviewTitle>
-                <ArrowUp
-                  src={benefitsFlag ? arrowup : arrowdown}
-                  onClick={() => {
-                    setBenefitsFlag(!benefitsFlag);
-                  }}
-                />
-              </OverviewTitleContainer>
-              {benefitsFlag ? (
-                <p>
-                  {featuredproduct?.gotFeaturedProductById?.benefits.split(",").map((bnft)=>(<li>{bnft}</li>))}
-                </p>
-              ) : (
-                ""
-              )}
-            </Overview>
-            <Overview>
-              <OverviewTitleContainer>
-                <OverviewTitle>Ingredients</OverviewTitle>
-                <ArrowUp
-                  src={ingredientFlag ? arrowup : arrowdown}
-                  onClick={() => {
-                    setIngredientFlag(!ingredientFlag);
-                  }}
-                />
-              </OverviewTitleContainer>
-              {ingredientFlag ? (
-                <p>
-                  {featuredproduct?.gotFeaturedProductById?.ingredients}
-
-                </p>
-              ) : (
-                ""
-              )}
-            </Overview>
-          </ProductContainerLeft>
-          <ProductContainerRight>
-            <DetailTitle>{product?.name + " " + featuredproduct?.gotFeaturedProductById?.flavour } ( {product?.weight}KG )</DetailTitle>
-            <Price>
-              <StrikedPrice>Rs. {featuredproduct?.gotFeaturedProductById?.price}</StrikedPrice>
-              <DiscountPrice>Rs. {featuredproduct?.gotFeaturedProductById?.discounted_price}</DiscountPrice>
-              <SavePrice>Save Rs. {featuredproduct?.gotFeaturedProductById?.price - featuredproduct?.gotFeaturedProductById?.discounted_price}</SavePrice>
-            </Price>
-            <FeatureContainer>
-
-{featuredProductList?.map(fp=>(  <FeatureButton onClick={()=>{
-  handleFeatureChnage(fp);
-}}>{fp.flavour}</FeatureButton>
-))}             
-            </FeatureContainer>
-        {reviewData?.length > 0 ? <RatingContainer>
-              <ReactStars
-                count={5}
-                // onChange={ratingChanged}
-                size={32}
-                value={Math.floor(starCount/reviewData?.length)}
-                edit={false}
-                activeColor="#ffd700"
-                style={{
-                  display: "flex",
-                  alignitem: "center",
-                }}
-              />
-              <Reviews>{reviewData?.length} Reviews</Reviews>
-            </RatingContainer> : <NoReviews>No Reviews Yet</NoReviews>}
             <Divider />
-            <MoreFeatures>
-              <ul>
-              {featuredproduct?.gotFeaturedProductById?.description.split(",").map((desc)=>(<FeatureLI>{desc}</FeatureLI>))}
-              </ul>
-             
-            
-            </MoreFeatures>
-            <Divider />
-            <BottomContainer>
-              <QuantityContainer>
-                <QuantityText>Quantity</QuantityText>
-                <Quantity>
-                  <AddItem onClick={(e)=>{
-                    e.preventDefault();
-                    setQty(qty + 1)
-                  }
-                  }> + </AddItem>
-                  <QValue>{qty}</QValue>
-                  <RemoveItem onClick={(e)=>{
-                    e.preventDefault();
-                    if(qty > 1){
-                      setQty(qty - 1)
-                    }
-                  }}> - </RemoveItem>
-                </Quantity>
-              </QuantityContainer>
-              <AddToBasketButton
-              onClick={() => {
-                handleAddToCart();
-              }}
-              >
-                Add to Basket
-              </AddToBasketButton>
-            </BottomContainer>
-          </ProductContainerRight>
-        </Container>
-        
-        
-        <Divider />
 
+            {loadingReview ? (
+              <Loading />
+            ) : (
+              <ReviewContainer>
+                <ReviewTitle>Customer Review</ReviewTitle>
+                {reviewData ? (
+                  <MainReviewBox>
+                    <ReviewBarContainer>
+                      <ReviewStarContainer>
+                        <ReactStars
+                          count={5}
+                          size={20}
+                          value={Math.floor(starCount / reviewData.length)}
+                          edit={false}
+                        />
+                        <StarCount>
+                          {Math.floor(starCount / reviewData.length)} Starts out
+                          of 5
+                        </StarCount>
+                      </ReviewStarContainer>
+                      <CustomerCount>
+                        {reviewData.length} Customer reviews
+                      </CustomerCount>
+                      <ReviewBar>
+                        <StarProgress>
+                          <Star>5 Star</Star>
+                          <Progress
+                            percent={Math.floor(
+                              (starCount5 / reviewData.length) * 100
+                            )}
+                            strokeColor={"#FFB100"}
+                            style={{ width: "50%" }}
+                            showInfo={false}
+                          />
+                        </StarProgress>
+                        <StarProgress>
+                          <Star>4 Star</Star>
+                          <Progress
+                            percent={Math.floor(
+                              (starCount4 / reviewData.length) * 100
+                            )}
+                            strokeColor={"#FFB100"}
+                            showInfo={false}
+                            style={{ width: "50%" }}
+                          />
+                        </StarProgress>
+                        <StarProgress>
+                          <Star>3 Star</Star>
+                          <Progress
+                            percent={Math.floor(
+                              (starCount3 / reviewData.length) * 100
+                            )}
+                            strokeColor={"#FFB100"}
+                            showInfo={false}
+                            style={{ width: "50%" }}
+                          />
+                        </StarProgress>
+                        <StarProgress>
+                          <Star>2 Star</Star>
+                          <Progress
+                            percent={Math.floor(
+                              (starCount2 / reviewData.length) * 100
+                            )}
+                            strokeColor={"#FFB100"}
+                            showInfo={false}
+                            style={{ width: "50%" }}
+                          />
+                        </StarProgress>
+                        <StarProgress>
+                          <Star>1 Star</Star>
+                          <Progress
+                            percent={Math.floor(
+                              (starCount1 / reviewData.length) * 100
+                            )}
+                            strokeColor={"#FFB100"}
+                            showInfo={false}
+                            style={{ width: "50%" }}
+                          />
+                        </StarProgress>
+                      </ReviewBar>
+                    </ReviewBarContainer>
 
+                    <ReviewCardConatiner>
+                      {reviewData.map((review, index) => (
+                        <ReviewCard review={review} key={index} />
+                      ))}
 
-        {loadingReview ? <Loading /> : <ReviewContainer>
-          <ReviewTitle>Customer Review</ReviewTitle>
-          {reviewData ? 
-          <MainReviewBox>
-            <ReviewBarContainer>
-              <ReviewStarContainer>
-                <ReactStars  count={5} size={20} value={Math.floor(starCount/reviewData.length)} edit={false} />
-                <StarCount>{Math.floor(starCount/reviewData.length)} Starts out of 5</StarCount>
-              </ReviewStarContainer>
-              <CustomerCount>{reviewData.length} Customer reviews</CustomerCount>
-              <ReviewBar>
-                <StarProgress>
-                  <Star>5 Star</Star>
-                  <Progress
-                    percent={Math.floor((starCount5/reviewData.length)*100)}
-                    strokeColor={"#FFB100"}
-                    style={{ width: "50%" }}
-                    showInfo={false}
+                      <Divider />
+
+                      <SeeAllButton>See all reviews </SeeAllButton>
+                    </ReviewCardConatiner>
+                  </MainReviewBox>
+                ) : (
+                  <NoDataFound data={reviewNotFound} />
+                )}
+
+                <Divider />
+
+                {userData ? (
+                  <ReviewEditCard
+                    reviewSubmitRef={reviewSubmitRef}
+                    handleSubmitReview={handleSubmitReview}
+                    userData={userData}
+                    setRatingStars={setRatingStars}
+                    ratingStars={ratingStars}
                   />
-                </StarProgress>
-                <StarProgress>
-                  <Star>4 Star</Star>
-                  <Progress
-                    percent={Math.floor((starCount4/reviewData.length)*100)}
-                    strokeColor={"#FFB100"}
-                    showInfo={false}
-                    style={{ width: "50%" }}
-                  />
-                </StarProgress>
-                <StarProgress>
-                  <Star>3 Star</Star>
-                  <Progress
-                    percent={Math.floor((starCount3/reviewData.length)*100)}
-                    strokeColor={"#FFB100"}
-                    showInfo={false}
-                    style={{ width: "50%" }}
-                  />
-                </StarProgress>
-                <StarProgress>
-                  <Star>2 Star</Star>
-                  <Progress
-                    percent={Math.floor((starCount2/reviewData.length)*100)}
-                    strokeColor={"#FFB100"}
-                    showInfo={false}
-                    style={{ width: "50%" }}
-                  />
-                </StarProgress>
-                <StarProgress>
-                  <Star>1 Star</Star>
-                  <Progress
-                    percent={Math.floor((starCount1/reviewData.length)*100)}
-                    strokeColor={"#FFB100"}
-                    showInfo={false}
-                    style={{ width: "50%" }}
-                  />
-                </StarProgress>
-              </ReviewBar>
-            </ReviewBarContainer>
+                ) : (
+                  <Link to="/login">
+                    {" "}
+                    <p>Login to Submit a Review</p>{" "}
+                  </Link>
+                )}
+              </ReviewContainer>
+            )}
 
-            <ReviewCardConatiner>
-              {reviewData.map((review, index)=>(<ReviewCard review={review} key={index} />))}
-
-              <Divider />
-
-              <SeeAllButton>See all reviews </SeeAllButton>
-            </ReviewCardConatiner>
-          </MainReviewBox> 
-          : <NoDataFound data={reviewNotFound} />
-     }
-
-     <Divider />
-
-{userData ? <ReviewEditCard reviewSubmitRef={reviewSubmitRef} handleSubmitReview={handleSubmitReview} userData={userData} setRatingStars={setRatingStars} ratingStars={ratingStars} /> : <Link to="/login"> <p>Login to Submit a Review</p> </Link>} 
-
-     </ReviewContainer>}
-        
-        <OtherProductContainer>
-          <OtherCustomerBroughtTitle>
-            Other Customers bought
-          </OtherCustomerBroughtTitle>
-          <ProductContainer>
-            <ProductCard
-              price={"6,999.00"}
-              originalPrice={"6,999.00"}
-              type={"GAINER"}
-              title={"Mass Gainer(5KG)"}
-              productImage={MassGainer5KG}
-            />
-            <ProductCard
-              price={"6,999.00"}
-              originalPrice={"6,999.00"}
-              type={"GAINER"}
-              title={"Mass Gainer(5KG)"}
-              productImage={MassGainer5KG}
-            />
-            <ProductCard
-              price={"6,999.00"}
-              originalPrice={"6,999.00"}
-              type={"GAINER"}
-              title={"Mass Gainer(5KG)"}
-              productImage={MassGainer5KG}
-            />
-            <ProductCard
-              price={"6,999.00"}
-              originalPrice={"6,999.00"}
-              type={"GAINER"}
-              title={"Mass Gainer(5KG)"}
-              productImage={MassGainer5KG}
-            />
-          </ProductContainer>
-        </OtherProductContainer>
-      </MainContainer>
-    </>
-    }
+            <OtherProductContainer>
+              <OtherCustomerBroughtTitle>
+                Other Customers bought
+              </OtherCustomerBroughtTitle>
+              <ProductContainer>
+                <ProductCard
+                  price={"6,999.00"}
+                  originalPrice={"6,999.00"}
+                  type={"GAINER"}
+                  title={"Mass Gainer(5KG)"}
+                  productImage={MassGainer5KG}
+                />
+                <ProductCard
+                  price={"6,999.00"}
+                  originalPrice={"6,999.00"}
+                  type={"GAINER"}
+                  title={"Mass Gainer(5KG)"}
+                  productImage={MassGainer5KG}
+                />
+                <ProductCard
+                  price={"6,999.00"}
+                  originalPrice={"6,999.00"}
+                  type={"GAINER"}
+                  title={"Mass Gainer(5KG)"}
+                  productImage={MassGainer5KG}
+                />
+                <ProductCard
+                  price={"6,999.00"}
+                  originalPrice={"6,999.00"}
+                  type={"GAINER"}
+                  title={"Mass Gainer(5KG)"}
+                  productImage={MassGainer5KG}
+                />
+              </ProductContainer>
+            </OtherProductContainer>
+          </MainContainer>
+        </>
+      )}
       <Footer />
-
     </React.Fragment>
-    
   );
 };
 

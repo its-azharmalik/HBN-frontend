@@ -12,6 +12,7 @@ import NoDataFound from "../components/Atoms/NoDataFound";
 import SalesChart from "../components/Atoms/SalesChart";
 const Dashbord = () => {
   const getAllOrders = useStore((state) => state.getAllOrders);
+  const setActiveNav = useStore((state) => state.setActiveNav);
   const AllOrders = useStore((state) => state.AllOrders);
   const [orderList, setOrderList] = useState();
 
@@ -21,6 +22,7 @@ const Dashbord = () => {
   };
 
   useEffect(() => {
+    setActiveNav("/dashboard");
     // getOrders();
     getAllOrders();
   }, []);

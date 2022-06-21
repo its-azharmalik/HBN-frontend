@@ -4,8 +4,24 @@ import LeanGainerProduct from "../../assets/images/leangainer.png";
 import PrimaryButton from "../Atoms/Primary Button/PrimaryButton";
 import dot from "../../assets/images/Ellipse3.png";
 import { Link } from "react-router-dom";
+import useStore from "../../store";
+import { checkAuth } from "../../utils/checkAuth";
 
 function ProductBanner({ img, title, disc, rev }) {
+  const addToCart = useStore((state) => state.addToCart);
+  let guest = true;
+  let AccessToken = undefined;
+  if (checkAuth()) {
+    guest = false;
+  } else {
+    guest = true;
+    AccessToken = "538475934857947593ierh";
+  }
+  const pid1 = "628de37ebcbac516123944d9";
+  const fpid1 = "628de3f5bcbac5161239456a";
+
+  const pid2 = "628de0f0a95efeb655c84d33";
+  const fpid2 = "628de0f3a95efeb655c84d53";
   const MainHeadContainer = styled.div`
     width: 100vw;
   `;
@@ -93,6 +109,7 @@ function ProductBanner({ img, title, disc, rev }) {
       width: 199px;
       height: 233px;
     }
+    cursor: pointer;
   `;
   return (
     <React.Fragment>
@@ -122,18 +139,24 @@ function ProductBanner({ img, title, disc, rev }) {
                 bulking
               </Li>
             </PordBannerDisc>
-            <Link
-              to={"/products"}
-              style={{ marginLeft: "20px", marginTop: "10px" }}
+
+            <div
+              onClick={() => {
+                addToCart(fpid2, pid2, guest, AccessToken);
+              }}
             >
               <PrimaryButton btnText={"Shop Now"} />
-            </Link>
+            </div>
           </ProdBanner>
-          <BannerImage src={img} alt="" />
+          <Link to="/product-info/628de0f0a95efeb655c84d33/628de0f3a95efeb655c84d53">
+            <BannerImage src={img} alt="" />
+          </Link>
         </Container>
       ) : (
         <Container>
-          <BannerImage src={img} alt="" />
+          <Link to="/product-info/628de37ebcbac516123944d9/628de3f5bcbac5161239456a">
+            <BannerImage src={img} alt="" />
+          </Link>
           <ProdBanner>
             <BannerTitle>{title}</BannerTitle>
             <PordBannerDisc>
@@ -158,13 +181,13 @@ function ProductBanner({ img, title, disc, rev }) {
                 bulking
               </Li>
             </PordBannerDisc>
-            <Link
-              to={"/products"}
-              style={{ marginLeft: "20px", marginTop: "10px" }}
+            <div
+              onClick={() => {
+                addToCart(fpid1, pid1, guest, AccessToken);
+              }}
             >
               <PrimaryButton btnText={"Shop Now"} />
-              <PrimaryButton btnText={"Shop Now"} />
-            </Link>
+            </div>
           </ProdBanner>
         </Container>
       )}

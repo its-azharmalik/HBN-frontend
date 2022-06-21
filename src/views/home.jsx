@@ -22,15 +22,16 @@ import CommentDivider from "../components/PageDivider/CommentDivider";
 import { Carousel } from "antd";
 import Banner1 from "../assets/images/banner1.jpeg";
 import Loading from "../components/Atoms/Loading";
-import bn1 from '../assets/images/bn1.jpg';
-import bn2 from '../assets/images/bn2.jpg';
-import bn3 from '../assets/images/bn3.jpg';
-
+import bn1 from "../assets/images/bn1.jpg";
+import bn2 from "../assets/images/bn2.jpg";
+import bn3 from "../assets/images/bn3.jpg";
 
 const Home = () => {
-
+  const setActiveNav = useStore((state) => state.setActiveNav);
+  useEffect(() => {
+    setActiveNav("/home");
+  });
   const getFeaturedProdById = useStore((state) => state.getFeaturedProdById);
-
 
   // api calls for 4 products later will be changed to api calls for all data
 
@@ -223,23 +224,17 @@ const Home = () => {
           style={{ width: "100vw", objectFit: "cover" }}
         ></img> */}
         <Carousel autoplay>
-        <div>
+          <div>
             <img
               src={HeaderMain}
               style={{ width: "100vw", objectFit: "cover" }}
             ></img>
           </div>
           <div>
-            <img
-              src={bn1}
-              style={{ width: "100vw", objectFit: "cover" }}
-            ></img>
+            <img src={bn1} style={{ width: "100vw", objectFit: "cover" }}></img>
           </div>
           <div>
-            <img
-              src={bn2}
-              style={{ width: "100vw", objectFit: "cover" }}
-            ></img>
+            <img src={bn2} style={{ width: "100vw", objectFit: "cover" }}></img>
           </div>
           <div>
             <img
@@ -353,10 +348,7 @@ const Home = () => {
       </IngredientsContainer>
       <CommentDivider />
       <MainHeadContainer>
-        <img
-          src={bn3}
-          style={{ width: "100%", objectFit: "cover" }}
-        ></img>
+        <img src={bn3} style={{ width: "100%", objectFit: "cover" }}></img>
       </MainHeadContainer>
       <CustomerRview />
       <Footer />

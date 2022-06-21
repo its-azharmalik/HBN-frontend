@@ -19,8 +19,12 @@ let useStore = (set) => ({
   LoginError: false,
   Cart: {},
   AllOrders: [],
+  ActiveNav: "",
 
   // https://hbn-host.azurewebsites.net/
+  setActiveNav: (active) => {
+    set({ ActiveNav: active });
+  },
 
   getAllProduct: async () => {
     try {
