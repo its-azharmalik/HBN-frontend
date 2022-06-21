@@ -12,19 +12,20 @@ import NoDataFound from "../components/Atoms/NoDataFound";
 import SalesChart from "../components/Atoms/SalesChart";
 const Dashbord = () => {
   const getAllOrders = useStore((state) => state.getAllOrders);
+  const setActiveNav = useStore((state) => state.setActiveNav);
   const AllOrders = useStore((state) => state.AllOrders);
   const [orderList, setOrderList] = useState();
 
   const getOrders = async () => {
     const result = await getAllOrders();
-    setOrderList(result.data.data.orders);
+    setOrderList(result.data.data);
   };
 
   useEffect(() => {
-    // getOrders();
-    getAllOrders();
+    setActiveNav("/dashboard");
+    getOrders();
+    // getAllOrders();
   }, []);
-  console.log(AllOrders);
 
   const ProductContainer = styled.div`
     width: 80%;
@@ -70,10 +71,10 @@ const Dashbord = () => {
         </p>
         <PageTitle>Dashboard</PageTitle>
         <Span>
-          <SalesChart />
+          <SalesChart orderList={orderList} />
         </Span>
         <PageTitle>Orders</PageTitle>
-        {/* {orderList ? (
+        {orderList ? (
           <React.Fragment>
             {orderList.length > 0 ? (
               <Table>
@@ -107,7 +108,7 @@ const Dashbord = () => {
           </React.Fragment>
         ) : (
           <Loading />
-        )} */}
+        )}
       </ProductContainer>
       <Footer />
     </>

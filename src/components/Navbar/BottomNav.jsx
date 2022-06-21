@@ -6,8 +6,11 @@ import styled from "styled-components";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
+import useStore from "../../store";
 
 const BottomNav = () => {
+  const activeNav = useStore((state) => state.ActiveNav);
+  console.log(activeNav);
   const { SubMenu } = Menu;
   const [activeId, setActiveId] = useState();
   const MenuContainer = styled.div`
@@ -28,14 +31,15 @@ const BottomNav = () => {
           justifyContent: "center",
           backgroundColor: "black",
         }}
+        defaultSelectedKeys={[activeNav]}
       >
-        <Menu.Item key="home">
+        <Menu.Item key="/home">
           <Link to="/" style={{ textDecoration: "none", color: "white" }}>
             Home
           </Link>
         </Menu.Item>
 
-        <Menu.Item key="products">
+        <Menu.Item key="/products">
           <Link
             to="/products"
             style={{ textDecoration: "none", color: "white" }}
@@ -53,7 +57,7 @@ const BottomNav = () => {
               Gainer
             </Link>
           </Menu.Item>
-          <Menu.Item key="whey">
+          <Menu.Item key="whey-protein">
             <Link
               to="/products?q=whey-protein"
               style={{ textDecoration: "none", color: "white" }}
@@ -61,7 +65,7 @@ const BottomNav = () => {
               Whey Protein
             </Link>
           </Menu.Item>
-          <Menu.Item key="support">
+          <Menu.Item key="support-suppliments">
             <Link
               to="/products?q=support-suppliments"
               style={{ textDecoration: "none", color: "white" }}
@@ -69,7 +73,7 @@ const BottomNav = () => {
               Support Suppliments
             </Link>
           </Menu.Item>
-          <Menu.Item key="butter">
+          <Menu.Item key="peanut-butter">
             <Link
               to="/products?q=peanut-butter"
               style={{ textDecoration: "none", color: "white" }}
@@ -79,7 +83,7 @@ const BottomNav = () => {
           </Menu.Item>
         </SubMenu>
 
-        <Menu.Item key="authenticity">
+        <Menu.Item key="/authenticity">
           <Link
             to="/authenticity"
             style={{ textDecoration: "none", color: "white" }}
@@ -87,7 +91,7 @@ const BottomNav = () => {
             Authenticity
           </Link>
         </Menu.Item>
-        <Menu.Item key="account">
+        <Menu.Item key="/account">
           <Link
             to="/account"
             style={{ textDecoration: "none", color: "white" }}
