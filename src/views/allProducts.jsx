@@ -66,7 +66,6 @@ const AllProducts = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const querry = searchParams.get("q");
-  console.log(querry);
 
   const allProducts = useStore((state) => state.AllProducts);
   const getAllProducts = useStore((state) => state.getAllProduct);

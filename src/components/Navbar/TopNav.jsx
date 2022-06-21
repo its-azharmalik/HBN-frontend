@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import ham from "../../assets/images/hamburger.png";
 import cross from "../../assets/images/cross.png";
@@ -11,13 +11,17 @@ import hellboylogo1 from "../../assets/images/helboylogo1.png";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { checkAdmin, checkAuth } from "../../utils/checkAuth";
 import { useRef } from "react";
+import useStore from '../../store'
 
 const TopNav = ({ handleSearch }) => {
   const [hambugerMenuDisplay, setHambugerMenuDisplay] = useState(false);
 
+  const SearchData = useStore((state) => state.SearchData);
+  const setSearchData = useStore((state)=> state.setSearchData);
+
   const location = useLocation();
 
-  const searchRef = useRef();
+  let searchRef = useRef();
 
   const Hamburger = styled.img`
     position: relative;
@@ -138,6 +142,10 @@ const TopNav = ({ handleSearch }) => {
   const LogoImg = styled.img``;
 
   const navigate = useNavigate();
+  useEffect(() => {
+  //  make here the logic to take the search from url and place here the current ref value
+    searchRef.current.value = SearchData
+  }, [SearchData])
 
   return (
     <NavBarTopContainer>
@@ -149,12 +157,12 @@ const TopNav = ({ handleSearch }) => {
         <SearchForm
           onSubmit={(e) => {
             e.preventDefault();
+            setSearchData(searchRef?.current?.value)
             navigate(`/products?q=${searchRef?.current?.value}`);
           }}
         >
           <SearchInput
             ref={searchRef}
-            
             placeholder="Type Here to Search Products...."
             type="text"
             required

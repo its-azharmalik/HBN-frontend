@@ -19,6 +19,7 @@ let useStore = (set) => ({
   LoginError: false,
   Cart: {},
   AllOrders: [],
+  SearchData: "",
 
   // https://hbn-host.azurewebsites.net/
 
@@ -30,6 +31,9 @@ let useStore = (set) => ({
       set({ AllProducts: res.data.data });
       return res;
     } catch (error) {}
+  },
+  setSearchData: (data) => {
+    set({ SearchData: data });
   },
 
   deleteProduct: async (id) => {
