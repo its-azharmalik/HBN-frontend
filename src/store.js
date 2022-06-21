@@ -123,7 +123,7 @@ let useStore = (set) => ({
         cred
       );
       console.log(res);
-      localStorage.setItem("userInfo", JSON.stringify(res.data.data));
+      localStorage.setItem("userInfo", JSON.stringify(res.data.data.data));
       set({ LoginUser: res.data.data, LoginError: false });
       return res;
     } catch (error) {

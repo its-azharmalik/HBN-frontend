@@ -22,7 +22,7 @@ const Dashbord = () => {
 
   useEffect(() => {
     // getOrders();
-    // getAllOrders();
+    getAllOrders();
   }, []);
   console.log(AllOrders);
 
