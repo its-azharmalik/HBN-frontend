@@ -45,7 +45,7 @@ function App() {
           <Route path="login" element={<LoginCart />} />
           <Route path="signup" element={<Signup />} />
           <Route path="signup2" element={<Signup2 />} />
-          <Route path="admin/user" element={<User />} />
+          {/* <Route path="admin/user" element={<User />} /> */}
           <Route path="admin/addproduct/" element={<ProductDetails />} />
           <Route path="admin/updateproduct/:id" element={<ProductDetails />} />
           <Route path="terms" element={<Terms />} />

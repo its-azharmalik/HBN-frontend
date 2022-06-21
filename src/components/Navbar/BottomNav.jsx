@@ -102,9 +102,9 @@ const BottomNav = () => {
               <Link to="/admin/dashboard">
                 <Menu.Item key="setting:1">Dashboard</Menu.Item>
               </Link>
-              <Link to="/admin/user">
+              {/* <Link to="/admin/user">
                 <Menu.Item key="setting:2">User Management</Menu.Item>
-              </Link>
+              </Link> */}
               <Link to="/admin/product">
                 <Menu.Item key="setting:3">Product Management</Menu.Item>
               </Link>

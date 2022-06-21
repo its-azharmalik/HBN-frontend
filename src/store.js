@@ -424,6 +424,7 @@ let useStore = (set) => ({
         {},
         config
       );
+
       set({ AllOrders: res });
     } catch (error) {
       return error;
