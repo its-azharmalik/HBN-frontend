@@ -77,6 +77,7 @@ const AllProducts = () => {
   const getProdcuts = async () => {
     setLoading(true);
     const result = await getAllProducts();
+    console.log(result)
     const finalSearchedData = searchFunction(querry, result.data.data);
     setProductList(finalSearchedData);
     const fpListTemp = [];

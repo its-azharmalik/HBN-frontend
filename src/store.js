@@ -125,7 +125,7 @@ let useStore = (set) => ({
       console.log(res);
       localStorage.setItem("userInfo", JSON.stringify(res.data.data));
       set({ LoginUser: res.data.data, LoginError: false });
-      return "Success";
+      return res;
     } catch (error) {
       set({
         LoginError:
@@ -478,22 +478,38 @@ let useStore = (set) => ({
       console.log(error);
     }
   },
-  addToCart: async (fpid, pid, qty) => {
+  addToCart: async (fpid, pid, qty, guest, AuthToken) => {
     try {
       const token = JSON.parse(localStorage.getItem("userInfo"));
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token.AccessToken}`,
-        },
-      };
-      console.log(fpid, pid, qty);
-      const res = await axios.patch(
-        `https://hbn-host.herokuapp.com/api/cart/${pid}/${fpid}/add`,
-        { quantity: qty },
-        config
-      );
+      if (guest) {
+        const config = {
+          headers: {
+            Authorization: `Bearer ${AuthToken}`,
+          },
+        };
+        console.log(fpid, pid, qty, guest, AuthToken);
+        const res = await axios.patch(
+          `https://hbn-host.herokuapp.com/api/cart/${pid}/${fpid}/add`,
+          { quantity: qty },
+          config
+        );
 
-      return res;
+        return res;
+      } else {
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token.AccessToken}`,
+          },
+        };
+        console.log(fpid, pid, qty, guest, AuthToken);
+        const res = await axios.patch(
+          `https://hbn-host.herokuapp.com/api/cart/${pid}/${fpid}/add`,
+          { quantity: qty },
+          config
+        );
+
+        return res;
+      }
     } catch (error) {
       toast.error(error.message);
       return error;

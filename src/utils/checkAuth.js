@@ -1,7 +1,7 @@
 export const checkAuth = () => {
   const token = JSON.parse(localStorage.getItem("userInfo"));
   if (token) {
-    if (token.AccessToken.length > 10 && token.email.includes("@")) {
+    if (token?.AccessToken?.length > 10 && token?.email?.includes("@")) {
       return true;
     }
   }

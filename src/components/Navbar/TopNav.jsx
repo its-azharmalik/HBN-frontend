@@ -282,31 +282,32 @@ const TopNav = ({ handleSearch }) => {
                       </button>
                     </AccButton>
                   </Link>{" "}
-                  <Link
-                    to="/cart"
-                    style={{ textDecoration: "none", color: "black" }}
+                 
+                  <CartButton onClick={()=>{
+                  if(!checkAuth()) {
+                    navigate("/login")
+                  } else navigate("/cart")
+                }}>
+                  <ShoppingCartOutlined
+                    style={{
+                      fontSize: "20px",
+                      border: "1px solid black",
+                      borderRadius: "50%",
+                      padding: "5px",
+                    }}
+                  />
+                  <button
+                    style={{
+                      border: "none",
+                      outline: "none",
+                      backgroundColor: "white",
+                      cursor: "pointer",
+                    }}
                   >
-                    <CartButton>
-                      <ShoppingCartOutlined
-                        style={{
-                          fontSize: "20px",
-                          border: "1px solid black",
-                          borderRadius: "50%",
-                          padding: "5px",
-                        }}
-                      />
-                      <button
-                        style={{
-                          border: "none",
-                          outline: "none",
-                          backgroundColor: "white",
-                          cursor: "pointer",
-                        }}
-                      >
-                        Cart
-                      </button>
-                    </CartButton>
-                  </Link>{" "}
+                    Cart
+                  </button>
+                </CartButton>
+
                 </React.Fragment>
               )}
             </React.Fragment>

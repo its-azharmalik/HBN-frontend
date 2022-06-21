@@ -34,7 +34,7 @@ const ProductPage = ({fpidFromProductPage}) => {
   let [qty, setQty]  = useState(1);
 
   const param = useParams();
-
+ 
   const getProductById = useStore((state) => state.getProductById);
   const getFeaturedProdBYid = useStore((state) => state.getFeaturedProdById);
   const getReviewById = useStore((state) => state.getAllReviewsById);
@@ -44,6 +44,7 @@ const ProductPage = ({fpidFromProductPage}) => {
   const addToCart = useStore((state) => state.addToCart);
   const AllReviews = useStore((state) => state.AllReviewsById);
   const ProductById = useStore((state) => state.Product);
+  const login = useStore((state) => state.login);
 
 
   const [product, setProduct] = useState({});
@@ -147,9 +148,11 @@ const ProductPage = ({fpidFromProductPage}) => {
   const handleAddToCart = async () => {
     if(checkAuth()){
       setLoading(true)
+      const guest = false;
+      const AuthToken = undefined;
       const pid = product._id
       const fpid = featuredproduct.gotFeaturedProductById?._id
-      const result = await addToCart(fpid, pid, qty)
+      const result = await addToCart(fpid, pid, qty, guest, AuthToken)
       if(result.staus != 404 || result.status != 500){
         toast.success("Product Successfully Added to Cart")
         navigate("/cart")
@@ -159,7 +162,24 @@ const ProductPage = ({fpidFromProductPage}) => {
         setLoading(false)
       }
     } else {
-      navigate("/login")
+      const resultLogin = await login({ isDummy: true })
+      console.log(resultLogin.data.data.data.AccessToken)
+      if(resultLogin){
+        setLoading(true)
+        const AuthToken = resultLogin.data.data.data.AccessToken;
+        const guest = true;
+        const pid = product._id
+        const fpid = featuredproduct.gotFeaturedProductById?._id
+        const result = await addToCart(fpid, pid, qty, guest, AuthToken)
+        if(result.staus != 404 || result.status != 500){
+          toast.success("Product Successfully Added to Cart")
+          navigate("/cart")
+          setLoading(false)
+        } else {
+          toast.error(result.data.message)
+          setLoading(false)
+        }
+      }
     }
   }
 

@@ -76,14 +76,7 @@ function App() {
               </PrivateRoute>
             }
           />
-          <Route
-            path="cart"
-            element={
-              <PrivateRoute>
-                <Cart />
-              </PrivateRoute>
-            }
-          />
+          <Route path="cart" element={<Cart />} />
           <Route
             path="product-info/:id/:fpidFromProductPage"
             element={<ProductPage />}

@@ -28,15 +28,10 @@ import bn3 from '../assets/images/bn3.jpg';
 
 
 const Home = () => {
-  const loginUser = useStore((state) => state.LoginUser);
-  const login = useStore((state) => state.login);
+
   const getFeaturedProdById = useStore((state) => state.getFeaturedProdById);
-  console.log(loginUser);
-  useEffect(() => {
-    if (!loginUser) {
-      login({ isDummy: true });
-    }
-  }, []);
+
+
   // api calls for 4 products later will be changed to api calls for all data
 
   const [products, setProducts] = useState();
@@ -300,19 +295,20 @@ const Home = () => {
         title={"Best Quality Hell Boy Nutrition - Lean Gainer"}
         rev={true}
       />
+      {console.log(products)}
       <BestSellerContainer>
         <BestSellerHead>BEST SELLER</BestSellerHead>
         <BestSellerProd>
           {products ? (
             products.map((product) => (
               <ProductCard
-                price={product.gotFeaturedProductById.discounted_price}
-                originalPrice={product.gotFeaturedProductById.price}
-                type={product.gotFeaturedProductById.flavour}
+                price={product.gotFeaturedProductById?.discounted_price}
+                originalPrice={product.gotFeaturedProductById?.price}
+                type={product.gotFeaturedProductById?.flavour}
                 title={product.parentproduct[0].name}
                 productImage={product.parentproduct[0].main_url}
                 id={product.parentproduct[0]._id}
-                fpidFromProductPage={product.gotFeaturedProductById._id}
+                fpidFromProductPage={product.gotFeaturedProductById?._id}
               />
             ))
           ) : (
