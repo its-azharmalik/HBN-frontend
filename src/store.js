@@ -124,7 +124,7 @@ let useStore = (set) => ({
       );
       console.log(res);
       localStorage.setItem("userInfo", JSON.stringify(res.data.data.data));
-      set({ LoginUser: res.data.data, LoginError: false });
+      set({ LoginUser: res.data.data.data, LoginError: false });
       return res;
     } catch (error) {
       set({
