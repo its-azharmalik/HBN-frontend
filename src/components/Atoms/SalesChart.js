@@ -26,7 +26,6 @@ const SalesChart = ({ orderList }) => {
       }
     });
   }
-
   const config = {
     data,
     xField: "month",

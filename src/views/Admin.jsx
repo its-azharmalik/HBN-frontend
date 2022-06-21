@@ -110,6 +110,20 @@ const Admin = () => {
     display: flex;
   `;
 
+  const updateStockByFpId = useStore((state)=> state.updateStockByFpId);
+
+  const [loadingState, setLoadingState] = useState(false)
+
+  const handleStockChange = async (fid) => {
+    setLoadingState(true)
+    // api call for stock change
+    const result = await updateStockByFpId(fid);
+    if(result.status != 400){
+      getAllProducts();  
+      setLoadingState(false)
+    }
+  }
+
   return (
     <>
       {editState == "products" ? (
@@ -133,14 +147,14 @@ const Admin = () => {
                 setEditState("featuredProducts");
               }}
             >
-              Delete Featured Products
+              Switch to Featured Products
             </Productbtn>
           </ProductContainerHead>
           <Table>
             <thead>
               <TR>
                 <TH>Product</TH>
-                <TH>stock</TH>
+                {editState == "featuredProducts" ? <TH>Stock</TH> : <></>}
                 <TH>Quantity</TH>
                 <TH>Date</TH>
                 <TH>Rating</TH>
@@ -153,7 +167,7 @@ const Admin = () => {
                 <TableRow
                   name={product.name}
                   Desc={product.details}
-                  stock={"In Stock"}
+                  stock={"Products"}
                   Action={
                     <>
                       <Link to={`/admin/updateproduct/${product._id}`}>
@@ -174,6 +188,7 @@ const Admin = () => {
                   handleDeleteProduct={handleDeleteProduct}
                   id={product._id}
                   productUrl={product.main_url}
+                  handleStockChange={handleStockChange}
                 />
               ))}
             </TBody>
@@ -192,19 +207,17 @@ const Admin = () => {
           </p>
           <ProductContainerHead>
             <PageTitle>Flavours</PageTitle>
-
-            <PrimaryButton
+            <Productbtn
               onClick={() => {
                 setEditState("products");
               }}
-              btnText={"Back to Products"}
-            />
+            >Back to Products</Productbtn>
           </ProductContainerHead>
           <Table>
             <thead>
               <TR>
                 <TH>Flavour</TH>
-                <TH>stock</TH>
+                <TH>Stock</TH>
                 <TH>Quantity</TH>
                 <TH>Product</TH>
                 <TH>Rating</TH>
@@ -218,7 +231,7 @@ const Admin = () => {
                   <TableRow
                     name={featuredProduct.flavour + " " + product.name}
                     Desc={product.details}
-                    stock={"In Stock"}
+                    stock={featuredProduct.isInStock}
                     Action={<></>}
                     key={index}
                     handleDeleteProduct={handleDeleteFeaturedProduct}
@@ -226,6 +239,8 @@ const Admin = () => {
                     pid={product._id}
                     fpid={featuredProduct._id}
                     productUrl={featuredProduct.url[0]}
+                    handleStockChange={handleStockChange}
+                    loadingState={loadingState}
                   />
                 ));
               })}

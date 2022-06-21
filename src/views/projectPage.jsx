@@ -712,6 +712,65 @@ const ProductPage = ({ fpidFromProductPage }) => {
                   </AddToBasketButton>
                 </BottomContainer>
               </ProductContainerRight>
+
+              <Divider />
+              <MoreFeatures>
+                <ul>
+                  {featuredproduct?.gotFeaturedProductById?.description
+                    .split(",")
+                    .map((desc) => (
+                      <FeatureLI>{desc}</FeatureLI>
+                    ))}
+                </ul>
+              </MoreFeatures>
+              <Divider />
+              <BottomContainer>
+                <QuantityContainer>
+                  <QuantityText>Quantity</QuantityText>
+                  <Quantity>
+                    <AddItem
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setQty(qty + 1);
+                      }}
+                    >
+                      {" "}
+                      +{" "}
+                    </AddItem>
+                    <QValue>{qty}</QValue>
+                    <RemoveItem
+                      onClick={(e) => {
+                        e.preventDefault();
+                        if (qty > 1) {
+                          setQty(qty - 1);
+                        }
+                      }}
+                    >
+                      {" "}
+                      -{" "}
+                    </RemoveItem>
+                  </Quantity>
+                </QuantityContainer>
+                {featuredproduct?.gotFeaturedProductById?.isInStock ? (
+                  <AddToBasketButton
+                    onClick={() => {
+                      handleAddToCart();
+                    }}
+                  >
+                    Add to Basket
+                  </AddToBasketButton>
+                ) : (
+                  <AddToBasketButton
+                    style={{
+                      backgroundColor: "#c2c2c2",
+                      color: "#000",
+                      cursor: "not-allowed",
+                    }}
+                  >
+                    Out of Stock
+                  </AddToBasketButton>
+                )}
+              </BottomContainer>
             </Container>
 
             <Divider />
