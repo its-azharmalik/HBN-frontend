@@ -9,18 +9,21 @@ import { checkAuth } from "../../utils/checkAuth";
 
 function ProductBanner({ img, title, disc, rev, pid1, fpid1 }) {
   const addToCart = useStore((state) => state.addToCart);
+  const login = useStore((state) => state.login);
   const navigate = useNavigate()
-  let guest = true;
+  let guest = false;
   let AccessToken = undefined;
-  if (checkAuth()) {
-    guest = false;
-  } else {
+  if (!checkAuth()) {
     guest = true;
-    AccessToken = "538475934857947593ierh";
+    AccessToken = "faketokenx";
   }
 
 
   const handleAddToCartDirect = async () => {
+    if(guest == true){
+      const result = await login({isDummy: true})
+      AccessToken = result?.data?.data?.data?.AccessToken
+    }
     const result = await addToCart(fpid1, pid1, 1 , guest, AccessToken);
     if(result.status != 400 || result.status != 404){
       navigate("/cart")
