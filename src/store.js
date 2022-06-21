@@ -423,13 +423,14 @@ let useStore = (set) => ({
           Authorization: `Bearer ${token.AccessToken}`,
         },
       };
-      const res = await axios.post(
-        `https://hbn-host.herokuapp.com/api/orders/getallorder/`,
+      const res = await axios.get(
+        `https://hbn-host.herokuapp.com/api/orders`,
         {},
         config
       );
 
       set({ AllOrders: res });
+      return res;
     } catch (error) {
       return error;
     }
