@@ -683,13 +683,17 @@ const ProductPage = ({fpidFromProductPage}) => {
                   }}> - </RemoveItem>
                 </Quantity>
               </QuantityContainer>
-              <AddToBasketButton
+              {featuredproduct?.gotFeaturedProductById?.isInStock ? <AddToBasketButton
               onClick={() => {
                 handleAddToCart();
               }}
               >
                 Add to Basket
-              </AddToBasketButton>
+              </AddToBasketButton> : <AddToBasketButton style={{
+                backgroundColor: "#c2c2c2",
+                color: "#000",
+                cursor: "not-allowed"
+              }}>Out of Stock</AddToBasketButton>}
             </BottomContainer>
           </ProductContainerRight>
         </Container>

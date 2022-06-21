@@ -362,6 +362,26 @@ let useStore = (set) => ({
       return error;
     }
   },
+
+  updateStockByFpId: async (id) => {
+    try {
+      const token = JSON.parse(localStorage.getItem("userInfo"));
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token.AccessToken}`,
+        },
+      };
+      const res = await axios.get(
+        `https://hbn-host.herokuapp.com/api/featured_product/${id}/outofstock`,
+        config
+      );
+      return res;
+    } catch (error) {
+      return error;
+    }
+  },
+
+  //
   getCartDetails: async () => {
     try {
       const token = JSON.parse(localStorage.getItem("userInfo"));

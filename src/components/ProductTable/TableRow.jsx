@@ -1,7 +1,11 @@
 import React from "react";
 import styled from "styled-components";
+import { Switch } from 'antd';
+
 import OptionVector from "../../assets/images/delete.png";
-const TableRow = ({ name, Desc, stock, quantity, Date, Rating,Action, handleDeleteProduct, id, pid, fpid, productUrl }) => {
+const TableRow = ({ name, Desc, stock, quantity, Date, Rating,Action, handleDeleteProduct, id, pid, fpid, productUrl, handleStockChange, loadingState }) => {
+
+
   const TD = styled.td`
     padding: 12px 15px;
     border-top: 1px solid #b5bdc4;
@@ -39,6 +43,11 @@ const TableRow = ({ name, Desc, stock, quantity, Date, Rating,Action, handleDele
     height: 50px;
     margin: 0 0.5rem;
   `;
+
+
+  const onChange = (checked) => {
+    handleStockChange(fpid);
+  };
   return (
     <TR>
       <TD>
@@ -71,7 +80,7 @@ const TableRow = ({ name, Desc, stock, quantity, Date, Rating,Action, handleDele
           </div>
         </TdContainer>
       </TD>
-      <TD style={{color:'#007D1E'}}>{stock}</TD>
+      {stock != "Products" ? <TD > {stock == true ? <p style={{color:'#007D1E'}}>In Stock</p> : <p>Out of Stock</p>} <Switch checked={stock} loading={loadingState} onChange={onChange} /></TD> : <></>}
       <TD>{quantity}</TD>
       <TD>{Date}</TD>
       <TD>{Rating}</TD>
