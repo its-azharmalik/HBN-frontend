@@ -3,12 +3,13 @@ import styled from "styled-components";
 import LeanGainerProduct from "../../assets/images/leangainer.png";
 import PrimaryButton from "../Atoms/Primary Button/PrimaryButton";
 import dot from "../../assets/images/Ellipse3.png";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import useStore from "../../store";
 import { checkAuth } from "../../utils/checkAuth";
 
-function ProductBanner({ img, title, disc, rev }) {
+function ProductBanner({ img, title, disc, rev, pid1, fpid1 }) {
   const addToCart = useStore((state) => state.addToCart);
+  const navigate = useNavigate()
   let guest = true;
   let AccessToken = undefined;
   if (checkAuth()) {
@@ -17,11 +18,18 @@ function ProductBanner({ img, title, disc, rev }) {
     guest = true;
     AccessToken = "538475934857947593ierh";
   }
-  const pid1 = "628de37ebcbac516123944d9";
-  const fpid1 = "628de3f5bcbac5161239456a";
 
-  const pid2 = "628de0f0a95efeb655c84d33";
-  const fpid2 = "628de0f3a95efeb655c84d53";
+
+  const handleAddToCartDirect = async () => {
+    const result = await addToCart(fpid1, pid1, 1 , guest, AccessToken);
+    if(result.status != 400 || result.status != 404){
+      navigate("/cart")
+    }
+  }
+
+  
+
+
   const MainHeadContainer = styled.div`
     width: 100vw;
   `;
@@ -142,7 +150,7 @@ function ProductBanner({ img, title, disc, rev }) {
 
             <div
               onClick={() => {
-                addToCart(fpid2, pid2, guest, AccessToken);
+                handleAddToCartDirect()
               }}
             >
               <PrimaryButton btnText={"Shop Now"} />
@@ -183,7 +191,7 @@ function ProductBanner({ img, title, disc, rev }) {
             </PordBannerDisc>
             <div
               onClick={() => {
-                addToCart(fpid1, pid1, guest, AccessToken);
+                handleAddToCartDirect()                
               }}
             >
               <PrimaryButton btnText={"Shop Now"} />

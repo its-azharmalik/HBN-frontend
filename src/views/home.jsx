@@ -284,11 +284,15 @@ const Home = () => {
       <ProductBanner
         img={LeanGainerProduct}
         title={"Best Quality Hell Boy Nutrition - Lean Gainer"}
+        pid1={"628de37ebcbac516123944d9"}
+        fpid1={"628de3f5bcbac5161239456a"}
       />
       <ProductBanner
         img={LeanGainerProduct}
         title={"Best Quality Hell Boy Nutrition - Lean Gainer"}
         rev={true}
+        pid1={"628de0f0a95efeb655c84d33"}
+        fpid1={"628de0f3a95efeb655c84d53"}
       />
       {console.log(products)}
       <BestSellerContainer>

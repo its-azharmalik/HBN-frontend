@@ -22,9 +22,12 @@ let useStore = (set) => ({
   SearchData: "",
   ActiveNav: "",
 
-  // https://hbn-host.azurewebsites.net/
   setActiveNav: (active) => {
     set({ ActiveNav: active });
+  },
+
+  setSearchData: (data) => {
+    set({ SearchData: data });
   },
 
   getAllProduct: async () => {
@@ -35,9 +38,6 @@ let useStore = (set) => ({
       set({ AllProducts: res.data.data });
       return res;
     } catch (error) {}
-  },
-  setSearchData: (data) => {
-    set({ SearchData: data });
   },
 
   deleteProduct: async (id) => {
