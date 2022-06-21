@@ -66,6 +66,7 @@ const AllProducts = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const querry = searchParams.get("q");
+  console.log(querry);
 
   const allProducts = useStore((state) => state.AllProducts);
   const getAllProducts = useStore((state) => state.getAllProduct);
@@ -91,10 +92,9 @@ const AllProducts = () => {
   };
 
   useEffect(() => {
-    if (productList?.length == 0) {
-      console.log("hello", productList);
+    
       getProdcuts();
-    }
+    
   }, [querry]);
 
   return (
@@ -161,6 +161,7 @@ const AllProducts = () => {
         {/* <PrimaryButton btnText={"Load More"} /> */}
       </div>
       {/* <Loading /> */}
+      <Footer />
     </>
   );
 };

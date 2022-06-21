@@ -154,7 +154,7 @@ const TopNav = ({ handleSearch }) => {
         >
           <SearchInput
             ref={searchRef}
-            value={searchRef.current?.value}
+            
             placeholder="Type Here to Search Products...."
             type="text"
             required
